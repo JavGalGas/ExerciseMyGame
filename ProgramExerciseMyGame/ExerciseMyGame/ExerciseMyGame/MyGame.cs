@@ -53,7 +53,7 @@ namespace ExerciseMyGame
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
         {
             canvas.Clear(0.0, 0.0, 0.0, 1.0);
-            canvas.Camera.SetRectangle(0.0, 0.0, 20.0, 20.0);
+            canvas.Camera.SetRectangle(Rectangle.x, y, w, h);
 
             for (int i = 0; i < MyWorld.GetCharacterCount(); i++)
             {

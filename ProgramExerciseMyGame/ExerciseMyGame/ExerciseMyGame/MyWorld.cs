@@ -8,10 +8,10 @@ namespace ExerciseMyGame
     {
         class Rectangle
         {
-            public int x;
-            public int y;
-            public double w;
-            public double h;
+            public int x=0;
+            public int y=0;
+            public double w=10.0;
+            public double h=10.0;
         }
 
         internal List<Character> Characters = new List<Character>();
