@@ -7,18 +7,18 @@ namespace ExerciseMyGame
     public class MyGame : IGameDelegate
     {
 
-        MyWorld world = new MyWorld();
+        
 
         //cuando entres al juego
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            MyWorld.CreateCharacters(4);
+            MyWorld.CreateCharacters(pj1);
         }
 
         //al pulsar una tecla del teclado
         public void OnKeyboard(GameDelegateEvent gameEvent, IKeyboard keyboard, IMouse mouse)
         {
-            Character? p1 = MyWorld.GetCharacterAt(0);
+            Character? p1 = MyWorld.GetCharacterAt(1);
 
             if (keyboard.IsKeyDown(Keys.Right))
             {
@@ -53,7 +53,7 @@ namespace ExerciseMyGame
         public void OnDraw(GameDelegateEvent gameEvent, ICanvas canvas)
         {
             canvas.Clear(0.0, 0.0, 0.0, 1.0);
-            canvas.Camera.SetRectangle(Rectangle.x, y, w, h);
+            canvas.Camera.SetRectangle(MyWorld.Rectangle.x, MyWorld.Rectangle.y, MyWorld.Rectangle.width, MyWorld.Rectangle.height);
 
             for (int i = 0; i < MyWorld.GetCharacterCount(); i++)
             {
