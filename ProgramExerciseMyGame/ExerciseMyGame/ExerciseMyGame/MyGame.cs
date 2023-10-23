@@ -6,13 +6,13 @@ namespace ExerciseMyGame
 {
     public class MyGame : IGameDelegate
     {
+
         MyWorld world = new MyWorld();
 
-        
         //cuando entres al juego
         public void OnLoad(GameDelegateEvent gameEvent)
         {
-            
+            MyWorld.CreateCharacters(4);
         }
 
         //al pulsar una tecla del teclado
@@ -41,9 +41,9 @@ namespace ExerciseMyGame
         //...
         public void OnAnimate(GameDelegateEvent gameEvent)
         {
-            for (int i = 0; i < MyWorld.Characters.Count; i++)
+            for (int i = 0; i < MyWorld.GetCharacterCount(); i++)
             {
-                Character ch = Characters[i];
+                Character ch = MyWorld.GetCharacterAt(i);
                 ch.x = ch.x + Utils.GetRandomBetween(-0.007, 0.007);
                 ch.y = ch.y + Utils.GetRandomBetween(-0.007, 0.007);
             }
@@ -55,10 +55,10 @@ namespace ExerciseMyGame
             canvas.Clear(0.0, 0.0, 0.0, 1.0);
             canvas.Camera.SetRectangle(0.0, 0.0, 20.0, 20.0);
 
-            for (int i = 0; i < Characters.Count; i++)
+            for (int i = 0; i < MyWorld.GetCharacterCount(); i++)
             {
                 Character ch = MyWorld.Characters[i];
-                ch.Draw(canvas);
+                Character.Draw(canvas);
             }
         }
 

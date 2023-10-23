@@ -1,6 +1,6 @@
 ﻿namespace ExerciseMyGame
 {
-    internal class Utils
+    public class Utils
     {
         private static Random r = new Random();
 
@@ -30,5 +30,5 @@
             return true;
         }
     }
-    //funcion intrersect + funcion doble for para pasar  por la lista de personajes, funcion se sale del mundo
+    //funcion intersect + funcion doble for para pasar  por la lista de personajes, funcion se sale del mundo
 }

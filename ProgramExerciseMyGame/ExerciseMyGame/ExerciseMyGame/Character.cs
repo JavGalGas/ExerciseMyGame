@@ -12,7 +12,7 @@ namespace ExerciseMyGame
 
         public double red, blue, green, alpha;
     }
-    public void Draw(ICanvas canvas)
+    public static void Draw(ICanvas canvas)
     {
         canvas.FillShader.SetColor(red, green, blue, alpha);
         canvas.DrawRectangle(x, y, w, h);

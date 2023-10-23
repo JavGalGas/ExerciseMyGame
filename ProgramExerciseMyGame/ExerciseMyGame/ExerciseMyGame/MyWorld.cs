@@ -14,7 +14,7 @@ namespace ExerciseMyGame
             public double h;
         }
 
-        private List<Character> Characters = new List<Character>();
+        internal List<Character> Characters = new List<Character>();
         //Map map = new Map();
 
         public void CreateCharacters(int characterCount)
@@ -38,6 +38,11 @@ namespace ExerciseMyGame
             if (index < 0 || index >= Characters.Count)
                 return null;
             return Characters[index];
+        }
+
+        public int GetCharacterCount() 
+        { 
+            return Characters.Count;
         }
 
        
