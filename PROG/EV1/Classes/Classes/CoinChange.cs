@@ -141,23 +141,23 @@ namespace Classes
             else if (centims <= ToNumber(Moneda.E_10))
                 return Moneda.E_10;
             else if (centims <= ToNumber(Moneda.E_5))
-                moneda = Moneda.E_5;
+                return Moneda.E_5;
             else if (centims <= ToNumber(Moneda.E_2))
-                moneda = Moneda.E_2;
+                return Moneda.E_2;
             else if (centims <= ToNumber(Moneda.E_1))
-                moneda = Moneda.E_1;
+                return Moneda.E_1;
             else if (centims <= ToNumber(Moneda.E_050))
-                moneda = Moneda.E_050;
+                return Moneda.E_050;
             else if (centims <= ToNumber(Moneda.E_020))
-                moneda = Moneda.E_020;
+                return Moneda.E_020;
             else if (centims <= ToNumber(Moneda.E_010))
-                moneda = Moneda.E_010;
+                return Moneda.E_010;
             else if (centims <= ToNumber(Moneda.E_005))
-                moneda = Moneda.E_005;
+                return Moneda.E_005;
             else if (centims <= ToNumber(Moneda.E_002))
-                moneda = Moneda.E_002;
+                return Moneda.E_002;
             else if (centims <= ToNumber(Moneda.E_001))
-                moneda = Moneda.E_001;
+                return Moneda.E_001;
             return Moneda.UNKNOWN;
         }
 
@@ -166,8 +166,6 @@ namespace Classes
             List<Moneda> result = new List<Moneda>();
             while(centims > 0)
             {
-                
-
                 result.Add(moneda);
                 centims -= ToNumber(moneda);
             }

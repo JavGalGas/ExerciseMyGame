@@ -8,7 +8,7 @@ namespace Classes
         private int value1;
         private int value2;
 
-        public DominoPiece(int v1, int v2)
+        private DominoPiece(int v1, int v2)
         {
             /*this.*/value1 = v1;
             /*this.*/value2 = v2;
@@ -36,5 +36,14 @@ namespace Classes
             return false;
         }
 
+
+        public static DominoPiece? CreatePiece(int v1, int v2)
+        {
+            if (v1 > 6 || v1 < 0)
+                return null;
+            else if (v2 > 6 || v2 < 0)
+                return null;
+            return new DominoPiece(v1, v2);
+        }
     }
 }
