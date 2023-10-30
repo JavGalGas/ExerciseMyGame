@@ -5,33 +5,33 @@ namespace Classes
     class DominoPiece
     {
        
-        private int value1;
-        private int value2;
+        private int _value1;
+        private int _value2;
 
         private DominoPiece(int v1, int v2)
         {
-            /*this.*/value1 = v1;
-            /*this.*/value2 = v2;
+            /*this.*/_value1 = v1;
+            /*this.*/_value2 = v2;
         }
 
         public int GetValue1()
         {
-            return value1;
+            return _value1;
         }
 
         public int GetValue2()
         {
-            return value2;
+            return _value2;
         }
 
         public int GetTotalValue()
         {
-            return value1 + value2;
+            return _value1 + _value2;
         }
 
         public bool IsDouble()
         {
-            if(value1 == value2)
+            if(_value1 == _value2)
                 return true;
             return false;
         }
@@ -44,6 +44,11 @@ namespace Classes
             else if (v2 > 6 || v2 < 0)
                 return null;
             return new DominoPiece(v1, v2);
+        }
+
+        public bool IsEquals(DominoPiece other)
+        {
+            return (_value1 == other._value1 && _value2==other._value2)||(_value1 == other._value2 && _value2 == other._value1);
         }
     }
 }

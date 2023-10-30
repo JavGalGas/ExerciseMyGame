@@ -9,42 +9,85 @@ namespace Classes
 {
     public class DominoDeck
     {
-        private List<DominoPiece>? pieces;  /*Esto ya está escrito en la relación, cuando lo escribimos en Método relacional*/
+        private List<DominoPiece> _pieceList = new List<DominoPiece>();  /*Esto ya está escrito en la relación, cuando lo escribimos en Método relacional*/
 
-        public DominoPiece ExtractPieceAt(int index)
+        public DominoPiece ExtractPiece(int index)
         {
-
+            if(index < 0 || index >= GetPieceCount())
+            {
+                var p = _pieceList[index];
+                _pieceList.RemoveAt(index);
+                return p;
+            }
+            
         }
+
         public DominoPiece ExtractPiece()
         {
-
+            int random = GetRandom(0, GetPieceCount() - 1);
+            return ExtractPiece(random);
         }
+
         public int GetPieceCount()
         {
-            return pieces.count;
+            return _pieceList.Count;
         }
+
         public void AddPiece(DominoPiece piece) //añade una pieza a la lista DominoPiece
         {
-            for (int i = 1; i < 10; i++)
-            {
-                piece = new DominoPiece(GetRandom(1,6),GetRandom(1,6));
-                pieces?.Add(piece);
-            }
+            if (ContainsPiece(piece) == false)
+                _pieceList.Add(piece);
         }
+
         public DominoPiece? GetPieceAt(int index) //saca los valores de la ficha de la lista DominoPiece, de la posicion index
         {
             DominoPiece piece = pieces[index];
             piece?.GetValue1();
             piece?.GetValue2();
         }
+
         public void Shuffle() //cambia las posiciones de dos fichas de domino de la lista
         {
             
         }
-        public static int GetRandom(int min, int max)
+
+        public bool ContainsPiece(DominoPiece piece)
+        {
+            if(piece == null)
+                return false;
+            for(int i = 0; i < GetPieceCount(); i++)
+            {
+                if(_pieceList[i].IsEquals(piece))
+                    return true;
+            }
+        }
+
+        public int GetPieceIndex(DominoPiece piece)
+        {
+            if (piece == null)
+                return -1;
+            for (int i = 0; i < GetPieceCount(); i++)
+            {
+                if (_pieceList[i].IsEquals(piece))
+                    return 1;
+            }
+        }
+
+
+        private static Random r = new Random();
+        public static double GetRandom()
+        {
+            return r.NextDouble();
+        }
+        public static int GetRandomBetween(int min, int max)
         {
             int dif = max - min + 1;
-            return min + (Random % dif);
+
+            double r = GetRandom();
+            double v = r * (max - min);
+            return v + min;
+            return min + (r.NextDouble() % dif);
         }
+
     }
 }
