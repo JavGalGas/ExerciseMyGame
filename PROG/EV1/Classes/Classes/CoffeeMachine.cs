@@ -29,6 +29,7 @@ namespace Classes
         
         public void ChangeToNextState()
         {
+            /*
             if (state == Estado.Esperando)
                 return state = Estado.Procesando_moneda;
             else if(state == Estado.Procesando_moneda)
@@ -36,7 +37,7 @@ namespace Classes
             else if(state == Estado.Retirando_producto)
                 return state = Estado.Devolviendo_cambio;
             else
-                return state = Estado.Esperando;
+                return state = Estado.Esperando;*/
             
         }
     }

@@ -163,6 +163,8 @@ namespace Classes
 
         public static List<Moneda> GetCoins(int centims) //hacer una lista con las monedas de cada tipo que necesitas en la conversión, repitiendose si necesitas más de una. Ej:429 son [200,200,20,5,2,2,1]
         {
+            return null;
+            /*
             List<Moneda> result = new List<Moneda>();
             while(centims > 0)
             {
@@ -170,7 +172,7 @@ namespace Classes
                 centims -= ToNumber(moneda);
             }
 
-            return result;
+            return result;*/
         }
     }
 }

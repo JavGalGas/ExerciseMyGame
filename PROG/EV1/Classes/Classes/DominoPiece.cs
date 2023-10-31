@@ -2,7 +2,7 @@
 
 namespace Classes
 {
-    class DominoPiece
+    public class DominoPiece
     {
        
         private int _value1;

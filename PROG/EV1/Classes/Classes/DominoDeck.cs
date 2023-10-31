@@ -11,7 +11,7 @@ namespace Classes
     {
         private List<DominoPiece> _pieceList = new List<DominoPiece>();  /*Esto ya está escrito en la relación, cuando lo escribimos en Método relacional*/
 
-        public DominoPiece ExtractPiece(int index)
+        public DominoPiece ExtractPieceAt(int index)
         {
             if(index < 0 || index >= GetPieceCount())
             {
@@ -19,13 +19,13 @@ namespace Classes
                 _pieceList.RemoveAt(index);
                 return p;
             }
-            
+            return null;
         }
 
         public DominoPiece ExtractPiece()
         {
-            int random = GetRandom(0, GetPieceCount() - 1);
-            return ExtractPiece(random);
+            int random = GetRandomBetween(0, GetPieceCount() - 1);
+            return ExtractPieceAt(random);
         }
 
         public int GetPieceCount()
@@ -41,12 +41,21 @@ namespace Classes
 
         public DominoPiece? GetPieceAt(int index) //saca los valores de la ficha de la lista DominoPiece, de la posicion index
         {
-            DominoPiece piece = pieces[index];
+            DominoPiece piece = _pieceList[index];
             piece?.GetValue1();
             piece?.GetValue2();
+            return piece;
         }
 
-        public void Shuffle() //cambia las posiciones de dos fichas de domino de la lista
+        public void Swap(DominoPiece p1, DominoPiece p2) //cambia las posiciones de dos fichas de domino de la lista
+        {
+            DominoPiece aux = p1;
+            p1= p2;
+            p2= aux;
+
+        }
+
+        public void Shuffle() 
         {
             
         }
@@ -60,33 +69,27 @@ namespace Classes
                 if(_pieceList[i].IsEquals(piece))
                     return true;
             }
+            return false;
         }
 
-        public int GetPieceIndex(DominoPiece piece)
+        public int IndexOf(DominoPiece piece)
         {
             if (piece == null)
                 return -1;
-            for (int i = 0; i < GetPieceCount(); i++)
+            for (int i = 0; i < GetPieceCount()-1; i++)
             {
-                if (_pieceList[i].IsEquals(piece))
-                    return 1;
+                if (piece.IsEquals(GetPieceAt(i)))
+                    return i;
             }
+            return -1;
         }
 
 
         private static Random r = new Random();
-        public static double GetRandom()
-        {
-            return r.NextDouble();
-        }
         public static int GetRandomBetween(int min, int max)
         {
             int dif = max - min + 1;
-
-            double r = GetRandom();
-            double v = r * (max - min);
-            return v + min;
-            return min + (r.NextDouble() % dif);
+            return min + (r.Next() % dif);
         }
 
     }

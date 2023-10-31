@@ -5,6 +5,16 @@
         static void Main(string[] args)
         {
             //DominoPiece f = new DominoPiece(1,2);
+            
+            Card carta1=new Card(2,Palo.HEARTS);
+            carta1.IsValid();
+            carta1.GetValue();
+            carta1.GetPalo();
+            carta1.GetColor();
+            carta1.GetFigure();
+            carta1.IsFigure();
+
+
 
 
         }
