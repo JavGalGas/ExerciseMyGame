@@ -39,9 +39,7 @@ namespace Classes
 
         public bool IsValid()
         {
-            if (_number < 0 || _number > 14)
-                return false;
-            return true;
+            return (_number < 0 || _number > 13) ? false : true;
         }
         public Palo GetPalo()
         {
@@ -59,11 +57,11 @@ namespace Classes
         {
             if (!IsValid())
                 return Figure.UNKNOWN;
-            else if (_number == 14)
-                return Figure.KING;
             else if (_number == 13)
-                return Figure.QUEEN;
+                return Figure.KING;
             else if (_number == 12)
+                return Figure.QUEEN;
+            else if (_number == 11)
                 return Figure.JACK;
             else if (_number == 1)
                 return Figure.AS;
@@ -75,13 +73,15 @@ namespace Classes
         {
             if (!IsValid())
                 return false;
-            else if (_number > 1 && _number < 12)
+            else if (_number > 1 && _number < 11)
                 return false;
             return true;
+
+            //return GetFigure() != Figure.NONE;
         }
         public int GetValue()
         {
-            return _number;
+            return IsValid() ? _number : -1;
         }
         /*
         public Card? CreateCard(int v1, Palo v2)

@@ -6,7 +6,7 @@
         {
             //DominoPiece f = new DominoPiece(1,2);
             
-            Card carta1=new Card(2,Palo.HEARTS);
+            Card carta1=new Card(13,Palo.CLOVER);
             carta1.IsValid();
             carta1.GetValue();
             carta1.GetPalo();
