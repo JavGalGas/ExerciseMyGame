@@ -4,7 +4,7 @@
     {
         BLACK,
         WHITE,
-        UNKNOWN,
+
     }
     public enum FigureType
     {
@@ -14,7 +14,7 @@
         ROOK,
         BISHOP,
         QUEEN,
-        UNKWOWN,
+ 
     }
     class ChessFigure
     {
@@ -22,13 +22,17 @@
         private ColorType _color;
         private FigureType _figureType;
 
-        private ChessFigure(ColorType color, FigureType figure)
+        private ChessFigure(int x, int y, ColorType color, FigureType figure)
         {
+            _x = x;
+            _y = y;
             _color = color;
             _figureType = figure;
+            
+            
         }
 
-        public bool IsValid()
+        /*public bool IsValid()
         {
             if(_color == ColorType.BLACK || _color == ColorType.WHITE)
             {
@@ -44,7 +48,7 @@
                 }
             }
             return false;
-        }
+        }*/
         public int GetX()
         {
             return _x;
@@ -55,38 +59,43 @@
         }
         public ColorType GetColor()
         {
-            return (IsValid()) ? _color : ColorType.UNKNOWN;
+        //return (IsValid()) ? _color : ColorType.UNKNOWN;
+            return _color;
         }
-        public FigureType FigureType()
+        public FigureType GetFigureType()
         {
-            return (IsValid()) ? _figureType : Classes.FigureType.UNKWOWN;
+            //return (IsValid()) ? _figureType : Classes.FigureType.UNKWOWN;
+            return _figureType;
         }
         internal void MoveTo(int x, int y)
         {
+            if(x>=0 && x<7)
             _x = x;
             _y = y;
+            ChessUtils.IsMoving();
             return;
         }
         public void Promove(ChessFigure figure, FigureType typePromoved )
         {
-            if(figure.FigureType()!=Classes.FigureType.PAWN)
+            if(figure.GetFigureType()==Classes.FigureType.PAWN && figure.GetY()==10)
             {
+                CreateFigure(figure.GetX(), figure.GetY(), figure.GetColor(), typePromoved);
+                MoveTo(_x, _y);
                 return;
             }
-            CreateFigure(figure.GetColor(), typePromoved);
-            MoveTo(_x, _y);
+            
             return;
         }
         /*public Rectangle GetRectangle()
         {
             
         }*/
-        public static ChessFigure? CreateFigure(ColorType color, FigureType figure)
+        public static ChessFigure? CreateFigure(int x, int y, ColorType color, FigureType figure)
         {
-            if(color != ColorType.WHITE || color!= ColorType.BLACK)
+            /*if(color != ColorType.WHITE || color!= ColorType.BLACK)
             {
                 return null;
-            }
+            }*/
             if (figure != Classes.FigureType.QUEEN)
                 return null;
             if (figure != Classes.FigureType.KNIGHT)
@@ -99,7 +108,7 @@
                 return null;
             if (figure != Classes.FigureType.ROOK)
                 return null;
-            return new ChessFigure(color, figure);
+            return new ChessFigure(x, y, color, figure);
         }
 
 
