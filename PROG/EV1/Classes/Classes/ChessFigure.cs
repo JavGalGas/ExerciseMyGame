@@ -4,7 +4,6 @@
     {
         BLACK,
         WHITE,
-
     }
     public enum FigureType
     {
@@ -14,7 +13,6 @@
         ROOK,
         BISHOP,
         QUEEN,
- 
     }
     class ChessFigure
     {
@@ -59,7 +57,7 @@
         }
         public ColorType GetColor()
         {
-        //return (IsValid()) ? _color : ColorType.UNKNOWN;
+            //return (IsValid()) ? _color : ColorType.UNKNOWN;
             return _color;
         }
         public FigureType GetFigureType()
@@ -69,18 +67,18 @@
         }
         internal void MoveTo(int x, int y)
         {
-            if(x>=0 && x<7)
+            if(ChessUtils.IsOnBoard(x,y))
             _x = x;
             _y = y;
-            ChessUtils.IsMoving();
+            ChessUtils.HasBeenMoved();
             return;
         }
         public void Promove(ChessFigure figure, FigureType typePromoved )
         {
-            if(figure.GetFigureType()==Classes.FigureType.PAWN && figure.GetY()==10)
+            if(figure.GetFigureType()==Classes.FigureType.PAWN && figure.GetY()==8)
             {
                 CreateFigure(figure.GetX(), figure.GetY(), figure.GetColor(), typePromoved);
-                MoveTo(_x, _y);
+                MoveTo(figure._x, figure._y);
                 return;
             }
             

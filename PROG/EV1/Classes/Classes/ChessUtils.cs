@@ -7,10 +7,11 @@
         {
             if(figure.GetFigureType() == FigureType.KNIGHT)
             {
-                if(!IsOnBoard(targetX, targetY))
+                if (!IsOnBoard(targetX, targetY))
+                {
                     return false;
-
-                return false;
+                }
+                return true;
             }
             return false;
         }
@@ -54,21 +55,24 @@
         {
             return _movCount;
         }
-        public bool HasBeenMoved()
+        public static bool HasBeenMoved(int x, int y)
         {
-            return IsMoving() ? true : false;
+            return x!=0 ? true : false;
         }
-        public static bool IsMoving()
-        {
-            //_movCount++;
-            //return GetMovementCount() > 0;
-            return true;
-        }
-        public bool IsOnBoard(int x, int y)
+       
+        public static bool IsOnBoard(int x, int y)
         {
             return ((x>0 && x<=7) && (y>0 && y<=7));
         }
 
+        public void GetFigureAt(int x, int y)
+        {
+            for (int i = 0;i < ChessGame.GetFigureCount();i++) { }
+        }
+        public bool AllowKnightMove(int x, int y)
+        {
+
+        }
         //hacer funciones IsOnBoard, GetFigureAt, AllowKnightMove
     }     
 }
