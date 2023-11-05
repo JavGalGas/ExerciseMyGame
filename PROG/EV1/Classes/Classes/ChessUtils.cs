@@ -2,16 +2,12 @@
 {
     class ChessUtils
     {
-        private int _movCount=0;
+        public int _movCount;
         public static bool CanKnightMoveTo(ChessFigure figure, int targetX, int targetY, List<ChessFigure> figuresOnBoard)
         {
-            if(figure.GetFigureType() == FigureType.KNIGHT)
+            if(figure.GetFigureType() == FigureType.KNIGHT && AllowedKnightMove(figure, targetX, targetY))
             {
-                if (!IsOnBoard(targetX, targetY))
-                {
-                    return false;
-                }
-                return true;
+                return !IsOnBoard(targetX, targetY) ? false : true;
             }
             return false;
         }
@@ -57,7 +53,13 @@
         }
         public static bool HasBeenMoved(int x, int y)
         {
-            return x!=0 ? true : false;
+            if(x < x || y < y)
+            {
+                _movCount++;
+                return true;
+            }
+                
+            return false;
         }
        
         public static bool IsOnBoard(int x, int y)
@@ -69,10 +71,16 @@
         {
             for (int i = 0;i < ChessGame.GetFigureCount();i++) { }
         }
-        public bool AllowKnightMove(int x, int y)
+        public bool AllowedKnightMove(ChessFigure figure, int targetX, int targetY)
         {
+            int x=figure.GetX(), y=figure.GetY();
+            if(targetX==x+2 || targetX==x-2)
+                return (targetY == y++ || targetY == y--) ? true : false;
+            if(targetX==x++  || targetX==x--)
+                return (targetY == y+2 || targetY==y-2) ? true : false;
+            return false;
 
         }
-        //hacer funciones IsOnBoard, GetFigureAt, AllowKnightMove
+        //hacer funciones IsOnBoard, GetFigureAt, AllowedKnightMove
     }     
 }

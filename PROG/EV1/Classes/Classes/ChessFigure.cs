@@ -70,7 +70,7 @@
             if(ChessUtils.IsOnBoard(x,y))
             _x = x;
             _y = y;
-            ChessUtils.HasBeenMoved();
+            ChessUtils.HasBeenMoved(x,y);
             return;
         }
         public void Promove(ChessFigure figure, FigureType typePromoved )
@@ -94,6 +94,8 @@
             {
                 return null;
             }*/
+            if(!ChessUtils.IsOnBoard(x,y))
+                return null;
             if (figure != Classes.FigureType.QUEEN)
                 return null;
             if (figure != Classes.FigureType.KNIGHT)
