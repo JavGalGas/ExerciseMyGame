@@ -2,7 +2,7 @@
 {
     class ChessUtils
     {
-        public int _movCount;
+        public static int _movCount;
         public static bool CanKnightMoveTo(ChessFigure figure, int targetX, int targetY, List<ChessFigure> figuresOnBoard)
         {
             if(figure.GetFigureType() == FigureType.KNIGHT && AllowedKnightMove(figure, targetX, targetY))
@@ -67,11 +67,19 @@
             return ((x>0 && x<=7) && (y>0 && y<=7));
         }
 
-        public void GetFigureAt(int x, int y)
+        public static ChessFigure? GetFigureAt(int x, int y, List<ChessFigure> list)
         {
-            for (int i = 0;i < ChessGame.GetFigureCount();i++) { }
+            for(int i = 0; i < list.Count; i++)
+            {
+                ChessFigure figure = list[i];
+                if(x==figure.GetX() && y==figure.GetY())
+                {
+                    return figure;
+                }
+            }
+            return null;
         }
-        public bool AllowedKnightMove(ChessFigure figure, int targetX, int targetY)
+        public static bool AllowedKnightMove(ChessFigure figure, int targetX, int targetY)
         {
             int x=figure.GetX(), y=figure.GetY();
             if(targetX==x+2 || targetX==x-2)

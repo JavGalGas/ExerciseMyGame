@@ -6,13 +6,13 @@
         {
             //DominoPiece f = new DominoPiece(1,2);
             
-            Card carta1=new Card(13,Palo.CLOVER);
-            carta1.IsValid();
-            carta1.GetValue();
-            carta1.GetPalo();
-            carta1.GetColor();
-            carta1.GetFigure();
-            carta1.IsFigure();
+            //Card carta1=new Card(13,Palo.CLOVER);
+            //carta1.IsValid();
+            //carta1.GetValue();
+            //carta1.GetPalo();
+            //carta1.GetColor();
+            //carta1.GetFigure();
+            //carta1.IsFigure();
 
 
 
