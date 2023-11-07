@@ -25,7 +25,7 @@ namespace EmGame
         public int GetWeaponDamage()
         {
             if (_weaponType == WeaponType.PUNCH)
-                return 5;
+                return 25;
             if (_weaponType == WeaponType.SWORD)
                 return 10;
             if( _weaponType == WeaponType.BOW)
@@ -36,6 +36,23 @@ namespace EmGame
                 return 6;
             return int.MinValue;
         }
+
+
+        public double GetWeaponDistance()
+        {
+            if (_weaponType == WeaponType.PUNCH)
+                return 1.5;
+            if( _weaponType == WeaponType.SWORD)
+                return 3;
+            if (_weaponType == WeaponType.BOW)
+                return 1.5;
+            if (_weaponType == WeaponType.MAZE)
+                return 2;
+            if (_weaponType == WeaponType.ARROW)
+                return 6;
+            return -1;
+        }
+
 
         public static double GetDistance(Warrior w1, Warrior w2)
         {

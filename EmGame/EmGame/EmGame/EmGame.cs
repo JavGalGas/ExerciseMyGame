@@ -2,7 +2,7 @@
 {
     public class EmGame
     {
-        public EmGame()
+        public EmGame(int x, int y )
         {
             EmGame emGame = new EmGame(1000,1000);
             emGame.Start(50,10,80,12);
@@ -15,6 +15,11 @@
         public TeamType GetWinner()
         {
             return TeamType.HUMAN;
+        }
+
+        public void PlayTurn(WarZone warZone)
+        {
+
         }
     }
 }

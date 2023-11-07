@@ -8,8 +8,19 @@ namespace EmGame
 
         public WarZone(int width, int height)
         {
+
             _width=width;
             _height=height;
+        }
+
+        public int GetWidth()
+        {
+            return _width;
+        }
+
+        public int GetHeight()
+        {
+            return _height;
         }
 
         private List<Warrior> _warriors=new List<Warrior>();
@@ -25,13 +36,12 @@ namespace EmGame
                 _warriors.Add(warrior);
             }
         }
-        public List<Warrior> RemoveAt(int index)
-        {
-            List<Warrior> List1= GetWarriorList();
-            List1.RemoveAt(index);
-            return List1;
-
-        }
+        //public List<Warrior> RemoveAt(int index)
+        //{
+        //    List<Warrior> List1= _warriors;
+        //    List1.RemoveAt(index);
+        //    return List1;
+        //}
         public void MoveWarrior(List<Warrior> list, int x, int y)
         {
            return;
@@ -39,10 +49,21 @@ namespace EmGame
 
         public void ExecuteRound(WarZone zone)
         {
+            for(int i=0; i< _warriors.Count; i++)
+            {
+                Warrior warrior= _warriors[i];
+                warrior.ExecuteTurn(zone);
+            }
             return;
         }
+
         public Warrior? GetWarriorAt(int x, int y) //en el WarZone
         {
+            for (int i = 0; i < _warriors.Count; i++)
+            {
+                if (_warriors[i].GetX()==x && _warriors[i].GetY()==y)
+                    return _warriors[i];
+            }
             return null;
         }
 
@@ -50,34 +71,73 @@ namespace EmGame
         {
             return _warriors.Count;
         }
-        public Warrior? GetWarriorAt(int index) // en la lista
+
+        public Warrior? GetWarriorAt2(int index) // en la lista
         {
-            return null;
+            return (index < 0 || index >= _warriors.Count) ? _warriors[index] : null;
         }
 
-        public int GetEnemiesArroundCount(int x, int y, TeamType team)
+        public int GetEnemiesAroundCount(int x, int y, TeamType team) // todos los enemigos en el rango
         {
-            return 0;
+            int enemyCount = 0;
+
+
+
+
+            return enemyCount;
         }
 
-        public int GetPlayersArround(int x, int y)
+        public int GetPlayersAroundCount(int x, int y) //todos los jugadores en el rango
         {
-            return 0;
+            int playerCount = 0;
+
+
+
+
+            return playerCount;
         }
 
         public List<Warrior> GetWarriorsSortedByDistance(int x, int y)
         {
             return new List<Warrior>();
         }
+
         public List<Warrior> GetWarriorsInside(int x, int y, int x2, int y2)
-        //public List<Warrior> GetWarriorsInside(int x, int y, int w, int h)
+        //public List<Warrior> GetWarriorsInside(int x, int y, int width, int height)
         {
-            
-            return new List<Warrior>();
+            int i=x;
+            int j=y;
+            List<Warrior?> list = new List<Warrior?>();
+
+            //while(i<=x2)
+            //{
+            //  ++i;
+            //    while(j<=y2)
+            //    {
+            //        ++j;
+            //        if (GetWarriorAt(i, j)==null)
+            //            break;
+            //        list.Add(GetWarriorAt(i, j));
+            //    }   
+            //}
+
+            while (i<=x2 && j<=y2)
+            {
+                ++i;
+                ++j;
+                if (j == y2)
+                    j = y;
+                if (GetWarriorAt(i, j) == null)
+                    continue;
+                list.Add(GetWarriorAt(i, j));
+            }
+            return list;
         }
+
         //Ver como conseguir que MoveWarrior llame a un solo guerrero
         public void IsBattleFinished()
         {
+            
 
         }
     }
