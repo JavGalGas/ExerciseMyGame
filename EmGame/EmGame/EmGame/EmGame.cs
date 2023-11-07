@@ -9,6 +9,12 @@
             emGame.GetWinner();
         }
         public void Start(int x, int y, int z, int a)
-        public TeamType GetWinner();
+        {
+
+        }
+        public TeamType GetWinner()
+        {
+            return TeamType.HUMAN;
+        }
     }
 }

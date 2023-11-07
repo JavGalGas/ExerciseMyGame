@@ -36,5 +36,16 @@ namespace EmGame
                 return 6;
             return int.MinValue;
         }
+
+        public static double GetDistance(Warrior w1, Warrior w2)
+        {
+            return GetDistance(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY());
+        }
+        public static double GetDistance(int x1, int y1, int x2, int y2)
+        {
+            int dx= x2-x1;
+            int dy = y2 - y1;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
     }
 }
