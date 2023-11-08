@@ -20,6 +20,7 @@ namespace EmGame
         private int _armor;
         private double _lucky;
         private TeamType _team;
+        private int cooldown;
         public Warrior(int x, int y, int life, double accuracity, int armor, double lucky, TeamType teamType)
         {
             _x=x;
@@ -63,6 +64,12 @@ namespace EmGame
 
 
         public void ExecuteTurn(WarZone zone)
+        {
+
+        }
+
+
+        public void Move()
         {
 
         }

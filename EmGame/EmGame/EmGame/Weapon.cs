@@ -17,6 +17,8 @@ namespace EmGame
     public class Weapon
     {
         private WeaponType _weaponType;
+        private int _damage;
+        private int _reloadTime;
 
         public WeaponType? GetWeaponType()
         {
@@ -43,14 +45,14 @@ namespace EmGame
             if (_weaponType == WeaponType.PUNCH)
                 return 1.5;
             if( _weaponType == WeaponType.SWORD)
-                return 3;
+                return 4.3;
             if (_weaponType == WeaponType.BOW)
                 return 1.5;
             if (_weaponType == WeaponType.MAZE)
-                return 2;
+                return 2.9;
             if (_weaponType == WeaponType.ARROW)
-                return 6;
-            return -1;
+                return 8.5;
+            return -1.0;
         }
 
 

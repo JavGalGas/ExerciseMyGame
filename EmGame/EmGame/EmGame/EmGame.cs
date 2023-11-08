@@ -14,6 +14,7 @@
         }
         public TeamType GetWinner()
         {
+
             return TeamType.HUMAN;
         }
 

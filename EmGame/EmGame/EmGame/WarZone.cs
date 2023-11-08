@@ -36,16 +36,16 @@ namespace EmGame
                 _warriors.Add(warrior);
             }
         }
-        //public List<Warrior> RemoveAt(int index)
-        //{
-        //    List<Warrior> List1= _warriors;
-        //    List1.RemoveAt(index);
-        //    return List1;
-        //}
-        public void MoveWarrior(List<Warrior> list, int x, int y)
+        public List<Warrior> RemoveWarriorAt(int index)
         {
-           return;
+            List<Warrior> List1 = _warriors;
+            List1.RemoveAt(index);
+            return List1;
         }
+        //public void MoveWarrior(List<Warrior> list, int x, int y)
+        //{
+        //   return;
+        //}
 
         public void ExecuteRound(WarZone zone)
         {
@@ -79,22 +79,24 @@ namespace EmGame
 
         public int GetEnemiesAroundCount(int x, int y, TeamType team) // todos los enemigos en el rango
         {
-            int enemyCount = 0;
+            int x0 = x - 1, y0 = y - 1, x1 = x + 1, y1 = y + 1;
+            List<Warrior> enemyCount = new List<Warrior>();
+            List<Warrior> list = GetWarriorsInside(x0, y0, x1, y1);
 
+            for(int i=0; i< list.Count; i++)
 
-
-
-            return enemyCount;
+            {
+                if (list[i].GetTeam()!=team)
+                    enemyCount.Add(list[i]);
+            }
+            
+            return enemyCount.Count;
         }
 
         public int GetPlayersAroundCount(int x, int y) //todos los jugadores en el rango
         {
-            int playerCount = 0;
-
-
-
-
-            return playerCount;
+            int x0 = x - 1, y0 = y - 1, x1 = x + 1, y1 = y + 1;
+            return GetWarriorsInside(x0, y0, x1, y1).Count();
         }
 
         public List<Warrior> GetWarriorsSortedByDistance(int x, int y)
@@ -135,9 +137,9 @@ namespace EmGame
         }
 
         //Ver como conseguir que MoveWarrior llame a un solo guerrero
-        public void IsBattleFinished()
+        public bool IsBattleFinished(WarZone warZone)
         {
-            
+            return ExecuteRound(warZone) ? true: false;
 
         }
     }
