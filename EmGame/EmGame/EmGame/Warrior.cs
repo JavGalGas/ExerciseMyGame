@@ -20,7 +20,7 @@ namespace EmGame
         private int _armor;
         private double _lucky;
         private TeamType _team;
-        private int cooldown;
+        private int _cooldown;
         public Warrior(int x, int y, int life, double accuracity, int armor, double lucky, TeamType teamType)
         {
             _x=x;
@@ -61,6 +61,10 @@ namespace EmGame
         {
             return _team;
         }
+        public int GetCooldown()
+        {
+            return _cooldown;
+        }
 
 
         public void ExecuteTurn(WarZone zone)
@@ -71,9 +75,29 @@ namespace EmGame
 
         public void Move()
         {
+            if(_cooldown==0)
+            {
 
+            }
         }
 
+        public void SetX(int x)
+        {
+            _x = x;
+        }
+        public void SetY(int y)
+        {
+            _y = y;
+        }
+        public void SetCooldown(int cooldown)
+        {
+            _cooldown = cooldown;
+        }
+
+        public void SetAccuracity(double accuracity)
+        {
+            if()
+        }
         
     }
    

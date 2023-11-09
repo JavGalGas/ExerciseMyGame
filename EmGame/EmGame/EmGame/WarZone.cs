@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 namespace EmGame
 {
@@ -80,17 +81,16 @@ namespace EmGame
         public int GetEnemiesAroundCount(int x, int y, TeamType team) // todos los enemigos en el rango
         {
             int x0 = x - 1, y0 = y - 1, x1 = x + 1, y1 = y + 1;
-            List<Warrior> enemyCount = new List<Warrior>();
+            int enemyCount=0;
             List<Warrior> list = GetWarriorsInside(x0, y0, x1, y1);
 
             for(int i=0; i< list.Count; i++)
-
             {
                 if (list[i].GetTeam()!=team)
-                    enemyCount.Add(list[i]);
+                    enemyCount++;
             }
             
-            return enemyCount.Count;
+            return enemyCount;
         }
 
         public int GetPlayersAroundCount(int x, int y) //todos los jugadores en el rango
@@ -99,9 +99,43 @@ namespace EmGame
             return GetWarriorsInside(x0, y0, x1, y1).Count();
         }
 
-        public List<Warrior> GetWarriorsSortedByDistance(int x, int y)
+        public List<Warrior> GetWarriorsSortedByDistance(int x, int y)//arreglar
         {
-            return new List<Warrior>();
+            double aux = Weapon.GetDistance(x, y, warrior.GetX(), warrior.GetY());
+
+            List<Warrior> list = GetWarriorsInside(0, 0, GetWidth(), GetHeight());
+            int n = list.Count - 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < list.Count; j++)
+                {
+                    if (list[i] > list[j])
+                    {
+                        int aux;
+                        aux = list[i];
+                        list[i] = list[j];
+                        list[j] = aux;
+                    }
+                }
+            }
+            return (list);
+
+
+
+
+            for (int i=0; i<list.Count; i++)
+            {
+               for(int j=1;j<list.Count; j++)
+                {
+
+                }
+                
+                if(aux<)
+                {
+
+                }
+
+            }
         }
 
         public List<Warrior> GetWarriorsInside(int x, int y, int x2, int y2)

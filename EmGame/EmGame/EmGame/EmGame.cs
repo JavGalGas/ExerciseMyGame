@@ -14,8 +14,8 @@
         }
         public TeamType GetWinner()
         {
-
-            return TeamType.HUMAN;
+            
+           
         }
 
         public void PlayTurn(WarZone warZone)

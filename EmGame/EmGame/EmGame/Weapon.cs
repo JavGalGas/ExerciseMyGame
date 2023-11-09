@@ -19,6 +19,8 @@ namespace EmGame
         private WeaponType _weaponType;
         private int _damage;
         private int _reloadTime;
+        private int _arrowAmmo;
+        private double _distance;
 
         public WeaponType? GetWeaponType()
         {
@@ -26,24 +28,54 @@ namespace EmGame
         }
         public int GetWeaponDamage()
         {
-            if (_weaponType == WeaponType.PUNCH)
-                return 25;
-            if (_weaponType == WeaponType.SWORD)
-                return 10;
-            if( _weaponType == WeaponType.BOW)
-                return 3;
-            if(_weaponType == WeaponType.MAZE)
-                return 15;
-            if(_weaponType == WeaponType.ARROW)
-                return 6;
-            return int.MinValue;
+            return _damage;
         }
-
-
-        public double GetWeaponDistance()
+        public int GetWeaponReload()
+        {
+            return _reloadTime;
+        }
+        public void SetWeapon() //aquí <--
         {
             if (_weaponType == WeaponType.PUNCH)
-                return 1.5;
+            {
+                _damage = 25;
+                _reloadTime = 1;
+                _distance= 1.5;
+            }
+            if (_weaponType == WeaponType.SWORD)
+            {
+                _damage = 15;
+                _reloadTime = 2;
+            }
+            if (_weaponType == WeaponType.BOW)
+            {
+                _damage = 5;
+                _reloadTime = 1;
+            }
+            if (_weaponType == WeaponType.MAZE)
+            {
+                _damage = 20;
+                _reloadTime = 2;
+            }
+            if (_weaponType == WeaponType.ARROW)
+            {
+                _damage = 10;
+                _reloadTime = 1;
+                _arrowAmmo = 10;
+            }
+        }
+
+        public void ChangeWeapon()
+        {
+            if (_arrowAmmo == 0)
+                _weaponType = WeaponType.BOW;
+            _arrowAmmo -= 1;
+        }
+
+        public double GetWeaponDistance() //modificar -->
+        {
+            if (_weaponType == WeaponType.PUNCH)
+                
             if( _weaponType == WeaponType.SWORD)
                 return 4.3;
             if (_weaponType == WeaponType.BOW)
