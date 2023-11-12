@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Runtime.Intrinsics.X86;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 namespace EmGame
@@ -101,41 +102,28 @@ namespace EmGame
 
         public List<Warrior> GetWarriorsSortedByDistance(int x, int y)//arreglar
         {
-            double aux = Weapon.GetDistance(x, y, warrior.GetX(), warrior.GetY());
-
             List<Warrior> list = GetWarriorsInside(0, 0, GetWidth(), GetHeight());
             int n = list.Count - 1;
             for (int i = 0; i < n; i++)
             {
                 for (int j = i + 1; j < list.Count; j++)
                 {
-                    if (list[i] > list[j])
+                    double aux = Weapon.GetDistance(x, y, list[j].GetX(), list[j].GetY());
+                    if (aux < Weapon.GetWeaponDistance())
                     {
-                        int aux;
-                        aux = list[i];
-                        list[i] = list[j];
-                        list[j] = aux;
+                        Swap(i, j, list); 
                     }
                 }
             }
             return (list);
-
-
-
-
-            for (int i=0; i<list.Count; i++)
-            {
-               for(int j=1;j<list.Count; j++)
-                {
-
-                }
-                
-                if(aux<)
-                {
-
-                }
-
-            }
+        }
+        public void Swap(int i, int j, List<Warrior> list)
+        {
+            Warrior aux2 = new Warrior(0, 0, 0, 0, 0, 0, 0);
+            List<Warrior> warriors = list;
+            aux2 = list[i];
+            list[i] = list[j];
+            list[j] = aux2;
         }
 
         public List<Warrior> GetWarriorsInside(int x, int y, int x2, int y2)

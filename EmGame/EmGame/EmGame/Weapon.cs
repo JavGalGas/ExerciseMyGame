@@ -34,7 +34,11 @@ namespace EmGame
         {
             return _reloadTime;
         }
-        public void SetWeapon() //aquí <--
+        public double GetWeaponDistance()
+        {
+            return _distance;
+        }
+        public void SetWeapon() 
         {
             if (_weaponType == WeaponType.PUNCH)
             {
@@ -46,45 +50,34 @@ namespace EmGame
             {
                 _damage = 15;
                 _reloadTime = 2;
+                _distance = 4.3;
             }
             if (_weaponType == WeaponType.BOW)
             {
                 _damage = 5;
                 _reloadTime = 1;
+                _distance = 1.5;
             }
             if (_weaponType == WeaponType.MAZE)
             {
                 _damage = 20;
                 _reloadTime = 2;
+                _distance = 2.9;
             }
             if (_weaponType == WeaponType.ARROW)
             {
                 _damage = 10;
                 _reloadTime = 1;
                 _arrowAmmo = 10;
+                _distance = 8.5;
             }
         }
 
-        public void ChangeWeapon()
+        public void ArrowToBow()
         {
             if (_arrowAmmo == 0)
                 _weaponType = WeaponType.BOW;
             _arrowAmmo -= 1;
-        }
-
-        public double GetWeaponDistance() //modificar -->
-        {
-            if (_weaponType == WeaponType.PUNCH)
-                
-            if( _weaponType == WeaponType.SWORD)
-                return 4.3;
-            if (_weaponType == WeaponType.BOW)
-                return 1.5;
-            if (_weaponType == WeaponType.MAZE)
-                return 2.9;
-            if (_weaponType == WeaponType.ARROW)
-                return 8.5;
-            return -1.0;
         }
 
 
