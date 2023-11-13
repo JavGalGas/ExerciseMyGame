@@ -20,7 +20,7 @@ namespace EmGame
         private int _damage;
         private int _reloadTime;
         private int _arrowAmmo;
-        private double _distance;
+        private static double _distance;
 
         public WeaponType? GetWeaponType()
         {
@@ -34,7 +34,7 @@ namespace EmGame
         {
             return _reloadTime;
         }
-        public double GetWeaponDistance()
+        public static double GetWeaponDistance()
         {
             return _distance;
         }

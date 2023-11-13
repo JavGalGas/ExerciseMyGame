@@ -15,7 +15,8 @@ namespace EmGame
     public class Warrior
     {
         private int _x, _y;
-        private int _life;
+        private double _life;
+        private double _lifeCapacity;
         private double _accuracity;
         private int _armor;
         private double _lucky;
@@ -41,9 +42,13 @@ namespace EmGame
         {
             return _y;
         }
-        public int GetLife()
+        public double GetLife()
         {
             return _life;
+        }
+        public double GetLifeCapacity()
+        {
+            return _lifeCapacity;
         }
         public double GetAccuracity()
         {
@@ -66,19 +71,31 @@ namespace EmGame
             return _cooldown;
         }
 
-
         public void ExecuteTurn(WarZone zone)
         {
+            double min, max = 10.0;
+
+            if (zone == null)
+                return;
+
+            if (GetLife() < GetLifeCapacity()/2)
+            {
+                min = 4.0;
+                double value=EmGame.GetRandomBetween(min, max)
+            }
+            else if (GetLife() > GetLifeCapacity() / 2)
+            {
+                min = 1.0;
+                double value = EmGame.GetRandomBetween(min, max)
+            }
 
         }
 
 
-        public void Move()
+        public void Move(int x, int y)
         {
-            if(_cooldown==0)
-            {
-
-            }
+            SetX(x);
+            SetY(y);
         }
 
         public void SetX(int x)
@@ -96,7 +113,24 @@ namespace EmGame
 
         public void SetAccuracity(double accuracity)
         {
-            if()
+            _accuracity = accuracity;
+        }
+        public void SetLife(int life)
+        {
+            _life = life;
+        }
+        public void SetLifeCapacity(double maxLife)
+        {
+            
+            if(maxLife<GetLife())
+            {
+                maxLife = GetLife();
+                _lifeCapacity = maxLife;
+            }
+            else
+            {
+                _lifeCapacity = maxLife;
+            }
         }
         
     }

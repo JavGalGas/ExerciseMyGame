@@ -87,7 +87,7 @@ namespace EmGame
 
             for(int i=0; i< list.Count; i++)
             {
-                if (list[i].GetTeam()!=team)
+                if (list[i].GetTeam()!=team && list[i].GetX()!=x && list[i].GetY() != y)
                     enemyCount++;
             }
             
@@ -100,7 +100,7 @@ namespace EmGame
             return GetWarriorsInside(x0, y0, x1, y1).Count();
         }
 
-        public List<Warrior> GetWarriorsSortedByDistance(int x, int y)//arreglar
+        public List<Warrior> GetWarriorsSortedByDistance(int x, int y)
         {
             List<Warrior> list = GetWarriorsInside(0, 0, GetWidth(), GetHeight());
             int n = list.Count - 1;
@@ -133,18 +133,6 @@ namespace EmGame
             int j=y;
             List<Warrior?> list = new List<Warrior?>();
 
-            //while(i<=x2)
-            //{
-            //  ++i;
-            //    while(j<=y2)
-            //    {
-            //        ++j;
-            //        if (GetWarriorAt(i, j)==null)
-            //            break;
-            //        list.Add(GetWarriorAt(i, j));
-            //    }   
-            //}
-
             while (i<=x2 && j<=y2)
             {
                 ++i;
@@ -156,6 +144,18 @@ namespace EmGame
                 list.Add(GetWarriorAt(i, j));
             }
             return list;
+
+            //while(i<=x2)
+            //{
+            //  ++i;
+            //    while(j<=y2)
+            //    {
+            //        ++j;
+            //        if (GetWarriorAt(i, j)==null)
+            //            break;
+            //        list.Add(GetWarriorAt(i, j));
+            //    }   
+            //}
         }
 
         //Ver como conseguir que MoveWarrior llame a un solo guerrero
