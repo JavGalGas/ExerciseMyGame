@@ -13,9 +13,9 @@
             //carta1.GetColor();
             //carta1.GetFigure();
             //carta1.IsFigure();
-            DateTime time = new DateTime(0, 0, 0, 1, 3, 1857);
+            DateTime time = new DateTime(0, 0, 0, 13, 5, 2042);
             time.GetDayOfWeek();
-
+            time.ToString();
 
 
 

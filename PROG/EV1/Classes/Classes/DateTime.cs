@@ -36,21 +36,14 @@ namespace Classes
             _month = month;
             _year = year;
         }
-        //public DateTime Clone()
-        //{
-        //    DateTime date = new DateTime();
-        //    date._year = _year;
-        //    date._month = _month;
-        //    date._day = _day;
-        //    date._hour = _hour;
-        //    date._minute = _minute;
-        //    date._second = _second;
-        //    return date;
-        //}
-        //public bool Equals(DateTime date)
-        //{
-        //    return (_day==date._day && _month==date._month && _year==date._year && _hour == date._hour && _minute == date._minute && _second == date._second) ? true : false;
-        //}
+        public DateTime Clone()
+        {
+            return new DateTime(_hour, _minute, _second, _day, _month, _year);
+        }
+        public bool Equals(DateTime other)
+        {
+            return (_day == other._day && _month == other._month && _year == other._year && _hour == other._hour && _minute == other._minute && _second == other._second);
+        }
         public bool IsValid()
         {
             if (_year < 0 || _month < 0 || _month > 12 || _day < 0 || _hour < 0 || _minute < 0 || _second < 0)
@@ -80,10 +73,7 @@ namespace Classes
                 case 10:
                 case 12:
                     if (_day > 30) { return false; }
-                    break;
-                default:
-                    break;
-                    
+                    break;     
             }
             if (_hour < 24 && _minute < 60 && _second < 60) 
             { 
@@ -93,22 +83,49 @@ namespace Classes
         }
         public bool IsLeap()
         {
-            return true;
+            return IsLeap(_year);
         }
-        public static void IsLeap(int year)
+        public static bool IsLeap(int year)
         {
-
+            return (year % 4 == 0 && year % 100 != 0) || (year % 4 == 0 && year % 100 == 0 && year % 400 == 0);
         }
         //Getters();
+        public int GetYear()
+        {
+            return _year;
+        }
+        public int GetMonth()
+        {
+            return _month;
+        }
+        public int GetDay()
+        {
+            return _day;
+        }
+        public int GetHour()
+        {
+            return _hour;
+        }
+        public int GetMinute()
+        {
+            return _minute;
+        }
+        public int GetSecond()
+        {
+            return _second;
+        }
 
         public string ToString() // escribir la fecha --> (ejemplo): 13/11/2023
         {
-            string hola = "hola";
-            return hola;
+            return _day + "/" + _month + "/" + _year;
         }
         public int GetDaysCount(int year, int month)
         {
-            return _day + 1;
+            if (month == 3 || month == 5 || month == 7 || month == 9 || month == 11)
+                return 30;
+            if(month == 2)
+                return IsLeap(year) ? 29 : 28;
+            return 31;
         }
         public void IncrementDay()
         {
@@ -126,21 +143,54 @@ namespace Classes
                 _year++;
             }
         }
-        //public void IncrementSeconds()
-        //{
-        //    if (IsValid())
-        //        _second++;
-        //    if (!IsValid())
-        //    {
-        //        if (_minute <= 60)
-        //        {
-        //            _second = 0;
-        //            _minute++;
-        //        }
-        //        else if ()
-                
-        //    }
-        //}
+        public void IncrementSeconds()
+        {
+            if (IsValid())
+                _second++;
+            if (!IsValid())
+            {
+                _second = 0;
+                _minute++;
+                if (_minute >= 60)
+                {
+                    _minute = 0;
+                    _hour++;
+                }
+                else if (_hour >= 24)
+                {
+                    _hour = 0;
+                    IncrementDay();
+                }
+            }
+        }
+        public void Correct()
+        {
+            if(_second>=60)
+            {
+                _second = _second % 60;
+                _minute += _second/60;
+            }
+            if(_minute>=60)
+            {
+                _minute = _minute % 60;
+                _hour += _minute/60;
+            }
+            if(_hour>=24)
+            {
+                _hour=_hour % 24;
+                _day += _hour/24;
+            }
+            while(_day>GetDaysCount(_year, _month))
+            {
+                _day = _day - GetDaysCount(_year, _month);
+                _month++;
+            }
+            if(_month>=12)
+            {
+                _month = _month % 12;
+                _year += _month/12;
+            }
+        }
         public int monthCode()
         {
             switch(_month)
@@ -165,16 +215,28 @@ namespace Classes
             }
             return 1;
         }
+        public int GetLeapCountBetween(int value1, int value2)
+        {
+            int count = 0;
+            for(int i = value1; i <= value2; i++)
+            {
+                if(IsLeap(i))
+                    count++;
+            }
+            return count;
+        }
         public int yearCode() // revisar
         {
             int i = _year;
             int leap = i / 400;
             int notLeap = (i / 100) - leap;
-            int aux = i - (leap * 100) - (notLeap * 100);
-            int aux2 = aux/12 + ((aux%12));
-            int aux3 = aux2 % 4;
-            int yearCode = (aux2 + aux3)%7;
-            int code = leap + (notLeap * 2) + yearCode;
+            int aux = i - (leap + notLeap) * 100;
+            int aux2 = aux / 12;
+            int aux3 = aux % 12;
+            int aux4 = aux3 + GetLeapCountBetween(_year - aux3, _year);
+            int yearCode = aux4 + aux2;
+            int century =34 - leap - (notLeap * 2);
+            int code = yearCode%7 + century;
             return code;
         }
         public int weekCode()
@@ -186,7 +248,7 @@ namespace Classes
         }
         public DayOfWeek GetDayOfWeek()
         {
-            switch(weekCode()%7)
+            switch(weekCode()%7 - 1)
             {
                 case 0: return DayOfWeek.Monday;
                 case 1: return DayOfWeek.Tuesday;
