@@ -13,9 +13,26 @@
             //carta1.GetColor();
             //carta1.GetFigure();
             //carta1.IsFigure();
-            DateTime time = new DateTime(0, 0, 0, 13, 5, 2042);
+            DateTime time = new DateTime(200, 65, 80, 16, 11, 2023);
+            if(time.IsValid())
+            {
+                DateTime time2 = time.Clone();
+                time.Equals(time2);
+            }
+            else
+            {
+                time.Correct();
+            }
+            time.IsLeap();
             time.GetDayOfWeek();
-            time.ToString();
+            Console.WriteLine(time.DateToString());
+            time.IncrementSeconds();
+            time.IncrementDay();
+
+
+
+
+
 
 
 

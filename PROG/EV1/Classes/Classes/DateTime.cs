@@ -89,7 +89,7 @@ namespace Classes
         {
             return (year % 4 == 0 && year % 100 != 0) || (year % 4 == 0 && year % 100 == 0 && year % 400 == 0);
         }
-        //Getters();
+        
         public int GetYear()
         {
             return _year;
@@ -115,11 +115,11 @@ namespace Classes
             return _second;
         }
 
-        public string ToString() // escribir la fecha --> (ejemplo): 13/11/2023
+        public string DateToString() // escribir la fecha --> (ejemplo): 13/11/2023
         {
-            return _day + "/" + _month + "/" + _year;
+            return _day + "/" + _month + "/" + _year + "| |" + _hour + ":" + _minute + ":" + _second;
         }
-        public int GetDaysCount(int year, int month)
+        public static int GetDaysCount(int year, int month)
         {
             if (month == 3 || month == 5 || month == 7 || month == 9 || month == 11)
                 return 30;
@@ -127,10 +127,13 @@ namespace Classes
                 return IsLeap(year) ? 29 : 28;
             return 31;
         }
+        public int GetDayOfMonth()
+        {
+            return GetDaysCount(GetYear(), GetMonth());
+        }
         public void IncrementDay()
         {
-            if(IsValid())
-                _day++;
+            _day++;
             if(!IsValid())
             {
                 if(_month<=12)
@@ -165,35 +168,35 @@ namespace Classes
         }
         public void Correct()
         {
-            if(_second>=60)
+            while(_second>=60)
             {
-                _second = _second % 60;
-                _minute += _second/60;
+                _second = _second - 60;
+                _minute++;
             }
-            if(_minute>=60)
+            while(_minute>=60)
             {
-                _minute = _minute % 60;
-                _hour += _minute/60;
+                _minute = _minute - 60;
+                _hour++;
             }
-            if(_hour>=24)
+            while(_hour>=24)
             {
-                _hour=_hour % 24;
-                _day += _hour/24;
+                _hour=_hour - 24;
+                _day++;
             }
             while(_day>GetDaysCount(_year, _month))
             {
                 _day = _day - GetDaysCount(_year, _month);
                 _month++;
             }
-            if(_month>=12)
+            while(_month>12)
             {
-                _month = _month % 12;
-                _year += _month/12;
+                _month = _month - 12;
+                _year++;
             }
         }
         public int monthCode()
         {
-            switch(_month)
+            switch(GetMonth())
             {
                 case 1:
                 case 10:
@@ -225,15 +228,15 @@ namespace Classes
             }
             return count;
         }
-        public int yearCode() // revisar
+        public int yearCode()
         {
-            int i = _year;
+            int i = GetYear();
             int leap = i / 400;
             int notLeap = (i / 100) - leap;
             int aux = i - (leap + notLeap) * 100;
             int aux2 = aux / 12;
             int aux3 = aux % 12;
-            int aux4 = aux3 + GetLeapCountBetween(_year - aux3, _year);
+            int aux4 = aux3 + GetLeapCountBetween(GetYear() - aux3, GetYear());
             int yearCode = aux4 + aux2;
             int century =34 - leap - (notLeap * 2);
             int code = yearCode%7 + century;
@@ -241,23 +244,23 @@ namespace Classes
         }
         public int weekCode()
         {
-            int code = (_day % 7) + monthCode() + yearCode();
-            if (IsLeap() && (_month==1 || _month==2))
+            int code = (GetDay() % 7) + monthCode() + yearCode();
+            if (IsLeap() && (GetMonth()==1 || GetMonth()==2))
                 code--;
             return code;
         }
         public DayOfWeek GetDayOfWeek()
         {
-            switch(weekCode()%7 - 1)
+            switch(weekCode()%7)
             {
-                case 0: return DayOfWeek.Monday;
-                case 1: return DayOfWeek.Tuesday;
-                case 2: return DayOfWeek.Wednesday;
-                case 3: return DayOfWeek.Thursday;
-                case 4: return DayOfWeek.Friday;
-                case 5: return DayOfWeek.Saturday;
+                case 0: return DayOfWeek.Sunday;
+                case 1: return DayOfWeek.Monday;
+                case 2: return DayOfWeek.Tuesday;
+                case 3: return DayOfWeek.Wednesday;
+                case 4: return DayOfWeek.Thursday;
+                case 5: return DayOfWeek.Friday;
             }
-            return DayOfWeek.Sunday;
+            return DayOfWeek.Saturday;
         }
     }
 }
