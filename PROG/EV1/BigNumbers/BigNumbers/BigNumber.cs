@@ -80,15 +80,14 @@
             {
                 n2._list.Add(0);
             }
-            for (int i = 0; i<n1.GetDigitCount(); i++)
+            for (int i = 0; i< n1.GetDigitCount(); i++)
             {
-                int sub = n1.GetDigitAt(i)  - n2.GetDigitAt(i) - aux;
-                aux = sub / 10;
-                sub += 10;
+                int sub = n1.GetDigitAt(i)  - n2.GetDigitAt(i) + aux;
+                aux = 
+                sub = 
                 list.Add(sub);
             }
-            if (aux != 0)
-                list.Add(aux);
+
             result._list = list;
             return result;
         }
