@@ -4,10 +4,10 @@
     {
         static void Main(string[] args)
         {
-            BigNumber n1 = new BigNumber("89");
-            BigNumber n2 = new BigNumber("111");
-            BigNumber n3 = BigNumber.Substract(n1, n2);
-            string result = n3.ConvertToString();
+            BigNumber n1 = new BigNumber(-7-1);
+            //BigNumber n2 = new BigNumber("");
+            //BigNumber n3 = BigNumber.Add(n1, n2);
+            string result = n1.ConvertToString();
             Console.WriteLine(result);
         }
     }

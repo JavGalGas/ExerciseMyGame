@@ -1,34 +1,62 @@
-﻿namespace BigNumbers
+﻿using System.Runtime.CompilerServices;
+
+namespace BigNumbers
 {
     public class BigNumber
     {
         private List<int> _list= new List<int>();
 
+        public BigNumber()
+        {
+
+        }
+
         public BigNumber(long value)
         {
-            Set(value);
+                Set(value);
         }
         public BigNumber (string value)
         {
-            Set (value);
+            if(StringIsValid(value))
+                Set (value);
         }
 
         public void Set(long value)
         {
-            while (value / 10 != 0)
+            while (Math.Abs(value) / 10 > 0)
             {
-                _list.Add((int)(value % 10));
+                _list.Add((int)(Math.Abs(value) % 10));
+                value /= 10;
             }
-            _list.Add ((int)(value));
+            _list.Add((int) value);
+            
         }
         public void Set(string value)
         {
             for (int i = value.Length-1; i >= 0; i--)
             {
                 char c = value[i];
-                int n = c - '0';
-                _list.Add(n);
+                if (c == '-' && i==0)
+                {
+                    _list[_list.Count - 1] *=-1 ;
+                }
+               else
+               {
+                    int n = c - '0';
+                    _list.Add(n);
+               }
             }
+        }
+        public bool StringIsValid(string value)
+        {
+            for (int i = 1; i < value.Count(); i++)
+            {
+                char c = value[i];
+                int n = c - '0';
+                if (n < 0 || n > 9)
+                    return false;
+            }
+            return true;
         }
         public string ConvertToString()
         {
@@ -83,8 +111,8 @@
             for (int i = 0; i< n1.GetDigitCount(); i++)
             {
                 int sub = n1.GetDigitAt(i)  - n2.GetDigitAt(i) + aux;
-                aux = 
-                sub = 
+                aux = 0;
+                sub = 0;
                 list.Add(sub);
             }
 
@@ -138,9 +166,14 @@
         {
             return _list[index];
         }
-        public void Clone()
-        {
-
-        }
+        //public BigNumber Clone()
+        //{
+        //    return this.Clone();
+        //}
+        //public static BigNumber Clone()
+        //{
+        //    BigNumber number = new BigNumber();
+        //    for(int i=0; i<_list.Count)
+        //}
     }
 }
