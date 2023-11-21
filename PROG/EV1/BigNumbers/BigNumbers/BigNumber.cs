@@ -19,6 +19,7 @@ namespace BigNumbers
         {
             if(StringIsValid(value))
                 Set (value);
+            Correct();
         }
 
         public void Set(long value)
@@ -46,6 +47,7 @@ namespace BigNumbers
                     _list.Add(n);
                }
             }
+
         }
         public bool StringIsValid(string value)
         {
@@ -68,11 +70,20 @@ namespace BigNumbers
             return result;
         }
 
+        public void Correct()
+        {
+            int i = _list.Count-1 ;
+            while (GetDigitAt(i)==0)
+            {
+                _list.RemoveAt(i--);
+            }
+                
+        }
+
         public static BigNumber Add(BigNumber n1, BigNumber n2) //sumar dos números, si pasa del 9 suma al siguiente dígito
         {
-            BigNumber result = new BigNumber(0);
+            BigNumber result = new BigNumber();
             int aux = 0;
-            List<int> list = new List<int>();
 
             for(int i = n1.GetDigitCount(); i < n2.GetDigitCount(); i++)
             {
@@ -87,11 +98,10 @@ namespace BigNumbers
                 int sum = n1.GetDigitAt(i) + n2.GetDigitAt(i) + aux;
                 aux = sum/10;
                 sum %= 10;
-                list.Add(sum);
+                result._list.Add(sum);
             }
             if (aux != 0)
-                list.Add(aux);
-            result._list = list;
+                result._list.Add(aux);
             return result;
         }
         public static BigNumber Substract(BigNumber n1, BigNumber n2) // restar 2 numeros
@@ -121,32 +131,36 @@ namespace BigNumbers
         }
         public static BigNumber Multiply(BigNumber n1, BigNumber n2) // multiplicar 2 números
         { //modificar (incluye doble for y creación de varios BigNumber, además de añadir ceros en la última posición de la lista y utilizar la función Add)
-            BigNumber result = new BigNumber(0);
+            BigNumber list1 = new BigNumber();
+            BigNumber list2 = new BigNumber();
             int aux = 0;
-            List<int> list = new List<int>();
-
-            for (int i = n1.GetDigitCount(); i < n2.GetDigitCount(); i++)
+            int count = 0;
+            for (int i = n2.GetDigitCount()-1; i >=0; i--)
             {
-                n1._list.Add(0);
-            }
-            for (int i = n2.GetDigitCount(); i < n1.GetDigitCount(); i++)
-            {
-                n2._list.Add(0);
-            }
-            for (int i = 0; i < n1.GetDigitCount(); i++)
-            {
-                int sum = n1.GetDigitAt(i) + n2.GetDigitAt(i) + aux;
-                if (sum > 9)
+                list1._list.Clear();
+                for(int j = n1.GetDigitCount()-1; j >= 0; j--)
                 {
-                    aux = sum / 10;
-                    sum %= 10;
+                    int mul = n1.GetDigitAt(j) * n2.GetDigitAt(i) + aux;
+                    if (mul > 9)
+                    {
+                        aux = mul / 10;
+                        mul%= 10;
+                    }
+                    list1._list.Add(mul);
+
                 }
-                list.Add(sum);
+                for (int k=count; k>0; k--)
+                {
+                    list1._list.Add(0);
+                }
+                list1._list.Reverse();
+                list2 = Add(list2, list1);
+                count++;
+                
             }
             if (aux != 0)
-                list.Add(aux);
-            result._list = list;
-            return result;
+                list2._list.Add(aux);
+            return list2;
         }
         //public static BigNumber Divide(BigNumber n1, BigNumber n2) // dividir 2 numeros <-- Module
         //{
