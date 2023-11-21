@@ -180,14 +180,17 @@ namespace BigNumbers
         {
             return _list[index];
         }
-        //public BigNumber Clone()
-        //{
-        //    return this.Clone();
-        //}
-        //public static BigNumber Clone()
-        //{
-        //    BigNumber number = new BigNumber();
-        //    for(int i=0; i<_list.Count)
-        //}
+        public BigNumber Clone()
+        {
+            return this.Clone();
+        }
+        public static BigNumber Clone(BigNumber number)
+        {
+            BigNumber clone = new BigNumber();
+
+            for(int i =0; i< number._list.Count; i++)
+                clone._list.Add(number._list[i]);
+            return clone;
+        }
     }
 }
