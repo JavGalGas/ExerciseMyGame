@@ -106,9 +106,8 @@ namespace BigNumbers
         }
         public static BigNumber Substract(BigNumber n1, BigNumber n2) // restar 2 numeros
         { //modificar
-            BigNumber result = new BigNumber(0);
+            BigNumber result = new BigNumber();
             int aux = 0;
-            List<int> list = new List<int>();
 
             for (int i = n1.GetDigitCount(); i < n2.GetDigitCount(); i++)
             {
@@ -118,15 +117,17 @@ namespace BigNumbers
             {
                 n2._list.Add(0);
             }
-            for (int i = 0; i< n1.GetDigitCount(); i++)
+            for (int i = 0; i < n2.GetDigitCount(); i++)
+                n2._list[i] *= -1;
+            for (int i = 0; i < n1.GetDigitCount(); i++)
             {
-                int sub = n1.GetDigitAt(i)  - n2.GetDigitAt(i) + aux;
-                aux = 0;
-                sub = 0;
-                list.Add(sub);
+                int sum = n1.GetDigitAt(i) + n2.GetDigitAt(i) + aux;
+                aux = sum / 10;
+                sum %= 10;
+                result._list.Add(sum);
             }
-
-            result._list = list;
+            if (aux != 0)
+                result._list.Add(aux);
             return result;
         }
         public static BigNumber Multiply(BigNumber n1, BigNumber n2) // multiplicar 2 números
