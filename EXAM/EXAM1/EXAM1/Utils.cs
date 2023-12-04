@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EXAM1
 {
-    class Utils
+    public class Utils
     {
         public static Random r = new Random();
 
@@ -36,7 +36,9 @@ namespace EXAM1
         public static void Swap(Runner a, Runner b) 
         { 
             Runner aux = new Runner();
-            a.
+            aux = a;
+            a = b;
+            b = aux;
         }
     }
 }

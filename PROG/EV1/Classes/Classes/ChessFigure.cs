@@ -26,8 +26,11 @@
             _y = y;
             _color = color;
             _figureType = figure;
-            
-            
+        }
+
+        private ChessFigure() 
+        { 
+        
         }
 
         /*public bool IsValid()
@@ -75,19 +78,16 @@
         }
         public void Promove(ChessFigure figure, FigureType typePromoved )
         {
-            if(figure.GetFigureType()==Classes.FigureType.PAWN && figure.GetY()==8)
+            if(figure.GetFigureType()==FigureType.PAWN && figure.GetY()==8)
             {
                 CreateFigure(figure.GetX(), figure.GetY(), figure.GetColor(), typePromoved);
-                MoveTo(figure._x, figure._y);
+
                 return;
             }
             
             return;
         }
-        /*public Rectangle GetRectangle()
-        {
-            
-        }*/
+       
         public static ChessFigure? CreateFigure(int x, int y, ColorType color, FigureType figure)
         {
             /*if(color != ColorType.WHITE || color!= ColorType.BLACK)
@@ -117,10 +117,15 @@
     {
         private int _x;
         private int _y;
-        Rectangle(int x, int y)
+        public Rectangle(int x, int y)
         {
             _x = x;
             _y = y;
+        }
+        public Rectangle GetRectangle()
+        {
+            Rectangle rectangle = new Rectangle(_x, _y);
+            return rectangle;
         }
     }
 }

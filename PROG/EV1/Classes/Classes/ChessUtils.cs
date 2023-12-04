@@ -5,25 +5,18 @@
         public static int _movCount;
         public static bool CanKnightMoveTo(ChessFigure figure, int targetX, int targetY, List<ChessFigure> figuresOnBoard)
         {
-            if(figure.GetFigureType() == FigureType.KNIGHT && AllowedKnightMove(figure, targetX, targetY))
-            {
-                return !IsOnBoard(targetX, targetY) ? false : true;
-            }
-            return false;
+            return figure.GetFigureType() == FigureType.KNIGHT && AllowedKnightMove(figure, targetX, targetY) && IsOnBoard(targetX, targetY); 
         }
-        /*public static bool CanPawnMoveTo(int x, int y, FigureType chessType, int targetX, int targetY)
+        public static bool CanPawnMoveTo(int x, int y, FigureType chessType, int targetX, int targetY)
         {
             if (chessType == FigureType.PAWN)
             {
 
             }
         }
-        public static bool CanKingMoveTo(int x, int y, FigureType chessType, int targetX, int targetY)
+        public static bool CanKingMoveTo(ChessFigure figure, int targetX, int targetY, List<ChessFigure> figuresOnBoard)
         {
-            if (chessType == FigureType.KING)
-            {
-
-            }
+            return figure.GetFigureType() == FigureType.KING && AllowedKingMove(figure, targetX, targetY) && IsOnBoard(targetX, targetY);
         }
         public static bool CanQueenMoveTo(int x, int y, FigureType chessType, int targetX, int targetY)
         {
@@ -45,7 +38,7 @@
             {
 
             }
-        }*/
+        }
 
         public int GetMovementCount()
         {
@@ -53,7 +46,7 @@
         }
         public static bool HasBeenMoved(int x, int y)
         {
-            if(x < x || y < y)
+            if(x < x2 || y < y2)
             {
                 _movCount++;
                 return true;
@@ -84,11 +77,44 @@
             int x=figure.GetX(), y=figure.GetY();
             if(targetX==x+2 || targetX==x-2)
                 return (targetY == y++ || targetY == y--) ? true : false;
-            if(targetX==x++  || targetX==x--)
+            if(targetX==x++ || targetX==x--)
                 return (targetY == y+2 || targetY==y-2) ? true : false;
             return false;
 
         }
+        public static bool AllowedKingMove(ChessFigure figure, int targetX, int targetY)
+        {
+            int x = figure.GetX(), y = figure.GetY();
+            for(int i = x-1; i<x+1;i++)
+            {
+                for (int j = y - 1; j < y + 1; j++)
+                {
+                    if (i == x && j == y)
+                        continue;
+                    if(i==targetX && j == targetY)
+                    {
+                        return true;
+                    }
+
+                }
+            }
+            return false;
+        }
+        public static bool AllowedRookMove(ChessFigure figure, int targetX, int targetY)
+        {
+            int x = figure.GetX(), y = figure.GetY();
+        }
+
+        public static Random r = new Random();
+        public static int GetRandom()
+        {
+            return r.Next();
+        }
+        public static int GetRandomBetween(int min, int max)
+        {
+            return r.Next(min,max);
+        }
+
         //hacer funciones IsOnBoard, GetFigureAt, AllowedKnightMove
     }     
 }

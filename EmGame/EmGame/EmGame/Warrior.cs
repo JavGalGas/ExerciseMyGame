@@ -81,12 +81,13 @@ namespace EmGame
             if (GetLife() < GetLifeCapacity()/2)
             {
                 min = 4.0;
-                double value=EmGame.GetRandomBetween(min, max)
+                double value = EmGame.GetRandomBetween(min, max);
+
             }
             else if (GetLife() > GetLifeCapacity() / 2)
             {
                 min = 1.0;
-                double value = EmGame.GetRandomBetween(min, max)
+                double value = EmGame.GetRandomBetween(min, max);
             }
 
         }

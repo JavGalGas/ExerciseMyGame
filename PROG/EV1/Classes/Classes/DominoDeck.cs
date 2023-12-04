@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Classes
+﻿namespace Classes
 {
     public class DominoDeck
     {
         private List<DominoPiece> _pieceList = new List<DominoPiece>();  /*Esto ya está escrito en la relación, cuando lo escribimos en Método relacional*/
 
-        public DominoPiece ExtractPieceAt(int index)
+        public DominoPiece? ExtractPieceAt(int index)
         {
             if(index < 0 || index >= GetPieceCount())
             {
@@ -22,7 +15,7 @@ namespace Classes
             return null;
         }
 
-        public DominoPiece ExtractPiece()
+        public DominoPiece? ExtractPiece()
         {
             int random = GetRandomBetween(0, GetPieceCount() - 1);
             return ExtractPieceAt(random);
@@ -52,12 +45,16 @@ namespace Classes
             DominoPiece aux = p1;
             p1= p2;
             p2= aux;
-
         }
 
         public void Shuffle() 
         {
-            
+            for(int i=0; i < _pieceList.Count; i++) 
+            {
+                DominoPiece p1 = _pieceList[ChessUtils.GetRandomBetween(0,GetPieceCount()-1)];
+                DominoPiece p2 = _pieceList[ChessUtils.GetRandomBetween(0, GetPieceCount() - 1)];
+                Swap(p1, p2);
+            }
         }
 
         public bool ContainsPiece(DominoPiece piece)

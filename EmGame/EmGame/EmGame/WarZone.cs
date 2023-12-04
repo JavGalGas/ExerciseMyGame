@@ -44,10 +44,10 @@ namespace EmGame
             List1.RemoveAt(index);
             return List1;
         }
-        //public void MoveWarrior(List<Warrior> list, int x, int y)
-        //{
-        //   return;
-        //}
+        public void MoveWarrior(List<Warrior> list, int x, int y)
+        {
+            return;
+        }
 
         public void ExecuteRound(WarZone zone)
         {

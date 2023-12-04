@@ -80,7 +80,6 @@ namespace EmGame
             _arrowAmmo -= 1;
         }
 
-
         public static double GetDistance(Warrior w1, Warrior w2)
         {
             return GetDistance(w1.GetX(), w1.GetY(), w2.GetX(), w2.GetY());
