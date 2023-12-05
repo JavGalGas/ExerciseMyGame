@@ -3,9 +3,16 @@
     class ChessUtils
     {
         public static int _movCount;
+
+        public static void IncrementMoveCount()
+        {
+            _movCount++;
+        }
         public static bool CanKnightMoveTo(ChessFigure figure, int targetX, int targetY, List<ChessFigure> figuresOnBoard)
         {
-            return figure.GetFigureType() == FigureType.KNIGHT && AllowedKnightMove(figure, targetX, targetY) && IsOnBoard(targetX, targetY); 
+            if(!IsOnBoard(targetX, targetY))
+                return false;
+            return figure.GetFigureType() == FigureType.KNIGHT && AllowedKnightMove(figure, targetX, targetY); 
         }
         public static bool CanPawnMoveTo(int x, int y, FigureType chessType, int targetX, int targetY)
         {
@@ -44,20 +51,16 @@
         {
             return _movCount;
         }
-        public static bool HasBeenMoved(int x, int y)
+        public static bool HasBeenMoved()
         {
-            if(x < x2 || y < y2)
-            {
-                _movCount++;
-                return true;
-            }
-                
-            return false;
+            return _movCount > 0;
         }
        
-        public static bool IsOnBoard(int x, int y)
+        public static bool IsOnBoard(ChessFigure figures, int x, int y)
         {
-            return ((x>0 && x<=7) && (y>0 && y<=7));
+            if(figures == null)
+                return false;
+            return ((x>0 && x<=7) && (y>0 && y<=7)) && GetFigureAt(x, y, figures) ;
         }
 
         public static ChessFigure? GetFigureAt(int x, int y, List<ChessFigure> list)

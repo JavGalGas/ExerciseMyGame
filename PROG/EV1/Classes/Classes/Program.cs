@@ -13,21 +13,25 @@
             //carta1.GetColor();
             //carta1.GetFigure();
             //carta1.IsFigure();
-            DateTime time = new DateTime(200, 65, 80, 16, 11, 2023);
-            if(time.IsValid())
-            {
-                DateTime time2 = time.Clone();
-                time.Equals(time2);
-            }
-            else
-            {
-                time.Correct();
-            }
-            time.IsLeap();
-            time.GetDayOfWeek();
-            Console.WriteLine(time.DateToString());
-            time.IncrementSeconds();
-            time.IncrementDay();
+
+            //DateTime time = new DateTime(200, 65, 80, 16, 11, 2023);
+            //if(time.IsValid())
+            //{
+            //    DateTime time2 = time.Clone();
+            //    time.Equals(time2);
+            //}
+            //else
+            //{
+            //    time.Correct();
+            //}
+            //time.IsLeap();
+            //time.GetDayOfWeek();
+            //Console.WriteLine(time.DateToString());
+            //time.IncrementSeconds();
+            //time.IncrementDay();
+
+            int centims = 50023;
+            List<Moneda> result = CoinChange.GetCoins(centims);
 
 
 

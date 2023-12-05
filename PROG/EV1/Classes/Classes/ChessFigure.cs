@@ -68,26 +68,25 @@
             //return (IsValid()) ? _figureType : Classes.FigureType.UNKWOWN;
             return _figureType;
         }
-        internal void MoveTo(int x, int y)
+        public void MoveTo(int x, int y)
         {
             if(ChessUtils.IsOnBoard(x,y))
             _x = x;
             _y = y;
-            ChessUtils.HasBeenMoved(x,y);
-            return;
+            ChessUtils.IncrementMoveCount();
         }
-        public void Promove(ChessFigure figure, FigureType typePromoved )
+        public void Promove(ChessFigure figure, FigureType typePromoved)
         {
             if(figure.GetFigureType()==FigureType.PAWN && figure.GetY()==8)
             {
                 CreateFigure(figure.GetX(), figure.GetY(), figure.GetColor(), typePromoved);
-
-                return;
+                Swap();
+                DeleteFigure(ChessGame.GetFigureCount()-1);
             }
-            
-            return;
         }
-       
+
+
+
         public static ChessFigure? CreateFigure(int x, int y, ColorType color, FigureType figure)
         {
             /*if(color != ColorType.WHITE || color!= ColorType.BLACK)

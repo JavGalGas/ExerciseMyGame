@@ -2,7 +2,7 @@
 {
     public class ChessGame
     {
-        private List<ChessFigure>  FigureList = new List<ChessFigure>();
+        private static List<ChessFigure>  FigureList = new List<ChessFigure>();
 
         public void AddFigureInList()
         {
@@ -13,9 +13,13 @@
             }
             return;
         }
-        public int GetFigureCount()
+        public static int GetFigureCount()
         {
             return FigureList.Count;
+        }
+        private static void DeleteFigure(int index)
+        {
+            FigureList.RemoveAt(index);
         }
     }
 }

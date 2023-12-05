@@ -4,11 +4,15 @@
     {
         static void Main(string[] args)
         {
-            BigNumber n1 = new BigNumber(5);
-            BigNumber n2 = new BigNumber(-545);
-            BigNumber n3 = BigNumber.Multiply(n1, n2);
+            BigNumber n1 = new BigNumber(-545);
+            BigNumber n2 = new BigNumber(-5);
+            string n1String = n1.ConvertToString();
+            string n2String = n2.ConvertToString();
+            BigNumber n3 = BigNumber.Substract(n1, n2);
             string result = n3.ConvertToString();
-            Console.WriteLine(result);
+            Console.WriteLine("Número 1:" + n1String);
+            Console.WriteLine("Número 2:" + n2String);
+            Console.WriteLine("Resultado:" + result);
         }
     }
 }

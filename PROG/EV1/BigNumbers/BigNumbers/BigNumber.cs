@@ -256,7 +256,7 @@ namespace BigNumbers
                 result._list.Add(sub);
             }
             Correct(result);
-            if ((aux1 == n1 && n1sign==-1)||(aux1 == n2 && n2sign==-1))
+            if ((aux1 == n1 && n1sign==-1)||(aux1 == n2))
                 result._list[result._list.Count-1] *= -1;
             return result;
         }

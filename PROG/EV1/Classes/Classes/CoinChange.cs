@@ -168,10 +168,40 @@ namespace Classes
             List<Moneda> result = new List<Moneda>();
             while (centims > 0)
             {
-                result.Add(GetCoin());
+                Moneda moneda = Moneda.UNKNOWN;
+                if (centims >= ToNumber(Moneda.E_500))
+                    moneda = Moneda.E_500;
+                else if (centims <= ToNumber(Moneda.E_200))
+                    moneda = Moneda.E_200;
+                else if (centims <= ToNumber(Moneda.E_100))
+                    moneda = Moneda.E_100;
+                else if (centims <= ToNumber(Moneda.E_50))
+                    moneda = Moneda.E_50;
+                else if (centims <= ToNumber(Moneda.E_20))
+                    moneda = Moneda.E_20;
+                else if (centims <= ToNumber(Moneda.E_10))
+                    moneda = Moneda.E_10;
+                else if (centims <= ToNumber(Moneda.E_5))
+                    moneda = Moneda.E_5;
+                else if (centims <= ToNumber(Moneda.E_2))
+                    moneda = Moneda.E_2;
+                else if (centims <= ToNumber(Moneda.E_1))
+                    moneda = Moneda.E_1;
+                else if (centims <= ToNumber(Moneda.E_050))
+                    moneda = Moneda.E_050;
+                else if (centims <= ToNumber(Moneda.E_020))
+                    moneda = Moneda.E_020;
+                else if (centims <= ToNumber(Moneda.E_010))
+                    moneda = Moneda.E_010;
+                else if (centims <= ToNumber(Moneda.E_005))
+                    moneda = Moneda.E_005;
+                else if (centims <= ToNumber(Moneda.E_002))
+                    moneda = Moneda.E_002;
+                else if (centims <= ToNumber(Moneda.E_001))
+                    moneda = Moneda.E_001;
+                result.Add(moneda);
                 centims -= ToNumber(moneda);
             }
-
             return result;
         }
     }
