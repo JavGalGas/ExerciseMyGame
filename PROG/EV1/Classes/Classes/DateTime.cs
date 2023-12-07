@@ -117,17 +117,35 @@ namespace Classes
 
         public string DateToString() // escribir la fecha --> (ejemplo): 13/11/2023
         {
-            return _day + "/" + _month + "/" + _year + "| |" + _hour + ":" + _minute + ":" + _second;
+            return _day + "/" + _month + "/" + _year + "| |" + PrintHour() + ":" + PrintMinute() + ":" + PrintSecond();
+        }
+        public string PrintHour()
+        {
+            if (_hour < 9)
+                return "0" + _hour;
+            return _hour.ToString();
+        }
+        public string PrintMinute()
+        {
+            if (_minute < 9)
+                return "0" + _minute;
+            return _minute.ToString();
+        }
+        public string PrintSecond() 
+        { 
+            if (_second < 9)
+                return "0" + _second;
+            return _second.ToString();
         }
         public static int GetDaysCount(int year, int month)
         {
             if (month == 3 || month == 5 || month == 7 || month == 9 || month == 11)
                 return 30;
-            if(month == 2)
+            else if(month == 2)
                 return IsLeap(year) ? 29 : 28;
             return 31;
         }
-        public int GetDayOfMonth()
+        public int GetDaysOfMonth()
         {
             return GetDaysCount(GetYear(), GetMonth());
         }
@@ -148,8 +166,7 @@ namespace Classes
         }
         public void IncrementSeconds()
         {
-            if (IsValid())
-                _second++;
+            _second++;
             if (!IsValid())
             {
                 _second = 0;
@@ -261,6 +278,10 @@ namespace Classes
                 case 5: return DayOfWeek.Friday;
             }
             return DayOfWeek.Saturday;
+        }
+        public string GetNameOfDay()
+        {
+            return GetDayOfWeek().ToString();
         }
     }
 }

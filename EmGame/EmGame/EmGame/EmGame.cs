@@ -2,18 +2,19 @@
 {
     public class EmGame
     {
-        public EmGame(int x, int y )
+        public EmGame(int x, int y)
         {
             EmGame emGame = new EmGame(x,y);
             emGame.Start(50,10,80,12);
             emGame.GetWinner();
         }
-        public void Start(int x, int y, int z, int a)
+        public void Start(int x, int y, int maxX, int maxY)
         {
+            WarZone zone = new(x, y, maxX, maxY);
         }
         public TeamType GetWinner()
         {
-           
+            return TeamType.DEMON;
         }
 
         public void PlayTurn(WarZone warZone)

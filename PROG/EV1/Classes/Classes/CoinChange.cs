@@ -50,6 +50,14 @@ namespace Classes
         }
         public static int ToNumber(Moneda coin)
         {
+            int result = int.MinValue;
+            foreach(var moneda in _diccionario)
+            {
+                if( moneda.Value == coin )
+                {
+                    result = moneda.Key;
+                }
+            }
             //if (coin == Moneda.E_500)
             //    return  50000;
             //if (coin == Moneda.E_200)
@@ -81,8 +89,8 @@ namespace Classes
             //return  1;
 
             //return (int)moneda;
-
-            return _monedasValue[(int)coin];
+            return result;
+            //return _monedasValue[(int)coin];
         }
 
         public static Moneda ToMoneda(int centims)
@@ -130,74 +138,72 @@ namespace Classes
             
             if (centims >= ToNumber(Moneda.E_500))
                 return Moneda.E_500;
-            else if (centims <= ToNumber(Moneda.E_200))
+            else if (centims >= ToNumber(Moneda.E_200))
                 return Moneda.E_200;
-            else if (centims <= ToNumber(Moneda.E_100))
+            else if (centims >= ToNumber(Moneda.E_100))
                 return Moneda.E_100;
-            else if (centims <= ToNumber(Moneda.E_50))
+            else if (centims >= ToNumber(Moneda.E_50))
                 return Moneda.E_50;
-            else if (centims <= ToNumber(Moneda.E_20))
+            else if (centims >= ToNumber(Moneda.E_20))
                 return Moneda.E_20;
-            else if (centims <= ToNumber(Moneda.E_10))
+            else if (centims >= ToNumber(Moneda.E_10))
                 return Moneda.E_10;
-            else if (centims <= ToNumber(Moneda.E_5))
+            else if (centims >= ToNumber(Moneda.E_5))
                 return Moneda.E_5;
-            else if (centims <= ToNumber(Moneda.E_2))
+            else if (centims >= ToNumber(Moneda.E_2))
                 return Moneda.E_2;
-            else if (centims <= ToNumber(Moneda.E_1))
+            else if (centims >= ToNumber(Moneda.E_1))
                 return Moneda.E_1;
-            else if (centims <= ToNumber(Moneda.E_050))
+            else if (centims >= ToNumber(Moneda.E_050))
                 return Moneda.E_050;
-            else if (centims <= ToNumber(Moneda.E_020))
+            else if (centims >= ToNumber(Moneda.E_020))
                 return Moneda.E_020;
-            else if (centims <= ToNumber(Moneda.E_010))
+            else if (centims >= ToNumber(Moneda.E_010))
                 return Moneda.E_010;
-            else if (centims <= ToNumber(Moneda.E_005))
+            else if (centims >= ToNumber(Moneda.E_005))
                 return Moneda.E_005;
-            else if (centims <= ToNumber(Moneda.E_002))
+            else if (centims >= ToNumber(Moneda.E_002))
                 return Moneda.E_002;
-            else if (centims <= ToNumber(Moneda.E_001))
+            else if (centims >= ToNumber(Moneda.E_001))
                 return Moneda.E_001;
             return Moneda.UNKNOWN;
         }
 
         public static List<Moneda> GetCoins(int centims) //hacer una lista con las monedas de cada tipo que necesitas en la conversión, repitiendose si necesitas más de una. Ej:429 son [200,200,20,5,2,2,1]
         {
-            return null;
-
             List<Moneda> result = new List<Moneda>();
             while (centims > 0)
             {
                 Moneda moneda = Moneda.UNKNOWN;
                 if (centims >= ToNumber(Moneda.E_500))
                     moneda = Moneda.E_500;
-                else if (centims <= ToNumber(Moneda.E_200))
+                else if (centims >= ToNumber(Moneda.E_200))
                     moneda = Moneda.E_200;
-                else if (centims <= ToNumber(Moneda.E_100))
+                else if (centims >= ToNumber(Moneda.E_100))
                     moneda = Moneda.E_100;
-                else if (centims <= ToNumber(Moneda.E_50))
+                else if (centims >= ToNumber(Moneda.E_50))
                     moneda = Moneda.E_50;
-                else if (centims <= ToNumber(Moneda.E_20))
+                else if (centims >= ToNumber(Moneda.E_20))
                     moneda = Moneda.E_20;
-                else if (centims <= ToNumber(Moneda.E_10))
+                else if (centims >= ToNumber(Moneda.E_10))
                     moneda = Moneda.E_10;
-                else if (centims <= ToNumber(Moneda.E_5))
+                else if (centims >= ToNumber(Moneda.E_5))
                     moneda = Moneda.E_5;
-                else if (centims <= ToNumber(Moneda.E_2))
+                else if (centims >= ToNumber(Moneda.E_2))
                     moneda = Moneda.E_2;
-                else if (centims <= ToNumber(Moneda.E_1))
+                else if (centims >= ToNumber(Moneda.E_1))
                     moneda = Moneda.E_1;
-                else if (centims <= ToNumber(Moneda.E_050))
+                else if (centims >= ToNumber(Moneda.E_050))
                     moneda = Moneda.E_050;
-                else if (centims <= ToNumber(Moneda.E_020))
+                else if (centims >= ToNumber(Moneda.E_020))
                     moneda = Moneda.E_020;
-                else if (centims <= ToNumber(Moneda.E_010))
+                else if (centims >= ToNumber(Moneda.E_010))
                     moneda = Moneda.E_010;
-                else if (centims <= ToNumber(Moneda.E_005))
+                else if (centims >= ToNumber(Moneda.E_005))
                     moneda = Moneda.E_005;
-                else if (centims <= ToNumber(Moneda.E_002))
+                else if (centims >= ToNumber(Moneda.E_002))
                     moneda = Moneda.E_002;
-                else if (centims <= ToNumber(Moneda.E_001))
+                else if (centims >= ToNumber(Moneda.E_001))
                     moneda = Moneda.E_001;
                 result.Add(moneda);
                 centims -= ToNumber(moneda);

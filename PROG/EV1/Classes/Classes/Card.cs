@@ -8,7 +8,6 @@ namespace Classes
         HEARTS,
         DIAMOND,
         SPADES,
-
     }
     public enum Color
     {

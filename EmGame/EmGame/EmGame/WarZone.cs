@@ -6,13 +6,14 @@ namespace EmGame
 {
     public class WarZone
     {
-        private int _width=10, _height=10;
+        private int _width=0, _height=0, _maxWidth=10, _maxHeight=10;
 
-        public WarZone(int width, int height)
+        public WarZone(int width, int height, int maxW, int maxH)
         {
-
             _width=width;
             _height=height;
+            _maxWidth=maxW; 
+            _maxHeight=maxH;
         }
 
         public int GetWidth()
@@ -44,9 +45,14 @@ namespace EmGame
             List1.RemoveAt(index);
             return List1;
         }
-        public void MoveWarrior(List<Warrior> list, int x, int y)
+        public void MoveWarrior(int x, int y, int targetX, int targetY)
         {
-            return;
+            Warrior? warrior = GetWarriorAt(x, y);
+            if (warrior == null)
+            {
+                return;
+            }
+            warrior.Move(targetX, targetY);
         }
 
         public void ExecuteRound(WarZone zone)
@@ -90,7 +96,6 @@ namespace EmGame
                 if (list[i].GetTeam()!=team && list[i].GetX()!=x && list[i].GetY() != y)
                     enemyCount++;
             }
-            
             return enemyCount;
         }
 
@@ -161,7 +166,14 @@ namespace EmGame
         //Ver como conseguir que MoveWarrior llame a un solo guerrero
         public bool IsBattleFinished(WarZone warZone)
         {
-            return ExecuteRound(warZone) ? true: false;
+            ExecuteRound(warZone);
+            Warrior? warrior = warZone.GetWarriorAt2(0);
+            for(int i = 1; i < warZone.GetWarriorList().Count; i++)
+            {
+                if (warZone.GetWarriorAt2(i) != warrior) 
+                    return false;
+            }
+            return true;
 
         }
     }

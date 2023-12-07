@@ -2,11 +2,11 @@
 {
     public class DominoDeck
     {
-        private List<DominoPiece> _pieceList = new List<DominoPiece>();  /*Esto ya está escrito en la relación, cuando lo escribimos en Método relacional*/
+        private static List<DominoPiece> _pieceList = new List<DominoPiece>();  /*Esto ya está escrito en la relación, cuando lo escribimos en Método relacional*/
 
-        public DominoPiece? ExtractPieceAt(int index)
+        public static DominoPiece? ExtractPieceAt(int index)
         {
-            if(index < 0 || index >= GetPieceCount())
+            if(index < 0 || index >= _pieceList.Count)
             {
                 var p = _pieceList[index];
                 _pieceList.RemoveAt(index);
@@ -15,9 +15,9 @@
             return null;
         }
 
-        public DominoPiece? ExtractPiece()
+        public static DominoPiece? ExtractPiece()
         {
-            int random = GetRandomBetween(0, GetPieceCount() - 1);
+            int random = GetRandomBetween(0, _pieceList.Count - 1);
             return ExtractPieceAt(random);
         }
 
@@ -26,17 +26,19 @@
             return _pieceList.Count;
         }
 
-        public void AddPiece(DominoPiece piece) //añade una pieza a la lista DominoPiece
+        public void AddPiece(DominoPiece? piece) //añade una pieza a la lista DominoPiece
         {
+            if (piece == null)
+                return;
             if (ContainsPiece(piece) == false)
                 _pieceList.Add(piece);
         }
 
-        public DominoPiece? GetPieceAt(int index) //saca los valores de la ficha de la lista DominoPiece, de la posicion index
+        public DominoPiece GetPieceAt(int index) //saca los valores de la ficha de la lista DominoPiece, de la posicion index
         {
             DominoPiece piece = _pieceList[index];
-            piece?.GetValue1();
-            piece?.GetValue2();
+            piece.GetValue1();
+            piece.GetValue2();
             return piece;
         }
 

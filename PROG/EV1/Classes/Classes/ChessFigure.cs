@@ -14,11 +14,12 @@
         BISHOP,
         QUEEN,
     }
-    class ChessFigure
+    public class ChessFigure
     {
         private int _x, _y;
         private ColorType _color;
         private FigureType _figureType;
+        private int _moveNum=0;
 
         private ChessFigure(int x, int y, ColorType color, FigureType figure)
         {
@@ -50,6 +51,10 @@
             }
             return false;
         }*/
+        public int GetMoveNum()
+        {
+            return _moveNum;
+        }
         public int GetX()
         {
             return _x;
@@ -70,22 +75,23 @@
         }
         public void MoveTo(int x, int y)
         {
-            if(ChessUtils.IsOnBoard(x,y))
-            _x = x;
-            _y = y;
-            ChessUtils.IncrementMoveCount();
+            if(ChessUtils.CanFigureMoveTo(this, x, y))
+            {
+                _x = x;
+                _y = y;
+                _moveNum++;
+                ChessUtils.IncrementMoveCount();
+            }
         }
         public void Promove(ChessFigure figure, FigureType typePromoved)
         {
             if(figure.GetFigureType()==FigureType.PAWN && figure.GetY()==8)
             {
-                CreateFigure(figure.GetX(), figure.GetY(), figure.GetColor(), typePromoved);
-                Swap();
-                DeleteFigure(ChessGame.GetFigureCount()-1);
+                ChessFigure? aux = CreateFigure(figure.GetX(), figure.GetY(), figure.GetColor(), typePromoved);
+                ChessGame.Swap(figure,aux);
+                ChessGame.DeleteFigure(ChessGame.GetFigureCount()-1);
             }
         }
-
-
 
         public static ChessFigure? CreateFigure(int x, int y, ColorType color, FigureType figure)
         {
@@ -93,38 +99,37 @@
             {
                 return null;
             }*/
-            if(!ChessUtils.IsOnBoard(x,y))
+            if(!ChessBoard.IsOnBoard(x,y))
                 return null;
-            if (figure != Classes.FigureType.QUEEN)
-                return null;
-            if (figure != Classes.FigureType.KNIGHT)
-                return null;
-            if (figure != Classes.FigureType.KING)
-                return null;
-            if (figure != Classes.FigureType.BISHOP)
-                return null;
-            if (figure != Classes.FigureType.PAWN)
-                return null;
-            if (figure != Classes.FigureType.ROOK)
-                return null;
+            foreach (string value in Enum.GetNames<FigureType>())
+            {
+                if(figure.ToString()==value)
+                {
+                    return new ChessFigure(x, y, color, figure);
+                }
+            }
+
+            //else if (figure != FigureType.QUEEN)
+            //    return null;
+            //else if (figure != FigureType.KNIGHT)
+            //    return null;
+            //else if (figure != FigureType.KING)
+            //    return null;
+            //else if (figure != FigureType.BISHOP)
+            //    return null;
+            //else if (figure != FigureType.PAWN)
+            //    return null;
+            //else if (figure != FigureType.ROOK)
+            //    return null;
             return new ChessFigure(x, y, color, figure);
         }
 
+        public ChessFigure Clone()
+        {
+            ChessFigure chessFigure = new ChessFigure(GetX(), GetY(), GetColor(), GetFigureType());
+            return chessFigure;
+        }
 
     }
-    class Rectangle
-    {
-        private int _x;
-        private int _y;
-        public Rectangle(int x, int y)
-        {
-            _x = x;
-            _y = y;
-        }
-        public Rectangle GetRectangle()
-        {
-            Rectangle rectangle = new Rectangle(_x, _y);
-            return rectangle;
-        }
-    }
+
 }

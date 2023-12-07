@@ -73,7 +73,7 @@ namespace EmGame
 
         public void ExecuteTurn(WarZone zone)
         {
-            double min, max = 10.0;
+            double value, min, max = 10.0;
 
             if (zone == null)
                 return;
@@ -81,14 +81,15 @@ namespace EmGame
             if (GetLife() < GetLifeCapacity()/2)
             {
                 min = 4.0;
-                double value = EmGame.GetRandomBetween(min, max);
+                value = EmGame.GetRandomBetween(min, max);
 
             }
             else if (GetLife() > GetLifeCapacity() / 2)
             {
                 min = 1.0;
-                double value = EmGame.GetRandomBetween(min, max);
+                value = EmGame.GetRandomBetween(min, max);
             }
+            if(value > 0)
 
         }
 
