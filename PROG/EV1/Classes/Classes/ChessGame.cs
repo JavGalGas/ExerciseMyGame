@@ -21,7 +21,10 @@
         { 
             for(int i = 0; i < GetFigureCount(); i++)
             {
-                if(GetFigureAt(i).GetX()==x && GetFigureAt(i).GetY() == y)
+                ChessFigure? figure = GetFigureAt(i);
+                if (GetFigureAt(i) == null)
+                    continue;
+                else if (figure.GetX() == x && figure.GetY() == y)//To Do --> Comprobar null
                     return true;
             }
             return false;
@@ -44,13 +47,21 @@
         {
             return FigureList.Count;
         }
-        public static ChessFigure GetFigureAt(int index)
-        { 
-            return FigureList[index];
+        public static ChessFigure? GetFigureAt(int index)
+        {
+            if(index < 0 || index >= FigureList.Count)
+            {
+                return FigureList[index];
+            }
+            return null;
         }
         public static void DeleteFigure(int index)
         {
-            FigureList.RemoveAt(index);
+            if (index < 0 || index >= FigureList.Count)
+            {
+                FigureList.RemoveAt(index);
+            }
+            return;    
         }
         public static void Swap(ChessFigure? f1, ChessFigure? f2)
         {

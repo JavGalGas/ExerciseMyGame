@@ -34,12 +34,16 @@
                 _pieceList.Add(piece);
         }
 
-        public DominoPiece GetPieceAt(int index) //saca los valores de la ficha de la lista DominoPiece, de la posicion index
+        public DominoPiece? GetPieceAt(int index) //saca los valores de la ficha de la lista DominoPiece, de la posicion index
         {
-            DominoPiece piece = _pieceList[index];
-            piece.GetValue1();
-            piece.GetValue2();
-            return piece;
+            if (index < 0 || index >= _pieceList.Count)
+            {
+                DominoPiece piece = _pieceList[index];
+                piece.GetValue1();
+                piece.GetValue2();
+                return piece;
+            }
+            return null;
         }
 
         public void Swap(DominoPiece p1, DominoPiece p2) //cambia las posiciones de dos fichas de domino de la lista
