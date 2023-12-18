@@ -10,9 +10,14 @@ namespace BasuraHerencias
     {
         private Point2D _min, _max;
 
+        public Rect2D(ShapeType type) : base(type)
+        {
+
+        }
+
         public override double GetArea()//base * altura
         {
-            return -1;
+            return (_min.x + _max.x) * (_min.y + _max.y);
         }
 
         public void SetMin(Point2D point)
@@ -40,6 +45,11 @@ namespace BasuraHerencias
         {
             double width = 0;
             return width;
+        }
+
+        public override ShapeType GetShapeType()
+        {
+            return ShapeType.RECT2D;
         }
     }
 }

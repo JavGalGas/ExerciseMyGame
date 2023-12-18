@@ -10,7 +10,5 @@ namespace BasuraHerencias
     {
         private Point2D _from, _to;
 
-
-
     }
 }

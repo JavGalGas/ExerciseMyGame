@@ -8,14 +8,10 @@ namespace BasuraHerencias
 {
     public interface IBlueprint
     {
-        public void AddShape(IShape shape)
-        {
-            _shapes.Add(shape);
-        }
-        public int GetShapeCount()
-        {
-            return 0;
-        }
+        public abstract void AddShape(IShape shape);
+
+        public abstract int GetShapeCount();
+
         public void GetShapeAt(int index)
         {
 
@@ -24,9 +20,9 @@ namespace BasuraHerencias
         {
 
         }
-        public double GetArea()
-        {
-            return 0;
-        }
+        public abstract double GetArea(double area);
+        //{
+        //    return 0;
+        //}
     }
 }

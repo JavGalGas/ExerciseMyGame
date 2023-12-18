@@ -6,8 +6,19 @@ using System.Threading.Tasks;
 
 namespace BasuraHerencias
 {
-    public class ShapeWithArea : Shape
+    public abstract class ShapeWithArea : Shape
     {
-        
+        protected ShapeWithArea(Point2D position, string name) : base(position, name)
+        {
+
+        }
+        //public override double GetArea()
+        //{
+        //    return 
+        //}
+        public override bool HasArea()
+        {
+            return true;
+        }
     }
 }

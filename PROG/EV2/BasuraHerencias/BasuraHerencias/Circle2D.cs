@@ -9,6 +9,11 @@ namespace BasuraHerencias
     public class Circle2D : ShapeWithArea
     {
         private double _radius;
+
+        public Circle2D(Point2D position, string name) : base(position, name)
+        {
+        }
+
         public double GetRadius()
         {
             return _radius;
