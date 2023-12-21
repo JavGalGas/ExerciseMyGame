@@ -10,7 +10,7 @@ namespace BasuraHerencias
     {
         protected ShapeWithArea(Point2D position, string name) : base(position, name)
         {
-
+            
         }
         //public override double GetArea()
         //{

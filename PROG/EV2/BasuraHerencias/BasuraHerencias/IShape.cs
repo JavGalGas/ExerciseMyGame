@@ -20,11 +20,11 @@ namespace BasuraHerencias
 
         string GetName();
 
-        public Point2D GetPosition();
-        public void SetPosition(Point2D point);
-        public abstract double GetArea();
-        public abstract bool HasArea();
-        public abstract ShapeType GetShapeType();
+        Point2D GetPosition();
+        void SetPosition(Point2D point);
+        abstract double GetArea();
+        abstract bool HasArea();
+        abstract ShapeType GetShapeType();
 
     }
 }

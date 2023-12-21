@@ -20,7 +20,7 @@ namespace BasuraHerencias
         {
 
         }
-        public abstract double GetArea(double area);
+        public abstract double GetArea();
         //{
         //    return 0;
         //}

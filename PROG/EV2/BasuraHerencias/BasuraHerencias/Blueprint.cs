@@ -8,30 +8,50 @@ namespace BasuraHerencias
 {
     public class Blueprint : IBlueprint
     {
-        private List<IShape> _shapes = new List<IShape>();
+        private List<IShape> _shapes;
+
+        public Blueprint()
+        {
+            _shapes = new List<IShape>();
+        }
 
         public void AddShape(IShape shape)
         {
+            if(shape == null)
+                return;
             _shapes.Add(shape);
         }
 
-        public double GetArea(double area) //area de todas las figuras : recorrer la lista
+        public double GetArea() //area de todas las figuras : recorrer la lista
         {
-            if(_shapes.Count <= 0)
+            double result = 0; 
+            if(GetShapeCount() <= 0)
                 return -1;
-            for(int i = 0; i<_shapes.Count; i++)
+            for(int i = 0; i< GetShapeCount(); i++)
             {
-                if(area == _shapes[i].GetArea())
-                {
-                    return area;
-                }
+                result+= _shapes[i].GetArea();
             }
-            return -1;
+            return result;
+        }
+
+        public IShape? GetShapeAt(int index)
+        {
+            if(index >= 0 && index < GetShapeCount())
+                return _shapes[index];
+            return null;
         }
 
         public int GetShapeCount()
         {
             return _shapes.Count;
+        }
+
+        public void RemoveShapeAt(int index)
+        {
+            if (index >= 0 && index < GetShapeCount())
+                _shapes.RemoveAt(index);
+            return;
+            
         }
 
 

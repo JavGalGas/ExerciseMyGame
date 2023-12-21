@@ -11,9 +11,9 @@ namespace BasuraHerencias
         private List<Point2D> _points = new List<Point2D>();
         private bool _isClosed;
 
-        public PolyLine2D()
+        public PolyLine2D(Point2D position, string name) : base(position, name)
         {
-            _shapeType = ShapeType.POLYLINE2D;
+            
         }
         public void AddPoint(Point2D point)
         {
@@ -31,7 +31,8 @@ namespace BasuraHerencias
         }
         public void SetPointAt(int index, Point2D point2D)
         {
-            if(index >= GetPointsCount()||)
+            if(index < 0 || index >= GetPointsCount())
+                return;
             _points[index] = point2D;
         }
         public void RemovePointAt()//puede que Point2D
@@ -55,9 +56,19 @@ namespace BasuraHerencias
         }
         public override double GetArea()
         {
-            double a = 0;
-            double p = 0;
-            return (a * p) / 2;
+            if(_isClosed)
+            {
+                double a = 0;
+                double p = 0;
+                return (a * p) / 2;
+            }
+            return -1;
+        }
+
+
+        public override ShapeType GetShapeType()
+        {
+            return ShapeType.POLYLINE2D;
         }
     }
 }

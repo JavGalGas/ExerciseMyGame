@@ -8,9 +8,9 @@ namespace BasuraHerencias
 {
     public class Rect2D : ShapeWithArea
     {
-        private Point2D _min, _max;
+        private Point2D _min = new Point2D(), _max = new Point2D();
 
-        public Rect2D(ShapeType type) : base(type)
+        public Rect2D(Point2D position, string name) : base(position,name)
         {
 
         }
@@ -22,19 +22,21 @@ namespace BasuraHerencias
 
         public void SetMin(Point2D point)
         {
-
+            _min.x = point.x;
+            _min.y = point.y;
         }
         public void SetMax(Point2D point)
         {
-
+            _max.x = point.x;
+            _max.y = point.y;
         }
-        public void GetMin(Point2D point)
+        public Point2D GetMin(Point2D point)
         {
-
+            return _min;
         }
-        public void GetMax(Point2D point)
+        public Point2D GetMax(Point2D point)
         {
-
+            return _max;
         }
         public double GetHeight()
         {
