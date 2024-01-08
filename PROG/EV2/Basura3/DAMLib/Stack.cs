@@ -8,7 +8,7 @@ namespace DAMLib
         private T [] _stack = new T[0];
         public void Push(T element)
         {
-            T[] aux = new T[_stack.Length+1];
+            T[] aux = new T[GetCount()+1];
             for(int i = 0; i < _stack.Length; i++)
             {
                 aux[i] = _stack[i];
