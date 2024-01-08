@@ -1,4 +1,5 @@
 ﻿using DAMLib;
+using System.Collections;
 
 namespace Basura3
 {
@@ -8,6 +9,7 @@ namespace Basura3
         {
             Stack s = new Stack();
             
+
             
         }
     }
