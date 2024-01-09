@@ -18,6 +18,8 @@ namespace DAMLib
         }
         public T Pop()
         {
+            if(IsEmpty())
+                return default(T);
             T element = GetTop();
             T[] NewStack = new T[GetCount() - 1];
             for (int i = 0; i < _stack.Length-2; i++)
@@ -29,6 +31,8 @@ namespace DAMLib
         }
         public T GetTop()
         {
+            if (IsEmpty())
+                return default(T);
             return _stack[_stack.Length - 1];
         }
         //Pop y GetTop pueden dar problemas con el null, hay que buscar sobre el default(T);
@@ -47,4 +51,5 @@ namespace DAMLib
         //      DAMLibTest
         //      DAMLib (biblioteca de clases)
     }
+    
 }
