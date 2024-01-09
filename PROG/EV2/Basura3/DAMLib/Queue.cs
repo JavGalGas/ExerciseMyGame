@@ -10,10 +10,15 @@ namespace DAMLib
     public class Queue<T>
     {
         private T[] _queue = new T[0];
+        private int _count = 0;
 
         public void Enqueue(T element)
         {
             T[] NewQueue = new T[Count + 1];
+            if(Count<_queue.Length)
+            {
+                _queue[_count++] = element;
+            }
             for (int i = 1; i < _queue.Length - 1; i++)
             {
                 NewQueue[i] = _queue[i];
@@ -36,30 +41,25 @@ namespace DAMLib
         }
         public int Count
         {
-            get=> _queue.Length;
+            get=> _count;
         }
         public T First
         {
             get
             {
-                if (Empty)
-                    return default(T);
-                return _queue[Count - 1];
+                return !(Empty) ? _queue[Count - 1] : default(T);
             }
         }
         public T Last
         {
             get
             {
-                if (Empty)
-                    return default(T);
-                return _queue[0];
+                return !(Empty) ? _queue[0] : default(T);
             }     
         }
         public void Clear()
         {
-            T[] NewQueue = new T[0];
-            _queue = NewQueue;
+            _count = 0;
         }
         public bool Empty
         {
