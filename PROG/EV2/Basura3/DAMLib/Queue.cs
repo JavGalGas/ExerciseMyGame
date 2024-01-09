@@ -44,7 +44,7 @@ namespace DAMLib
             {
                 if (Empty)
                     return default(T);
-                return (_queue[Count - 1]);
+                return _queue[Count - 1];
             }
         }
         public T Last
