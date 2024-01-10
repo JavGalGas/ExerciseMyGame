@@ -14,12 +14,11 @@ namespace BigNumbers
 
         public BigNumber(long value)
         {
-                Set(value);
+            Set(value);
         }
         public BigNumber (string value)
         {
-            if(StringIsValid(value))
-                Set (value);
+            Set(value);
             Correct();
         }
 
@@ -35,31 +34,43 @@ namespace BigNumbers
         }
         public void Set(string value)
         {
+            if (value.Length == 0)
+                return;
             for (int i = value.Length-1; i >= 0; i--)
             {
                 char c = value[i];
                 if (c == '-' && i==0)
                 {
-                    _list[_list.Count - 1] *=-1 ;
+                    int aux = 1;
+                    while (_list[_list.Count - aux] == 0)
+                        aux++;
+                    _list[_list.Count - aux] *=-1 ;
                 }
-               else
-               {
-                    int n = c - '0';
-                    _list.Add(n);
-               }
+                else
+                {
+                    switch(c)
+                    {
+                        case '0':
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            {
+                                int n = c - '0';
+                                _list.Add(n);
+                            }
+                            break;
+                        default: break;
+                    }
+                    
+                }
             }
 
-        }
-        public bool StringIsValid(string value)
-        {
-            for (int i = 1; i < value.Count(); i++)
-            {
-                char c = value[i];
-                int n = c - '0';
-                if (n < 0 || n > 9)
-                    return false;
-            }
-            return true;
         }
         public string ConvertToString()
         {
@@ -76,6 +87,8 @@ namespace BigNumbers
             int i = _list.Count-1 ;
             while (GetDigitAt(i)==0)
             {
+                if (_list.Count == 1)
+                    break;
                 _list.RemoveAt(i--);
             }
         }
@@ -85,6 +98,8 @@ namespace BigNumbers
             int i = value._list.Count - 1;
             while (value._list[i] == 0)
             {
+                if (value._list.Count == 1)
+                    break;
                 value._list.RemoveAt(i--);
             }
             return value;
@@ -159,8 +174,9 @@ namespace BigNumbers
 
         public static BigNumber Add(BigNumber n1, BigNumber n2) //sumar dos números, si pasa del 9 suma al siguiente dígito
         {
+            if (n1._list.Count == 0 || n2._list.Count == 0)
+                return new BigNumber(0);
             BigNumber result = new BigNumber();
-
             if (IsNumNegative(n1))
             {
                 if (IsNumNegative(n2))// negativo + negativo || negativo - positivo
@@ -183,7 +199,9 @@ namespace BigNumbers
             return result;
         }
         public static BigNumber Substract(BigNumber n1, BigNumber n2) // restar 2 numeros
-        { //modificar
+        {
+            if (n1._list.Count == 0 || n2._list.Count == 0)
+                return new BigNumber(0);
             BigNumber result = new BigNumber();
 
             if (IsNumNegative(n1))
@@ -299,7 +317,9 @@ namespace BigNumbers
         }
 
         public static BigNumber Multiply(BigNumber n1, BigNumber n2) // multiplicar 2 números
-        { //modificar (incluye doble for y creación de varios BigNumber, además de añadir ceros en la última posición de la lista y utilizar la función Add)
+        {
+            if (n1._list.Count == 0 || n2._list.Count == 0)
+                return new BigNumber(0);
             int n1sign = GetNumSign(n1);//1
             int n2sign = GetNumSign(n2);//1
             n1 = GetAbsoluteValue(n1);//[4],[4]
@@ -339,28 +359,34 @@ namespace BigNumbers
             list2._list[list2._list.Count - 1] = list2._list[list2._list.Count - 1] * n1sign * n2sign;
             return list2;
         }
-        //public static BigNumber Divide(BigNumber n1, BigNumber n2) // dividir 2 numeros <-- Module
-        //{
-        //    BigNumber number = new BigNumber();
-        //    string aux= n2.ConvertToString();
-        //    long divisor = 0;
-        //    for (int i = aux.Count()-1; i >=0; i--)
-        //    {
-        //        char c = aux[i];
-                
-        //    }
-            
+        public static BigNumber Divide(BigNumber n1, BigNumber n2) // dividir 2 numeros <-- Module
+        {
+            if (n1._list.Count == 0 || n2._list.Count == 0)
+                return new BigNumber(0);
+            int n1sign = GetNumSign(n1);
+            int n2sign = GetNumSign(n2);
+            n1 = GetAbsoluteValue(n1);
+            n2 = GetAbsoluteValue(n2);
+            BigNumber number = Clone(n1);
+            int aux = 0;
+            while (number.GetDigitAt(number.GetDigitCount()-1) > 0 && GetLesserBetween(n1, n2) == n2)
+            {
+                number = Substract(number, n2);
+                aux++;
+            }
+            BigNumber result = new BigNumber(aux);
+            result._list[result.GetDigitCount() - 1] = result.GetDigitAt(result.GetDigitCount() - 1) * n1sign * n2sign;
+            return result;
+        }
 
-        //    return number;
-        //}
-        //esta función coge el primer dígito 
+        public static BigNumber Module(BigNumber n1, BigNumber n2) // conseguir el resto de la división de 2 numeros --> Divide
+        {
+            if (n1._list.Count == 0 || n2._list.Count == 0)
+                return new BigNumber(0);
+            BigNumber number = new BigNumber();
+            return number;
+        }
 
-        //public static BigNumber Module(BigNumber n1, BigNumber n2) // conseguir el resto de la división de 2 numeros --> Divide
-        //{
-        //    BigNumber number = new BigNumber();
-        //    return number;
-        //}
-        
         public int GetDigitCount()
         {
             return _list.Count();
