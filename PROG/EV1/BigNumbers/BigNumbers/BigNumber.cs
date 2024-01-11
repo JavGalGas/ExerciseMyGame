@@ -369,7 +369,7 @@ namespace BigNumbers
             n2 = GetAbsoluteValue(n2);
             BigNumber number = Clone(n1);
             int aux = 0;
-            while (number.GetDigitAt(number.GetDigitCount()-1) > 0 && GetLesserBetween(number, n2) == n2)
+            while (GetLesserBetween(number, n2) == n2)
             {
                 number = Substract(number, n2);
                 aux++;
