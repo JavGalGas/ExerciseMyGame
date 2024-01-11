@@ -14,17 +14,20 @@ namespace DAMLib
 
         public void Enqueue(T element)
         {
-            T[] NewQueue = new T[Count + 1];
-            if(Count<_queue.Length)
+            if (Count < _queue.Length)
             {
                 _queue[_count++] = element;
             }
-            for (int i = 1; i < _queue.Length - 1; i++)
+            else
             {
-                NewQueue[i] = _queue[i];
+                T[] NewQueue = new T[Count + 1];
+                for (int i = 0; i < Count - 1; i++)
+                {
+                    NewQueue[i] = _queue[i];
+                }
+                NewQueue[Count-1] = element;
+                _queue = NewQueue;
             }
-            NewQueue[0] = element;
-            _queue = NewQueue;
         }
         public T Dequeue()
         {
@@ -32,7 +35,7 @@ namespace DAMLib
                 return default(T);
             T element = First;
             T[] NewQueue = new T[Count - 1];
-            for (int i = 0; i < _queue.Length - 2; i++)
+            for (int i = 1; i < Count - 1; i++)
             {
                 NewQueue[i] = _queue[i];
             }
@@ -47,14 +50,14 @@ namespace DAMLib
         {
             get
             {
-                return !(Empty) ? _queue[Count - 1] : default(T);
+                return !(Empty) ? _queue[0] : default(T);
             }
         }
         public T Last
         {
             get
             {
-                return !(Empty) ? _queue[0] : default(T);
+                return !(Empty) ? _queue[Count-1] : default(T);
             }     
         }
         public void Clear()
