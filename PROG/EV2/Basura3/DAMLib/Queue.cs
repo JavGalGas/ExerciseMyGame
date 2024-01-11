@@ -12,6 +12,33 @@ namespace DAMLib
         private T[] _queue = new T[0];
         private int _count = 0;
 
+        public int Count
+        {
+            get => _count;
+        }
+        public T First
+        {
+            get
+            {
+#nullable disable
+                return (Empty) ? default(T) :  _queue[0];
+#nullable enable
+            }
+        }
+        public T Last
+        {
+            get
+            {
+#nullable disable
+                return (Empty) ? default(T) : _queue[Count - 1];
+#nullable enable
+            }
+        }
+        public bool Empty
+        {
+            get => Count == 0;
+        }
+
         public void Enqueue(T element)
         {
             if (Count < _queue.Length)
@@ -32,7 +59,9 @@ namespace DAMLib
         public T Dequeue()
         {
             if (Empty)
+#nullable disable
                 return default(T);
+#nullable enable
             T element = First;
             T[] NewQueue = new T[Count - 1];
             for (int i = 1; i < Count - 1; i++)
@@ -42,32 +71,12 @@ namespace DAMLib
             _queue = NewQueue;
             return element;
         }
-        public int Count
-        {
-            get=> _count;
-        }
-        public T First
-        {
-            get
-            {
-                return !(Empty) ? _queue[0] : default(T);
-            }
-        }
-        public T Last
-        {
-            get
-            {
-                return !(Empty) ? _queue[Count-1] : default(T);
-            }     
-        }
+       
         public void Clear()
         {
             _count = 0;
         }
-        public bool Empty
-        {
-            get => Count == 0;
-        }
+ 
          
     }
 }

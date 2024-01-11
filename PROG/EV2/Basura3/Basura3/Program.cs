@@ -8,7 +8,8 @@ namespace Basura3
         static void Main(string[] args)
         {
             Stack s = new Stack();
-
+            HashSet<string> set = new HashSet<string>();   
+            set.Add()
 
             
         }
