@@ -10,6 +10,8 @@ namespace DAMLib
 
     public class Set<T>
     {
+        private T[] _set = new T[0];
+        private int _count = 0;    
 
         public override bool Equals(object? obj)
         {
@@ -18,12 +20,8 @@ namespace DAMLib
             if (obj is not Set<T>)
                 return false;
             Set<T> s = (Set<T>)obj;
-            return s._set == _set && s._count== _count;
+            return s._set == _set && s._count == _count;
         }
-
-        private T[] _set= new T[0];
-        private int _count = 0;
-
         public int Count
         {
             get => _count;
