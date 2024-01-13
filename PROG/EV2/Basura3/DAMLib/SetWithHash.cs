@@ -26,14 +26,14 @@ namespace DAMLib
 
         public override int GetHashCode()
         {
-            return _hash.GetHashCode() * _hash.GetHashCode() - 66 * (_hash.GetHashCode()/77) + Count;
+            return _hash.GetHashCode() * _hash.GetHashCode() - Count * (_hash.GetHashCode()/77) + Count;
         }
         public int Count
         {
             get => _count;
         }
 
-        public int IndexOf(T element)
+        public int IndexOf(T element)// implementar hash
         {
             for (int i = 0; i < _set.Length; i++)
             {
@@ -55,17 +55,21 @@ namespace DAMLib
             if (Count < _set.Length)
             {
                 _set[_count++] = element;
-                _hash[Count] = 1;
+                _hash[Count] = element.GetHashCode();
             }
             else
             {
                 T[] NewSet = new T[Count + 1];
+                int[] NewHash = new int[Count - 1];
                 for (int i = 0; i < Count - 1; i++)
                 {
                     NewSet[i] = _set[i];
+                    NewHash[i] = _hash[i];
                 }
                 NewSet[Count - 1] = element;
+                NewHash[Count-1] = GetHashCode();
                 _set = NewSet;
+                _hash = NewHash;
             }
         }
         public void Remove(T element) //implementar hash
@@ -74,7 +78,7 @@ namespace DAMLib
             if (aux == -1)
                 return;
             T[] NewSet = new T[Count - 1];
-
+            int[] NewHash = new int[Count - 1];
             //for (int i = 0; i < Count - 1; i++)
             //{
             //    if (i == aux)
@@ -83,9 +87,16 @@ namespace DAMLib
             //}
 
             for (int i = 0; i < aux; i++)
+            {
                 NewSet[i] = _set[i];
+                NewHash[i] = _hash[i];
+            }    
             for (int i = aux + 1; i < Count - 2; i++)
+            {
                 NewSet[i - 1] = _set[i];
+                NewHash[i] = _hash[i];
+            }
+               
 
             _set = NewSet;
         }
