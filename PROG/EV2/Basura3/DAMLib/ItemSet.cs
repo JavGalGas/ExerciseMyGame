@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DAMLib
 {
-    public class SetWithHash<T>
+    public class ItemSet<T>
     {
-        private T[] _set = new T[0];
-        private int[] _hash = new int[0];
+        private class Item
+        {
+            public T _element;
+            public int _hash;
+            
+        }
+        private Item[] _items;
+
         private int _count = 0;
 
         public override bool Equals(object? obj)
         {
             if (this == obj)
                 return true;
-            if (obj is not SetWithHash<T>)
+            if (obj is not Item)
                 return false;
-            SetWithHash<T> s = (SetWithHash<T>)obj;
-            return s._set == _set && s._count == _count;
+            Item s = (Item)obj;
+            return s._element == _element && s._hash == _hash;
         }
 
         public override int GetHashCode()
@@ -38,7 +45,7 @@ namespace DAMLib
 #nullable enable
             for (int i = 0; i < _set.Length; i++)
             {
-                
+
                 if (h == _hash[i])
                 {
 #nullable disable
@@ -80,7 +87,7 @@ namespace DAMLib
                     NewHash[i] = _hash[i];
                 }
                 NewSet[Count - 1] = element;
-                NewHash[Count-1] = element.GetHashCode();
+                NewHash[Count - 1] = element.GetHashCode();
                 _set = NewSet;
                 _hash = NewHash;
             }
@@ -103,7 +110,7 @@ namespace DAMLib
             {
                 NewSet[i] = _set[i];
                 NewHash[i] = _hash[i];
-            }    
+            }
             for (int i = aux + 1; i < NewSet.Length; i++)
             {
                 NewSet[i - 1] = _set[i];
@@ -118,12 +125,12 @@ namespace DAMLib
             //if (IndexOf(element) == -1)
             //    return false;
             //return true;
-            for (int i = 0; i < Count-1; i++)
+            for (int i = 0; i < Count - 1; i++)
             {
-                for(int j = 1;  j < Count; j++)
+                for (int j = 1; j < Count; j++)
                 {
                     if (_hash[i] == _hash[j])
-                       return true;
+                        return true;
                 }
             }
             for (int i = 0; i < Count; i++)
@@ -135,6 +142,5 @@ namespace DAMLib
             }
             return false;
         }
-
     }
 }
