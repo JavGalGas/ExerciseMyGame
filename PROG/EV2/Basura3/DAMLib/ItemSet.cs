@@ -13,25 +13,31 @@ namespace DAMLib
         {
             public T _element;
             public int _hash;
-            
+
+
+            public override bool Equals(object? obj)
+            {
+                if (this == obj)
+                    return true;
+                if (obj is not Item)
+                    return false;
+                Item s = (Item)obj;
+                return s._element == _element && s._hash == _hash;
+            }
+
+
+
+
         }
         private Item[] _items;
 
         private int _count = 0;
 
-        public override bool Equals(object? obj)
-        {
-            if (this == obj)
-                return true;
-            if (obj is not Item)
-                return false;
-            Item s = (Item)obj;
-            return s._element == _element && s._hash == _hash;
-        }
+        
 
         public override int GetHashCode()
         {
-            return _hash.GetHashCode() * _set.GetHashCode() - Count * (_count.GetHashCode() / 77) + Count;
+            return _items.GetHashCode() * _items.GetHashCode() - Count * (_count.GetHashCode() / 77) + Count;
         }
         public int Count
         {
@@ -43,20 +49,20 @@ namespace DAMLib
 #nullable disable
             int h = element.GetHashCode();
 #nullable enable
-            for (int i = 0; i < _set.Length; i++)
+            for (int i = 0; i < _items.Length; i++)
             {
 
-                if (h == _hash[i])
+                if (h == _items[i]._hash)
                 {
 #nullable disable
-                    if (_set[i].Equals(element))
+                    if (_items[i].Equals(element))
 #nullable enable
                     {
                         return i;
                     }
                 }
 #nullable disable
-                if (_set[i].Equals(element))
+                if (_items[i].Equals(element))
 #nullable enable
                 {
                     return i;
@@ -72,24 +78,22 @@ namespace DAMLib
         public void Add(T element) //implementar hash
         {
 
-            if (Count < _set.Length)
+            if (Count < _items.Length)
             {
-                _set[_count++] = element;
-                _hash[Count] = element.GetHashCode();
+                _items[_count++]._element = element;
+                _items[Count]._hash = element.GetHashCode();
             }
             else
             {
-                T[] NewSet = new T[Count + 1];
-                int[] NewHash = new int[Count - 1];
+                Item[] NewArray = new Item[Count + 1];
                 for (int i = 0; i < Count; i++)
                 {
-                    NewSet[i] = _set[i];
-                    NewHash[i] = _hash[i];
+                    NewArray[i]._element = _items[i]._element;
+                    NewArray[i]._hash = _items[i].GetHashCode();
                 }
-                NewSet[Count - 1] = element;
-                NewHash[Count - 1] = element.GetHashCode();
-                _set = NewSet;
-                _hash = NewHash;
+                NewArray[Count - 1]._element = element;
+                NewArray[Count - 1]._hash = element.GetHashCode();
+                _items = NewArray;
             }
         }
         public void Remove(T element) //implementar hash
@@ -97,8 +101,7 @@ namespace DAMLib
             int aux = IndexOf(element);
             if (aux == -1)
                 return;
-            T[] NewSet = new T[Count - 1];
-            int[] NewHash = new int[Count - 1];
+            Item[] NewArray = new Item[Count - 1];
             //for (int i = 0; i < Count - 1; i++)
             //{
             //    if (i == aux)
@@ -108,16 +111,15 @@ namespace DAMLib
 
             for (int i = 0; i < aux; i++)
             {
-                NewSet[i] = _set[i];
-                NewHash[i] = _hash[i];
+                NewArray[i]._element = _items[i]._element;
+                NewArray[i]._hash = _items[i]._hash;
             }
-            for (int i = aux + 1; i < NewSet.Length; i++)
+            for (int i = aux + 1; i < NewArray.Length; i++)
             {
-                NewSet[i - 1] = _set[i];
-                NewHash[i] = _hash[i];
+                NewArray[i - 1]._element = _items[i]._element;
+                NewArray[i]._hash = _items[i]._hash;
             }
-            _set = NewSet;
-            _hash = NewHash;
+            _items = NewArray;
         }
 
         public bool Cointains(T element) //implementar hash
@@ -129,14 +131,14 @@ namespace DAMLib
             {
                 for (int j = 1; j < Count; j++)
                 {
-                    if (_hash[i] == _hash[j])
+                    if (_items[i]._hash == _items[j]._hash)
                         return true;
                 }
             }
             for (int i = 0; i < Count; i++)
             {
 #nullable disable
-                if (_set[i].Equals(element))
+                if (_items[i].Equals(element))
 #nullable enable
                     return true;
             }
