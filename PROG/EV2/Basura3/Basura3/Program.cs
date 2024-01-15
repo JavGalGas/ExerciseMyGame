@@ -11,23 +11,28 @@ namespace Basura3
         }
         static void Main(string[] args)
         {
-            //DAMLib.Stack stack = new();
-            //stack.Start();
-            //stack.Push("a");
-            //stack.Push("b");
-            //stack.Push("c");
-            //stack.Push("d");
-            //stack.Push("e");
-            //stack.Push("f");
-            //stack.GetTop();
-            //stack.Pop();
-            //stack.End();
-            //DAMLib.Set set = new();
-            //DAMLib.Queue queue = new();
+            DAMLib.Stack<string> stack = new();
+            stack.Push("a");
+            stack.Push("b");
+            stack.Push("c");
+            stack.Push("d");
+            stack.Push("e");
+            stack.Push("f");
+            Console.WriteLine(stack.GetTop().ToString());
+            Console.WriteLine(stack.IsEmpty());
+            Console.WriteLine(stack.GetCount());
+            Console.WriteLine(stack.Pop());
+            Console.WriteLine(stack.GetTop().ToString());
+            Console.WriteLine(stack.IsEmpty());
+            Console.WriteLine(stack.GetCount());
 
-            Prueba s = new Prueba();
-            s._hash[0] = "hola";
-            Console.WriteLine(s._hash[0].GetHashCode());
+
+            //Set<string> set = new();
+            //DAMLib.Queue<string> queue = new();
+
+            //SetWithHash<string> s = new();
+            //s.Add("hola");
+            //Console.WriteLine();
 
         }
     }

@@ -26,7 +26,7 @@ namespace DAMLib
 
         public override int GetHashCode()
         {
-            return _hash.GetHashCode() * _hash.GetHashCode() - Count * (_hash.GetHashCode()/77) + Count;
+            return _hash.GetHashCode() * _set.GetHashCode() - Count * (_count.GetHashCode() / 77) + Count;
         }
         public int Count
         {
@@ -37,7 +37,9 @@ namespace DAMLib
         {
             for (int i = 0; i < _set.Length; i++)
             {
+#nullable disable
                 if (_set[i].Equals(element))
+#nullable enable
                 {
                     return i;
                 }
@@ -55,13 +57,13 @@ namespace DAMLib
             if (Count < _set.Length)
             {
                 _set[_count++] = element;
-                _hash[Count] = element.GetHashCode();
+                _hash[Count] = GetHashCode();
             }
             else
             {
                 T[] NewSet = new T[Count + 1];
                 int[] NewHash = new int[Count - 1];
-                for (int i = 0; i < Count - 1; i++)
+                for (int i = 0; i < Count; i++)
                 {
                     NewSet[i] = _set[i];
                     NewHash[i] = _hash[i];
@@ -91,7 +93,7 @@ namespace DAMLib
                 NewSet[i] = _set[i];
                 NewHash[i] = _hash[i];
             }    
-            for (int i = aux + 1; i < Count - 2; i++)
+            for (int i = aux + 1; i < NewSet.Length; i++)
             {
                 NewSet[i - 1] = _set[i];
                 NewHash[i] = _hash[i];
@@ -109,7 +111,9 @@ namespace DAMLib
 
             for (int i = 0; i < Count; i++)
             {
+#nullable disable
                 if (_set[i].Equals(element))
+#nullable enable
                     return true;
             }
             return false;

@@ -9,7 +9,7 @@ namespace DAMLib
         public void Push(T element)
         {
             T[] NewStack = new T[GetCount()+1];
-            for(int i = 0; i < _stack.Length-1; i++)
+            for(int i = 0; i < _stack.Length; i++)
             {
                 NewStack[i] = _stack[i];
             }
@@ -19,10 +19,12 @@ namespace DAMLib
         public T Pop()
         {
             if(IsEmpty())
+#nullable disable
                 return default(T);
+#nullable enable
             T element = GetTop();
             T[] NewStack = new T[GetCount() - 1];
-            for (int i = 0; i < _stack.Length-2; i++)
+            for (int i = 0; i < NewStack.Length; i++)
             {
                 NewStack[i] = _stack[i];
             }
@@ -32,7 +34,9 @@ namespace DAMLib
         public T GetTop()
         {
             if (IsEmpty())
+#nullable disable
                 return default(T);
+#nullable enable
             return _stack[_stack.Length - 1];
         }
         //Pop y GetTop pueden dar problemas con el null, hay que buscar sobre el default(T);
@@ -45,7 +49,7 @@ namespace DAMLib
         public int GetCount()
         {
             return _stack.Length;
-        }
+        }  
         //Libreria
         // DAMLibTest
         //      DAMLibTest

@@ -31,7 +31,9 @@ namespace DAMLib
         {
             for(int i = 0; i < _set.Length; i++)
             {
+#nullable disable
                 if (_set[i].Equals(element))
+#nullable enable
                 {
                     return i;
                 }
@@ -53,7 +55,7 @@ namespace DAMLib
             else
             {
                 T[] NewSet = new T[Count + 1];
-                for (int i = 0; i < Count - 1; i++)
+                for (int i = 0; i < Count; i++)
                 {
                     NewSet[i] = _set[i];
                 }
@@ -77,7 +79,7 @@ namespace DAMLib
 
             for(int i = 0; i < aux; i++)
                 NewSet[i]=_set[i];
-            for (int i = aux+1; i < Count - 2; i++)
+            for (int i = aux+1; i < NewSet.Length; i++)
                 NewSet[i-1] = _set[i];
 
             _set = NewSet;
@@ -91,12 +93,17 @@ namespace DAMLib
 
             for (int i = 0; i < Count; i++)
             {
+#nullable disable
                 if (_set[i].Equals(element))
+#nullable enable
                     return true;
             }
             return false;
         }
 
-        
+        public override int GetHashCode()
+        {
+           return base.GetHashCode();
+        }
     }
 }

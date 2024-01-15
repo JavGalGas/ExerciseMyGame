@@ -48,7 +48,7 @@ namespace DAMLib
             else
             {
                 T[] NewQueue = new T[Count + 1];
-                for (int i = 0; i < Count - 1; i++)
+                for (int i = 0; i < Count; i++)
                 {
                     NewQueue[i] = _queue[i];
                 }
