@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace DAMLib
 {
-    public class ItemSet<T>
+    public class ItemSet<T>//modificar, sobre todo el Equals
     {
         private class Item
         {
@@ -45,12 +45,12 @@ namespace DAMLib
         public int IndexOf(T element)// implementar hash
         {
 #nullable disable
-            int h = element.GetHashCode();
+            int hash = element.GetHashCode();
 #nullable enable
             for (int i = 0; i < _items.Length; i++)
             {
 
-                if (h == _items[i]._hash)
+                if (hash == _items[i]._hash)
                 {
 #nullable disable
                     if (_items[i].Equals(element))
@@ -60,7 +60,7 @@ namespace DAMLib
                     }
                 }
 #nullable disable
-                if (_items[i].Equals(element))
+                else if (_items[i].Equals(element))
 #nullable enable
                 {
                     return i;
@@ -75,8 +75,11 @@ namespace DAMLib
         }
         public void Add(T element) //implementar hash
         {
-
-            if (Count < _items.Length)
+            if(Contains(element))
+            {
+                return;
+            }
+            else if (Count < _items.Length)
             {
                 _items[_count++]._element = element;
 #nullable disable
@@ -124,7 +127,7 @@ namespace DAMLib
             _items = NewArray;
         }
 
-        public bool Cointains(T element) //implementar hash
+        public bool Contains(T element) //implementar hash
         {
             //if (IndexOf(element) == -1)
             //    return false;
