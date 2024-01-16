@@ -64,8 +64,12 @@ namespace DAMLib
         }
         public void Add(T element) //implementar hash
         {
+            if (Cointains(element))
+            {
+                return;
+            }
 
-            if (Count < _set.Length)
+            else if (Count < _set.Length)
             {
                 _set[_count++] = element;
 #nullable disable
@@ -75,12 +79,15 @@ namespace DAMLib
             else
             {
                 T[] NewSet = new T[Count + 1];
-                int[] NewHash = new int[Count - 1];
+                int[] NewHash = new int[Count + 1];
                 for (int i = 0; i < Count; i++)
                 {
                     NewSet[i] = _set[i];
                     NewHash[i] = _hash[i];
                 }
+                NewSet[_count++] = element;
+                _set = NewSet;
+
                 NewSet[Count - 1] = element;
 #nullable disable
                 NewHash[Count-1] = element.GetHashCode();
@@ -89,26 +96,21 @@ namespace DAMLib
                 _hash = NewHash;
             }
         }
+
         public void Remove(T element) //implementar hash
         {
             int aux = IndexOf(element);
             if (aux == -1)
                 return;
-            T[] NewSet = new T[Count - 1];
-            int[] NewHash = new int[Count - 1];
-            //for (int i = 0; i < Count - 1; i++)
-            //{
-            //    if (i == aux)
-            //        continue;
-            //    NewSet[i] = _set[i];
-            //}
+            T[] NewSet = new T[--_count];
+            int[] NewHash = new int[Count];
 
             for (int i = 0; i < aux; i++)
             {
                 NewSet[i] = _set[i];
                 NewHash[i] = _hash[i];
             }    
-            for (int i = aux + 1; i < NewSet.Length; i++)
+            for (int i = aux + 1; i <= NewSet.Length; i++)
             {
                 NewSet[i - 1] = _set[i];
                 NewHash[i] = _hash[i];

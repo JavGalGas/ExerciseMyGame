@@ -47,19 +47,23 @@ namespace DAMLib
         }
         public void Add(T element)
         {
+            if(Cointains(element))
+            {
+                return;
+            }
 
-            if (Count < _set.Length)
+            else if (Count < _set.Length)
             {
                 _set[_count++] = element;
             }
             else
             {
-                T[] NewSet = new T[Count + 1];
+                T[] NewSet = new T[Count+1];
                 for (int i = 0; i < Count; i++)
                 {
                     NewSet[i] = _set[i];
                 }
-                NewSet[Count - 1] = element;
+                NewSet[_count++] = element;
                 _set = NewSet;
             }
         }
@@ -68,7 +72,7 @@ namespace DAMLib
             int aux = IndexOf(element);
             if (aux == -1)
                 return;
-            T[] NewSet = new T[Count - 1];
+            T[] NewSet = new T[--_count];
             
             //for (int i = 0; i < Count - 1; i++)
             //{
@@ -79,7 +83,7 @@ namespace DAMLib
 
             for(int i = 0; i < aux; i++)
                 NewSet[i]=_set[i];
-            for (int i = aux+1; i < NewSet.Length; i++)
+            for (int i = aux+1; i <= NewSet.Length; i++)
                 NewSet[i-1] = _set[i];
 
             _set = NewSet;

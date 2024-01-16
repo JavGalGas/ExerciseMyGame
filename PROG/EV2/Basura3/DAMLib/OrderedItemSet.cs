@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace DAMLib
 {
-    public class ItemSet<T>//modificar, sobre todo el Equals(cambiar Add y Remove por el correcto)
+    public class OrderedItemSet<T>//Es ItemSet, pero con una copia ordenada de hash para optimizar la busqueda
     {
         private class Item
         {
@@ -17,7 +16,7 @@ namespace DAMLib
             public int _hash;
 
         }
-        private Item[] _items= new Item[0];
+        private Item[] _items = new Item[0];
 
         private int _count = 0;
 
@@ -25,9 +24,9 @@ namespace DAMLib
         {
             if (this == obj)
                 return true;
-            if (obj is not ItemSet<T>)
+            if (obj is not OrderedItemSet<T>)
                 return false;
-            ItemSet<T> s = (ItemSet<T>)obj;
+            OrderedItemSet<T> s = (OrderedItemSet<T>)obj;
             return s._items == _items && s._count == _count;
         }
 
@@ -75,7 +74,7 @@ namespace DAMLib
         }
         public void Add(T element) //implementar hash
         {
-            if(Contains(element))
+            if (Contains(element))
             {
                 return;
             }

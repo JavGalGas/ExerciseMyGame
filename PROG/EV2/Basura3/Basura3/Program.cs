@@ -27,28 +27,59 @@ namespace Basura3
             //Console.WriteLine(stack.GetCount());
 
 
-            //Set<string> set = new();
+            Set<string> set = new();
+            set.Add("a");
+            set.Add("b");
+            set.Add("c");
+            set.Add("d");
+            set.Add("e");
+            Console.WriteLine(set.Cointains("c"));
+            Console.WriteLine(set.Equals(set));
+            set.Remove("c");
+            Console.WriteLine(set.Cointains("c"));
+
+
+
             //DAMLib.Queue<string> queue = new();
 
-            SetWithHash<string> s = new();
-            s.Add("hola");
-            s.Add("ho");
-            s.Add("hola");
-            s.Add("as");
-            s.Add("brd");
-            s.Add("ngh");
-            s.Add("vrtd");
-            s.Add("nyt");
-            s.Add("vdfvg");
-            s.Add("ho");
-            s.Add("bdr");
-            s.Add("ngh");
-            s.Add("nyt");
-            s.Add("bdgn");
-            s.Add("nty");
-            s.Add("as");
-            s.Add("brd");
-            Console.WriteLine();
+            //SetWithHash<string> s = new();
+            //s.Add("hola");
+            //s.Add("ho");
+            //s.Add("hola");
+            //s.Add("as");
+            //s.Add("brd");
+            //s.Add("negh");
+            //s.Add("vrtd");
+            //s.Add("nyt");
+            //s.Add("vdfvg");
+            //s.Add("ho");
+            //s.Add("bdr");
+            //s.Add("negh");
+            //s.Add("nyt");
+            //s.Add("bdgn");
+            //s.Add("nty");
+            //s.Add("as");
+            //s.Add("brd");
+            //Console.WriteLine(s.Cointains("ho"));
+            //Console.WriteLine(s.Equals(s));
+            //Console.WriteLine();
+
+            //ItemSet<string> itemSet = new ItemSet<string>();
+            //itemSet.Add("hola");
+            //itemSet.Add("hola2");
+            //itemSet.Add("hola3");
+            //itemSet.Add("hola4");
+            //itemSet.Add("hola5");
+            //itemSet[1].Equals("hola2");
+
+
+
+
+
+
+
+
+
 
         }
     }
