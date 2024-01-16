@@ -11,34 +11,32 @@ namespace DAMLib
     {
         private class Item
         {
+#nullable disable
             public T _element;
+#nullable enable
             public int _hash;
 
-
-            public override bool Equals(object? obj)
-            {
-                if (this == obj)
-                    return true;
-                if (obj is not Item)
-                    return false;
-                Item s = (Item)obj;
-                return s._element == _element && s._hash == _hash;
-            }
-
-
-
-
         }
-        private Item[] _items;
+        private Item[] _items= new Item[0];
 
         private int _count = 0;
 
-        
+        public override bool Equals(object? obj)
+        {
+            if (this == obj)
+                return true;
+            if (obj is not ItemSet<T>)
+                return false;
+            ItemSet<T> s = (ItemSet<T>)obj;
+            return s._items == _items && s._count == _count;
+        }
 
         public override int GetHashCode()
         {
             return _items.GetHashCode() * _items.GetHashCode() - Count * (_count.GetHashCode() / 77) + Count;
         }
+
+
         public int Count
         {
             get => _count;
@@ -81,7 +79,9 @@ namespace DAMLib
             if (Count < _items.Length)
             {
                 _items[_count++]._element = element;
+#nullable disable
                 _items[Count]._hash = element.GetHashCode();
+#nullable enable
             }
             else
             {
@@ -92,7 +92,9 @@ namespace DAMLib
                     NewArray[i]._hash = _items[i].GetHashCode();
                 }
                 NewArray[Count - 1]._element = element;
+#nullable disable
                 NewArray[Count - 1]._hash = element.GetHashCode();
+#nullable enable
                 _items = NewArray;
             }
         }

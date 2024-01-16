@@ -68,7 +68,9 @@ namespace DAMLib
             if (Count < _set.Length)
             {
                 _set[_count++] = element;
+#nullable disable
                 _hash[Count] = element.GetHashCode();
+#nullable enable
             }
             else
             {
@@ -80,7 +82,9 @@ namespace DAMLib
                     NewHash[i] = _hash[i];
                 }
                 NewSet[Count - 1] = element;
+#nullable disable
                 NewHash[Count-1] = element.GetHashCode();
+#nullable enable
                 _set = NewSet;
                 _hash = NewHash;
             }
