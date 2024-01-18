@@ -92,39 +92,40 @@ namespace DAMLib
                 for (int i = 0; i < Count; i++)
                 {
                     NewArray[i]._element = _items[i]._element;
-                    NewArray[i]._hash = _items[i].GetHashCode();
+                    NewArray[i]._hash = _items[i]._hash;
                 }
-                NewArray[Count - 1]._element = element;
+                NewArray[_count++]._element = element;
 #nullable disable
                 NewArray[Count - 1]._hash = element.GetHashCode();
 #nullable enable
                 _items = NewArray;
             }
         }
+
         public void Remove(T element) //implementar hash
         {
             int aux = IndexOf(element);
             if (aux == -1)
                 return;
-            Item[] NewArray = new Item[Count - 1];
-            //for (int i = 0; i < Count - 1; i++)
-            //{
-            //    if (i == aux)
-            //        continue;
-            //    NewSet[i] = _set[i];
-            //}
+            Item[] NewArray = new Item[--_count];
 
             for (int i = 0; i < aux; i++)
             {
                 NewArray[i]._element = _items[i]._element;
                 NewArray[i]._hash = _items[i]._hash;
             }
-            for (int i = aux + 1; i < NewArray.Length; i++)
+            for (int i = aux + 1; i <= NewArray.Length; i++)
             {
                 NewArray[i - 1]._element = _items[i]._element;
-                NewArray[i]._hash = _items[i]._hash;
+                NewArray[i-1]._hash = _items[i]._hash;
             }
             _items = NewArray;
+        }
+
+        public void Remove(T element) //implementar hash
+        {//la direccion en la memoria ram donde se encuentra el entero (resultEntero), y es donde se encuentra la variable.
+         //out, in y ref estan relacionados a direcciones de la memoria RAM
+
         }
 
         public bool Contains(T element) //implementar hash

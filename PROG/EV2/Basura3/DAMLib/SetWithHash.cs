@@ -86,9 +86,6 @@ namespace DAMLib
                     NewHash[i] = _hash[i];
                 }
                 NewSet[_count++] = element;
-                _set = NewSet;
-
-                NewSet[Count - 1] = element;
 #nullable disable
                 NewHash[Count-1] = element.GetHashCode();
 #nullable enable
@@ -113,12 +110,11 @@ namespace DAMLib
             for (int i = aux + 1; i <= NewSet.Length; i++)
             {
                 NewSet[i - 1] = _set[i];
-                NewHash[i] = _hash[i];
+                NewHash[i-1] = _hash[i];
             }
             _set = NewSet;
             _hash = NewHash;
         }
-
         public bool Cointains(T element) //implementar hash
         {
             //if (IndexOf(element) == -1)
