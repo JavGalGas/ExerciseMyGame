@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DAMLib
 {
 
-    public class Set<T>
+    public class Set<T> : ISet<T>
     {
         private T[] _set = new T[0];
         private int _count = 0;    
@@ -47,7 +47,7 @@ namespace DAMLib
         }
         public void Add(T element)
         {
-            if(Cointains(element))
+            if(Contains(element))
             {
                 return;
             }
@@ -89,7 +89,7 @@ namespace DAMLib
             _set = NewSet;
         }
 
-        public bool Cointains(T element)
+        public bool Contains(T element)
         {
             //if (IndexOf(element) == -1)
             //    return false;
@@ -108,6 +108,11 @@ namespace DAMLib
         public override int GetHashCode()
         {
            return base.GetHashCode();
+        }
+
+        public bool IsEmpty
+        {
+            get { return _set.Length == 0; }
         }
     }
 }

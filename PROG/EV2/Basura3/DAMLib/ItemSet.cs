@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace DAMLib
 {
-    public class ItemSet<T>//modificar, sobre todo el Equals(cambiar Add y Remove por el correcto)
+    public class ItemSet<T>/*modificar, sobre todo el Equals(cambiar Add y Remove por el correcto)*/: ISet<T>
     {
         private class Item
         {
@@ -122,11 +122,10 @@ namespace DAMLib
             _items = NewArray;
         }
 
-        public void Remove(T element) //implementar hash
-        {//la direccion en la memoria ram donde se encuentra el entero (resultEntero), y es donde se encuentra la variable.
-         //out, in y ref estan relacionados a direcciones de la memoria RAM
+ //implementar hash
+    //la direccion en la memoria ram donde se encuentra el entero (resultEntero), y es donde se encuentra la variable.
+    //out, in y ref estan relacionados a direcciones de la memoria RAM
 
-        }
 
         public bool Contains(T element) //implementar hash
         {
@@ -149,6 +148,10 @@ namespace DAMLib
                     return true;
             }
             return false;
+        }
+        public bool IsEmpty
+        {
+            get { return _items.Length == 0; }
         }
     }
 }

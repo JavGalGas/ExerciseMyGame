@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAMLib
 {
-    public class SetWithHash<T>
+    public class SetWithHash<T> : ISet<T>
     {
         private T[] _set = new T[0];
         private int[] _hash = new int[0];
@@ -64,7 +64,7 @@ namespace DAMLib
         }
         public void Add(T element) //implementar hash
         {
-            if (Cointains(element))
+            if (Contains(element))
             {
                 return;
             }
@@ -115,7 +115,7 @@ namespace DAMLib
             _set = NewSet;
             _hash = NewHash;
         }
-        public bool Cointains(T element) //implementar hash
+        public bool Contains(T element) //implementar hash
         {
             //if (IndexOf(element) == -1)
             //    return false;
@@ -137,6 +137,9 @@ namespace DAMLib
             }
             return false;
         }
-
+        public bool IsEmpty
+        {
+            get { return _set.Length == 0; }
+        }
     }
 }

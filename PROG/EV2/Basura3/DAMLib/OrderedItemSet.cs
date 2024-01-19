@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAMLib
 {
-    public class OrderedItemSet<T>//Es ItemSet, pero con una copia ordenada de hash para optimizar la busqueda -- modificar
+    public class OrderedItemSet<T>/*Es ItemSet, pero con una copia ordenada de hash para optimizar la busqueda -- modificar*/ :ISet<T>
     {
         private class Item
         {
@@ -142,6 +142,10 @@ namespace DAMLib
                     return true;
             }
             return false;
+        }
+        public bool IsEmpty
+        {
+            get { return _items.Length == 0; }
         }
     }
 }
