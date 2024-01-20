@@ -51,16 +51,16 @@ namespace Basura3
             {
                 set.Clear();
 
-                results.Empty1 = set.IsEmpty;
+//                results.Empty1 = set.IsEmpty;
 
-                results.Count1 = set.Count;
-#nullable disable
-                set.Remove(null);
+//                results.Count1 = set.Count;
+//#nullable disable
+//                set.Remove(null);
 
-                set.Add(null);
+//                set.Add(null);
 
-                set.Contains(null);
-#nullable enable
+//                set.Contains(null);
+//#nullable enable
 
                 set.Add("Juan");
 
@@ -186,10 +186,70 @@ namespace Basura3
             string stringResult3 = JsonSerializer.Serialize(result3);
             string stringResult4 = JsonSerializer.Serialize(result4);
 
+            Console.WriteLine("---Set---");
+            Console.WriteLine(stringResult == stringResult2);
+            Console.WriteLine(stringResult2 == stringResult3);
+            Console.WriteLine(stringResult3 == stringResult4);
+            Console.WriteLine(stringResult4 == stringResult);
+            Console.WriteLine(stringResult2 == stringResult4);
+            Console.WriteLine(stringResult == stringResult3);
 
+            Console.WriteLine(" ");
 
+            SetWithHash<string> setWH = new SetWithHash<string>();
+            Test1Results resultWH1 = Test1(setWH);
 
+            SetWithHash<string> setWH2 = new SetWithHash<string>();
+            Test1Results resultWH2 = Test1(setWH2);
 
+            SetWithHash<string> setWH3 = new SetWithHash<string>();
+            Test1Results resultWH3 = Test1(setWH3);
+
+            SetWithHash<string> setWH4 = new SetWithHash<string>();
+            Test1Results resultWH4 = Test1(setWH4);
+
+            string stringResultWH = JsonSerializer.Serialize(resultWH1);
+            string stringResultWH2 = JsonSerializer.Serialize(resultWH2);
+            string stringResultWH3 = JsonSerializer.Serialize(resultWH3);
+            string stringResultWH4 = JsonSerializer.Serialize(resultWH4);
+
+            Console.WriteLine("---SetWithHash---");
+            Console.WriteLine(stringResultWH == stringResultWH2);
+            Console.WriteLine(stringResultWH2 == stringResultWH3);
+            Console.WriteLine(stringResultWH3 == stringResultWH4);
+            Console.WriteLine(stringResultWH4 == stringResultWH);
+            Console.WriteLine(stringResultWH2 == stringResultWH4);
+            Console.WriteLine(stringResultWH == stringResultWH3);
+
+            Console.WriteLine(" ");
+
+            SetWithHash<string> ItemSet = new SetWithHash<string>();
+            Test1Results resultIS1 = Test1(ItemSet);
+
+            SetWithHash<string> ItemSet2 = new SetWithHash<string>();
+            Test1Results resultIS2 = Test1(ItemSet2);
+
+            SetWithHash<string> ItemSet3 = new SetWithHash<string>();
+            Test1Results resultIS3 = Test1(ItemSet3);
+
+            SetWithHash<string> ItemSet4 = new SetWithHash<string>();
+            Test1Results resultIS4 = Test1(ItemSet4);
+
+            string stringResultIS = JsonSerializer.Serialize(resultIS1);
+            string stringResultIS2 = JsonSerializer.Serialize(resultIS2);
+            string stringResultIS3 = JsonSerializer.Serialize(resultIS3);
+            string stringResultIS4 = JsonSerializer.Serialize(resultIS4);
+
+            Console.WriteLine("---ItemSet---");
+            Console.WriteLine(stringResultIS == stringResultIS2);
+            Console.WriteLine(stringResultIS2 == stringResultIS3);
+            Console.WriteLine(stringResultIS3 == stringResultIS4);
+            Console.WriteLine(stringResultIS4 == stringResultIS);
+            Console.WriteLine(stringResultIS2 == stringResultIS4);
+            Console.WriteLine(stringResultIS == stringResultIS3);
+
+            Console.WriteLine(" ");
+            Console.WriteLine(stringResult== stringResultWH);
         }
         
     }

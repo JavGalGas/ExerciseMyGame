@@ -21,7 +21,7 @@ namespace DAMLib
             get
             {
 #nullable disable
-                return (Empty) ? default(T) :  _queue[0];
+                return (IsEmpty) ? default(T) :  _queue[0];
 #nullable enable
             }
         }
@@ -30,11 +30,11 @@ namespace DAMLib
             get
             {
 #nullable disable
-                return (Empty) ? default(T) : _queue[Count - 1];
+                return (IsEmpty) ? default(T) : _queue[Count - 1];
 #nullable enable
             }
         }
-        public bool Empty
+        public bool IsEmpty
         {
             get => Count == 0;
         }
@@ -58,7 +58,7 @@ namespace DAMLib
         }
         public T Dequeue()
         {
-            if (Empty)
+            if (IsEmpty)
 #nullable disable
                 return default(T);
 #nullable enable
