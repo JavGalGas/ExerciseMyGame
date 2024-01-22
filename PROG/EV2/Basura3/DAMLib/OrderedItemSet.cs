@@ -101,6 +101,66 @@ namespace DAMLib
             }
         }
 
+        private int[] HashClone()
+        {
+            int[] clone = new int[Count];
+            for(int i = 0; i< clone.Length;i++)
+            {
+                clone[i] = _items[i]._hash;
+            }
+            return clone;
+        }
+
+        private int[] OrderedHash()
+        {
+            if ( _items == null || Count == 0)
+                return new int[0];
+            int[] _hash = HashClone();
+            int n = Count-1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < Count; j++)
+                {
+                    if (_items[i] > list[j])
+                    {
+                        int aux;
+                        aux = list[i];
+                        list[i] = list[j];
+                        list[j] = aux;
+                    }
+                }
+            }
+            return (list);
+        }
+
+        public static List<int>? Sort(List<int> list)
+        {
+            if (list == null || list.Count == 0)
+                return null;
+            int n = list.Count - 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < list.Count; j++)
+                {
+                    if (list[i] > list[j])
+                    {
+                        int aux;
+                        aux = list[i];
+                        list[i] = list[j];
+                        list[j] = aux;
+                    }
+                }
+            }
+            return (list);
+        }
+
+        public void Swap(int hash1, int hash2)
+        {
+            int aux = hash1;
+            hash1 = hash2;
+            hash2 = aux;
+        }
+
         public void Remove(T element) //implementar hash
         {
             int aux = IndexOf(element);
@@ -145,7 +205,7 @@ namespace DAMLib
         }
         public bool IsEmpty
         {
-            get { return _items.Length == 0; }
+            get { return _count == 0; }
         }
     }
 }

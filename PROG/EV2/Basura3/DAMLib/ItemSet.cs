@@ -151,7 +151,7 @@ namespace DAMLib
         }
         public bool IsEmpty
         {
-            get { return _items.Length == 0; }
+            get { return _count == 0; }
         }
     }
 }

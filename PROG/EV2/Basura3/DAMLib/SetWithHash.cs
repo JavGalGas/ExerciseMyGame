@@ -139,7 +139,7 @@ namespace DAMLib
         }
         public bool IsEmpty
         {
-            get { return _set.Length == 0; }
+            get { return _count == 0; }
         }
     }
 }
