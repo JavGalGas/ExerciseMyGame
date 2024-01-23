@@ -46,7 +46,7 @@ namespace DAMLib
 #nullable disable
             int hash = element.GetHashCode();
 #nullable enable
-            for (int i = 0; i < _items.Length; i++)
+            for (int i = 0; i < Count; i++)
             {
 
                 if (hash == _items[i]._hash)
@@ -111,7 +111,7 @@ namespace DAMLib
             return clone;
         }
 
-        private int[] OrderedHash()
+        private int[] OrderedHash()//>>1 : desplaza los bit hacia el lado de las flechas, tantas veces como el número que se añade al lado (88/2 == 88 >> 1 == 0101 1000 -> 0010 1100)
         {
             if ( _items == null || Count == 0)
                 return new int[0];
@@ -133,14 +133,17 @@ namespace DAMLib
             return (list);
         }
 
-        public static List<int>? Sort(List<int> list)
+        private static List<int>? Sort(List<int> list)
         {
+            int n = list.Count;
+            int m = n - 1;
+
             if (list == null || list.Count == 0)
                 return null;
-            int n = list.Count - 1;
-            for (int i = 0; i < n; i++)
+
+            for (int i = 0; i < m; i++)
             {
-                for (int j = i + 1; j < list.Count; j++)
+                for (int j = i + 1; j < n; j++)
                 {
                     if (list[i] > list[j])
                     {
@@ -154,7 +157,7 @@ namespace DAMLib
             return (list);
         }
 
-        public void Swap(int hash1, int hash2)
+        private void Swap(int hash1, int hash2)
         {
             int aux = hash1;
             hash1 = hash2;
@@ -167,13 +170,14 @@ namespace DAMLib
             if (aux == -1)
                 return;
             Item[] NewArray = new Item[--_count];
+            int aux2 = NewArray.Length;
 
             for (int i = 0; i < aux; i++)
             {
                 NewArray[i]._element = _items[i]._element;
                 NewArray[i]._hash = _items[i]._hash;
             }
-            for (int i = aux + 1; i <= NewArray.Length; i++)
+            for (int i = aux + 1; i <= aux2; i++)
             {
                 NewArray[i - 1]._element = _items[i]._element;
                 NewArray[i - 1]._hash = _items[i]._hash;

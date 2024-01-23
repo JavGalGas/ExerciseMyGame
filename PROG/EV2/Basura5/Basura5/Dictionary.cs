@@ -3,73 +3,231 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Basura5
 {
-    delegate bool DictionaryFilterDelegate<K, V>(K key, V value);
+    public delegate bool DictionaryFilterDelegate<K, V>(K key, V value);
 
     public class Dictionary<K, V>
     {
-
-
+        private int _count=0;
         private class Item
         {
-            public K key;
-            public V value;
+#nullable disable
+            public K _key;
+            public V _value;
+#nullable enable
         }
 
         private Item[] _items = new Item[0];
-        public int Count => 0;
-        public bool IsEmpty => true;
+        public int Count => _count;
+        public bool IsEmpty => _count==0;
 
         public void Clear()
         {
-
+            _count=0;
         }
 
         public void Add(K key, V value)
         {
-
+            if (Contains(key))
+            {
+                return;
+            }
+            else if (Count < _items.Length)
+            {
+                _items[_count++]._key = key;
+#nullable disable
+                _items[Count]._value = value;
+#nullable enable
+            }
+            else
+            {
+                Item[] NewArray = new Item[Count + 1];
+                for (int i = 0; i < Count; i++)
+                {
+                    NewArray[i]._key = _items[i]._key;
+                    NewArray[i]._value = _items[i]._value;
+                }
+                NewArray[_count++]._key = key;
+#nullable disable
+                NewArray[Count - 1]._value = value;
+#nullable enable
+                _items = NewArray;
+            }
         }
         public bool Contains(K key)
         {
+            for (int i = 0; i < Count; i++)
+            {
+
+#nullable disable
+                if (_items[i]._key.Equals(key))
+#nullable enable
+                {
+                    return true;
+                }
+            }
             return false;
+        }
+
+        public int GetKey(K key)
+        {
+            if(Contains(key))
+            {
+                for(int i = 0; i < Count; i++)
+                {
+                    if (_items[i]._key.Equals(key))
+                        return i;
+                }
+            }
+            return -1;
+        }
+
+        private void AddKeyValue(K key, V value)//igual que el Add, pero organiza (ahora mismo no sabemos organizar por K)
+        {
+//            if (Count < _items.Length)
+//            {
+//                _items[_count++]._key = key;
+//#nullable disable
+//                _items[Count]._value = value;
+//#nullable enable
+//            }
+//            else
+//            {
+//                Item[] NewArray = new Item[Count + 1];
+//                for (int i = 0; i < Count; i++)
+//                {
+//                    NewArray[i]._key = _items[i]._key;
+//                    NewArray[i]._value = _items[i]._value;
+//                }
+//                NewArray[_count++]._key = key;
+//#nullable disable
+//                NewArray[Count - 1]._value = value;
+//#nullable enable
+//                _items = NewArray;
+//            }
         }
 
         public void Remove(K key)
         {
+            int aux = GetKey(key);
+            if (aux == -1)
+                return;
+            Item[] NewArray = new Item[--_count];
 
+            for (int i = 0; i < aux; i++)
+            {
+                NewArray[i]._key = _items[i]._key;
+                NewArray[i]._value = _items[i]._value;
+            }
+            for (int j = aux + 1; j <= NewArray.Length; j++)
+            {
+                int aux2 = j - 1;
+                NewArray[aux2]._key = _items[j]._key;
+                NewArray[aux2]._value = _items[j]._value;
+            }
+            _items = NewArray;
         }
 
-        public V GetValueWithKey(K key)
+        public V GetValueWithKey(K key)//modificar
         {
+#nullable disable
+            int hash = key.GetHashCode();
+#nullable enable
+            for (int i = 0; i < _items.Length; i++)
+            {
 
+                if (hash == _items[i]._hash)
+                {
+#nullable disable
+                    if (_items[i].Equals(key))
+#nullable enable
+                    {
+                        return i;
+                    }
+                }
+#nullable disable
+                else if (_items[i].Equals(key))
+#nullable enable
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
-        public bool TryGetValue(K key, out V value)
+        public bool TryGetValue(K key, out V value)//modificar
         {
+#nullable disable
+            int hash = key.GetHashCode();
+#nullable enable
+            for (int i = 0; i < _items.Length; i++)
+            {
 
+                if (hash == _items[i]._hash)
+                {
+#nullable disable
+                    if (_items[i].Equals(key))
+#nullable enable
+                    {
+                        return i;
+                    }
+                }
+#nullable disable
+                else if (_items[i].Equals(key))
+#nullable enable
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         //una lambda cambia el parámetro que normalmente pasamos por una función
         public Dictionary<K, V> Filter(DictionaryFilterDelegate<K, V> where)
         {
             var ret = new Dictionary<K, V>();
-            for (int i = 0; _items.Length; i++)
+            for (int i = 0; i < Count; i++)
             {
                 Item item = _items[i];
-                bool addToNewDictionary = where(item.key, item.value);
-
+                bool found = where(item._key, item._value);
+                if(found)
+                    ret.AddKeyValue(item._key, item._value);
             }
-
             return ret;
         }
 
-    }
-
         //igual que Remove(), pero varios key a la vez
-    public void Remove()
-    {
+        public void Remove(DictionaryFilterDelegate<K, V> where)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                Item item = _items[i];
+                bool found = where(item._key, item._value);
+                if (found)
+                {
+                    Remove(item._key);
+                    i--;
+                }
+                    
+            }
+        }
 
+        public override bool Equals(object? obj)
+        {
+            if (this == obj)
+                return true;
+            if (obj is not Dictionary<K, V>)
+                return false;
+            Dictionary<K, V> s = (Dictionary<K, V>)obj;
+            return s._items == _items && s._count == _count;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
