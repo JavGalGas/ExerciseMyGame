@@ -8,6 +8,7 @@ using System.Xml.Linq;
 namespace Basura5
 {
     public delegate bool DictionaryFilterDelegate<K, V>(K key, V value);
+    public delegate int ComparatorDelegate<T>(T n1, T n2);
 
     public class Dictionary<K, V>
     {
@@ -87,28 +88,29 @@ namespace Basura5
 
         private void AddKeyValue(K key, V value)//igual que el Add, pero organiza (ahora mismo no sabemos organizar por K)
         {
-//            if (Count < _items.Length)
+//            Item[] NewArray = new Item[_count++];
+//            for (int i = 0; i < Count-1; i++)
 //            {
-//                _items[_count++]._key = key;
-//#nullable disable
-//                _items[Count]._value = value;
-//#nullable enable
+//                NewArray[i]._key = _items[i]._key;
+//                NewArray[i]._value = _items[i]._value;
 //            }
-//            else
-//            {
-//                Item[] NewArray = new Item[Count + 1];
-//                for (int i = 0; i < Count; i++)
-//                {
-//                    NewArray[i]._key = _items[i]._key;
-//                    NewArray[i]._value = _items[i]._value;
-//                }
-//                NewArray[_count++]._key = key;
+//            NewArray[Count - 1]._key = key;
 //#nullable disable
-//                NewArray[Count - 1]._value = value;
+//            NewArray[Count - 1]._value = value;
 //#nullable enable
-//                _items = NewArray;
-//            }
+//            Sort(NewArray, (a, b) => {
+//                if (a._key.Equals(b._key))
+//                    return 0;
+//                if (a._key==null|| b._key ==null)
+//                    return -1;
+//                if (a._key.CompareTo(b._key) > 0)
+//                    return 1;
+//                return -1;
+//            });
+//            _items = NewArray;
+
         }
+
 
         public void Remove(K key)
         {
@@ -133,56 +135,59 @@ namespace Basura5
 
         public V GetValueWithKey(K key)//modificar
         {
-#nullable disable
-            int hash = key.GetHashCode();
-#nullable enable
-            for (int i = 0; i < _items.Length; i++)
-            {
+            //#nullable disable
+            //            int hash = key.GetHashCode();
+            //#nullable enable
+            //            for (int i = 0; i < _items.Length; i++)
+            //            {
 
-                if (hash == _items[i]._hash)
-                {
-#nullable disable
-                    if (_items[i].Equals(key))
-#nullable enable
-                    {
-                        return i;
-                    }
-                }
-#nullable disable
-                else if (_items[i].Equals(key))
-#nullable enable
-                {
-                    return i;
-                }
-            }
-            return -1;
+            //                if (hash == _items[i]._hash)
+            //                {
+            //#nullable disable
+            //                    if (_items[i].Equals(key))
+            //#nullable enable
+            //                    {
+            //                        return i;
+            //                    }
+            //                }
+            //#nullable disable
+            //                else if (_items[i].Equals(key))
+            //#nullable enable
+            //                {
+            //                    return i;
+            //                }
+            //            }
+            //            return -1;
+            return _items[0]._value;
         }
 
         public bool TryGetValue(K key, out V value)//modificar
         {
-#nullable disable
-            int hash = key.GetHashCode();
-#nullable enable
-            for (int i = 0; i < _items.Length; i++)
-            {
+            //#nullable disable
+            //            int hash = key.GetHashCode();
+            //#nullable enable
+            //            for (int i = 0; i < _items.Length; i++)
+            //            {
 
-                if (hash == _items[i]._hash)
-                {
-#nullable disable
-                    if (_items[i].Equals(key))
-#nullable enable
-                    {
-                        return i;
-                    }
-                }
-#nullable disable
-                else if (_items[i].Equals(key))
-#nullable enable
-                {
-                    return i;
-                }
-            }
-            return -1;
+            //                if (hash == _items[i]._hash)
+            //                {
+            //#nullable disable
+            //                    if (_items[i].Equals(key))
+            //#nullable enable
+            //                    {
+            //                        return i;
+            //                    }
+            //                }
+            //#nullable disable
+            //                else if (_items[i].Equals(key))
+            //#nullable enable
+            //                {
+            //                    return i;
+            //                }
+            //            }
+            //            return -1;
+            value = _items[0]._value;
+            return false;
         }
 
         //una lambda cambia el parámetro que normalmente pasamos por una función
@@ -202,6 +207,8 @@ namespace Basura5
         //igual que Remove(), pero varios key a la vez
         public void Remove(DictionaryFilterDelegate<K, V> where)
         {
+            if(where==null)
+                return;
             for (int i = 0; i < Count; i++)
             {
                 Item item = _items[i];
@@ -212,6 +219,26 @@ namespace Basura5
                     i--;
                 }
                     
+            }
+        }
+
+        public static void Swap<T>(ref T a, ref T b)
+        {
+            T aux = a;
+            a = b;
+            b = aux;
+        }
+        public static void Sort<T>(T[] array, ComparatorDelegate<T> comparer)
+        {
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    if (comparer(array[i], array[j]) < 0)
+                    {
+                        Swap(ref array[i], ref array[j]);
+                    }
+                }
             }
         }
 
