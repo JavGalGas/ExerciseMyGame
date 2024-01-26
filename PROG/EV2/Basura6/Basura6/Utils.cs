@@ -45,6 +45,7 @@ namespace Basura6
         //struct no soporta herencias, class sí
         //struct sirve, por ejemplo, a la hora de copiar y enviar de vuelta datos de la GPU.
         //struct se comporta como un int
+        //struct crea de una variable temporal, o que esta dentro de un objeto.
 
 
 
@@ -60,6 +61,108 @@ namespace Basura6
         //Student s = new Student(..., ...);
         //s.Name;
 
+        //void YerkoQuiereAEnrique()
+        //{
+        //    int j;
+        //    for(int i= 0; i <= 0; i--)
+        //    {
+        //        Beso b = new BesoEnLaBoca(); --> BesoEnLaBoca no da error si hereda de Beso (es class al heredar)
+        //              EN ACABAR el proceso de Beso, b apuntará a null, y en teoría se destruye (no lo hace)
+        //              runtime de C# (este es el lugar donde se 
+        //  runtime pide un hueco, el sistema lo busca y se lo devuelve, y por último el runtime te devuelve el espacio
+        //      App --> RT C# --> SO ¬
+        //       ^      |  ^         |
+        //       |______|  |_________|
+        //
+        //          En vez de borrarse el objeto, lo mete en una lista (pool) de objetos "muertos" (Garbage Collector)
+        //          
+        //    }
+        //}
+        //
+        //s= new Student();
+        //s1 = s;
+        //.
+        //.
+        //.
+        //s=null;
+        //
+        //class Node<T>
+        //{
+        //     private T Content/Item;
+        //     private List<Node<T>> _children;
+        //     private Node<T>? _parent; (root tiene como _parent null)
+        //
+        //
+        //
+        //     Node<T>? Parent{ get; Set(hacer función); }
+        //     bool IsRoot{ get; }
+        //     bool IsLeaf{ get; }
+        //     int ChildCount{ get; }
+        //     int Level { get; }
+        //     
+        //     int GetLevel()
+        //     {
+        //          return (_parent == null) ? return 0 : return _parent.GetLevel() + 1;
+        //
+        //          if(_parent == null)
+        //              return 0;
+        //          return _parent.GetLevel() + 1;
+        //          
+        //          (más eficiente con while)
+        //          while()
+        //          {
+        //          
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //          }
+        //     }
+        //
+        //     Node<T> GetRoot ()
+        //     {
+        //          return (_parent == null) ? this : _parent.GetRoot();
+        //  
+        //
+        //          if(_parent == null)
+        //              return this;
+        //          
+        //          return _parent.GetRoot();
+        //
+        //     }
+        //
+        //     void Unlink()        /(tambien se puede llamar Detach())
+        //     {
+        //          _parent.Remove(this); (Remove debe ser private)
+        //
+        //          _parent = null;
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //
+        //     }
+        //
+        //      void AddChild(Node<T> child)
+        //      {
+        //
+        //
+        //
+        //
+        //
+        //
+        //      }
+        //
+        //}
 
     }
 }
