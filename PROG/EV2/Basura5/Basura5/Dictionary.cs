@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace Basura5
+﻿namespace Basura5
 {
     public delegate bool DictionaryFilterDelegate<K, V>(K key, V value);
     public delegate int ComparatorDelegate<T>(T n1, T n2);
 
     public class Dictionary<K, V>
     {
-        private int _count=0;
+        private int _count = 0;
         private class Item
         {
 #nullable disable
@@ -23,11 +16,11 @@ namespace Basura5
 
         private Item[] _items = new Item[0];
         public int Count => _count;
-        public bool IsEmpty => _count==0;
+        public bool IsEmpty => _count == 0;
 
         public void Clear()
         {
-            _count=0;
+            _count = 0;
         }
 
         public void Add(K key, V value)
@@ -75,9 +68,9 @@ namespace Basura5
 
         public int GetKey(K key)
         {
-            if(Contains(key))
+            if (Contains(key))
             {
-                for(int i = 0; i < Count; i++)
+                for (int i = 0; i < Count; i++)
                 {
                     if (_items[i]._key.Equals(key))
                         return i;
@@ -86,28 +79,41 @@ namespace Basura5
             return -1;
         }
 
-        private void AddKeyValue(K key, V value)//igual que el Add, pero organiza (ahora mismo no sabemos organizar por K)
+        public K GetKeyAt(int index)
         {
-//            Item[] NewArray = new Item[_count++];
-//            for (int i = 0; i < Count-1; i++)
-//            {
-//                NewArray[i]._key = _items[i]._key;
-//                NewArray[i]._value = _items[i]._value;
-//            }
-//            NewArray[Count - 1]._key = key;
-//#nullable disable
-//            NewArray[Count - 1]._value = value;
-//#nullable enable
-//            Sort(NewArray, (a, b) => {
-//                if (a._key.Equals(b._key))
-//                    return 0;
-//                if (a._key==null|| b._key ==null)
-//                    return -1;
-//                if (a._key.CompareTo(b._key) > 0)
-//                    return 1;
-//                return -1;
-//            });
-//            _items = NewArray;
+            return _items[index]._key;
+        }
+        public V GetValueAt(int index)
+        {
+            return _items[index]._value;
+        }
+
+        public void AddKeyValue(K key, V value)//igual que el Add, pero organiza (ahora mismo no sabemos organizar por K)
+        {
+            Item[] NewArray = new Item[++_count];
+            for (int i = 0; i < Count - 1; i++)
+            {
+                NewArray[i]._key = _items[i]._key;
+                NewArray[i]._value = _items[i]._value;
+            }
+            NewArray[Count - 1]._key = key;
+#nullable disable
+            NewArray[Count - 1]._value = value;
+#nullable enable
+            Sort(NewArray, (a, b) =>
+            {
+                if (a._key.Equals(b._key))
+                    return 0;
+                if (a._key == null || b._key == null)
+                    return -1;
+#nullable disable
+                string key1 = a._key.ToString();
+                string key2 = b._key.ToString();
+                return key1.CompareTo(key2);
+#nullable enable
+
+            });
+            _items = NewArray;
 
         }
 
@@ -135,58 +141,34 @@ namespace Basura5
 
         public V GetValueWithKey(K key)//modificar
         {
-            //#nullable disable
-            //            int hash = key.GetHashCode();
-            //#nullable enable
-            //            for (int i = 0; i < _items.Length; i++)
-            //            {
-
-            //                if (hash == _items[i]._hash)
-            //                {
-            //#nullable disable
-            //                    if (_items[i].Equals(key))
-            //#nullable enable
-            //                    {
-            //                        return i;
-            //                    }
-            //                }
-            //#nullable disable
-            //                else if (_items[i].Equals(key))
-            //#nullable enable
-            //                {
-            //                    return i;
-            //                }
-            //            }
-            //            return -1;
-            return _items[0]._value;
+            if (TryGetValue(key, out var v))
+            { return v; }
+            return v;
         }
 
         public bool TryGetValue(K key, out V value)//modificar
         {
-            //#nullable disable
-            //            int hash = key.GetHashCode();
-            //#nullable enable
-            //            for (int i = 0; i < _items.Length; i++)
-            //            {
-
-            //                if (hash == _items[i]._hash)
-            //                {
-            //#nullable disable
-            //                    if (_items[i].Equals(key))
-            //#nullable enable
-            //                    {
-            //                        return i;
-            //                    }
-            //                }
-            //#nullable disable
-            //                else if (_items[i].Equals(key))
-            //#nullable enable
-            //                {
-            //                    return i;
-            //                }
-            //            }
-            //            return -1;
-            value = _items[0]._value;
+            for (int i = 0; i < _items.Length; i++)
+            {
+#nullable disable
+                if (key.Equals(_items[i]._key))
+                {
+                    if (_items[i]._value == null)
+                    {
+                        value = default;
+#nullable enable
+                        return false;
+                    }
+                    else
+                    {
+                        value = _items[i]._value;
+                        return true;
+                    }
+                }
+            }
+#nullable disable
+            value = default;
+#nullable enable
             return false;
         }
 
@@ -198,7 +180,7 @@ namespace Basura5
             {
                 Item item = _items[i];
                 bool found = where(item._key, item._value);
-                if(found)
+                if (found)
                     ret.AddKeyValue(item._key, item._value);
             }
             return ret;
@@ -207,7 +189,7 @@ namespace Basura5
         //igual que Remove(), pero varios key a la vez
         public void Remove(DictionaryFilterDelegate<K, V> where)
         {
-            if(where==null)
+            if (where == null)
                 return;
             for (int i = 0; i < Count; i++)
             {
@@ -218,7 +200,6 @@ namespace Basura5
                     Remove(item._key);
                     i--;
                 }
-                    
             }
         }
 
