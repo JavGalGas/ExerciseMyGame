@@ -71,32 +71,28 @@ namespace Basura_7
         {
             _parent?.Remove(this); /*(Remove debe ser private)*/
     
-              _parent = null;
-    
-    
-    
-    
-    
-    
-    
-    
-    
+            _parent = null;
     
         }
 
         void AddChild(Node<T> child)
         {
-
-
-
-
-
-
+            if (child == null)
+                return;
+            if (_children == null)
+            {
+                List<Node<T>> list = new(){child};
+                _children = list;
+            }
+            else
+            {
+                _children.Add(child);
+            }
         }
 
         private void Remove(Node<T> child) 
         { 
-            
+            _children?.Remove(child);
         }
     }
 }
