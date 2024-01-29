@@ -11,7 +11,7 @@ namespace Basura_7
     public class Node<T>
     {
         private T Content  /*Item*/;
-        private List<Node<T>>? _children;
+        private List<Node<T>> _children;
         private Node<T>? _parent; /*(root tiene como _parent null)*/
 
         private Node<T>? Parent => _parent; /*Set(hacer función);*/
@@ -24,10 +24,6 @@ namespace Basura_7
         private int Level => GetLevel();
         private Node<T>? Root => GetRoot();
 
-        public void Set(Node<T>? parent) /*Podría ser bueno revisar si es null, para no confundirlo con un root*/
-        {
-            _parent = parent;
-        }
 
         public int GetLevel()
         {
@@ -69,30 +65,113 @@ namespace Basura_7
 
         void Unlink()        /*(tambien se puede llamar Detach())*/
         {
-            _parent?.Remove(this); /*(Remove debe ser private)*/
-    
-            _parent = null;
-    
+            if(Parent != null)
+            {
+                _parent?.RemoveChild(this); /*(Remove debe ser private)*/
+
+                _parent = null;
+            }
+
         }
 
-        void AddChild(Node<T> child)
+        public void SetParent(Node<T>? node) /*Podría ser bueno revisar si es null, para no confundirlo con un root*/
         {
-            if (child == null)
-                return;
-            if (_children == null)
-            {
-                List<Node<T>> list = new(){child};
-                _children = list;
-            }
+            if (node == null)
+                Unlink();
             else
+                node.AddChild(this);
+        }
+
+        void AddChild(Node<T> node)
+        {
+            if (node == null)
+                return;
+            node.Unlink();
+            node._parent=this;
+            _children.Add(node);
+        }
+
+        private void RemoveChild(Node<T> child) 
+        {
+            int index = IndexOf(child);
+            if (index != -1 && index < _children.Count)
+                _children.RemoveAt(index);
+            return;
+        }
+
+        private int IndexOf(Node<T> node)
+        {
+           for(int i = 0; i < _children.Count; i++)
+           {
+                if(node.Equals(_children[i]))
+                    return i;
+           }
+           return -1;
+        }
+        
+         public bool HasSibling()
+        {
+            return (_parent != null) ? _parent._children.Count > 0 :false;
+            //if (_parent != null)
+            //    return _parent._children?.Count > 0;
+            //return false;
+
+
+            //deberia intentarlo con Equals
+
+
+        }
+
+        public bool ContainsAncestor(Node<T> node)
+        {
+            if (node == null || _parent == null)
+                return false;
+            if(_parent == node)
+                return true;
+            return _parent.ContainsAncestor(node);
+        }
+
+        public bool ContainsDescendant(Node<T> node)
+        {
+            if(node == null)
+                return false ;
+            for(int i = 0; i < _children.Count; i++)
             {
-                _children.Add(child);
+                var child = _children[i];
+                if(child.Equals(node))
+                    return true;
+                _children[i].ContainsDescendant(node);
+            }
+            return false;
+        }
+        //dado un nodo, invoca una función para él y todos sus descendientes
+        delegate void VisitDelegate<T>(Node<T> node);
+
+        void Visit(VisitDelegate<T> visitor)
+        {
+            if(visitor == null)
+                return;
+            visitor(this);
+            for(int i = 0; i < _children.Count; i++)
+            {
+                _children[i].Visit(visitor);
             }
         }
 
-        private void Remove(Node<T> child) 
-        { 
-            _children?.Remove(child);
+
+        delegate void CheckDelegate<T>(Node<T> node); 
+        delegate void CheckDelegate2<T>(T element);
+
+        Node<T> FindNode(CheckDelegate<T> checker)
+        {
+            if (checker == null)
+                return ;
+            checker(this);
+            for (int i = 0; i < _children.Count; i++)
+            {
+                _children[i].Visit(checker);
+            }
         }
     }
+
 }
