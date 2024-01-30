@@ -10,11 +10,19 @@ namespace Basura_7
 {
     public class Node<T>
     {
+        //WeakReference<Node<T>> _parent;
+        //Se trabaja con una copia
+
         private T Content  /*Item*/;
         private List<Node<T>> _children;
         private Node<T>? _parent; /*(root tiene como _parent null)*/
 
-        private Node<T>? Parent => _parent; /*Set(hacer función);*/
+        private Node<T>? Parent 
+        {
+                get {_parent;}
+                set{SetParent(this)}
+        }/*Set(hacer función);*/
+        
         private bool IsRoot => _parent == null;
         private bool IsLeaf => _children == null;
         private int ChildCount 
@@ -82,7 +90,7 @@ namespace Basura_7
                 node.AddChild(this);
         }
 
-        void AddChild(Node<T> node)
+        public void AddChild(Node<T> node)
         {
             if (node == null)
                 return;
@@ -158,35 +166,67 @@ namespace Basura_7
             }
         }
 
-        delegate /*void*/bool CheckDelegate<t>(Node<T> node);
-        delegate /*void*/bool CheckDelegate2<t>(T element);
+        delegate bool CheckDelegate<t>(Node<T> node);
+        delegate bool CheckDelegate2<t>(T element);
+        delegate bool CheckDelegate3<t>(List<Node<T>> node);
 
         Node<T> FindNode(CheckDelegate<T> checker)
         {
             if (checker == null)
-                return new Node<T>();
+                return null;
             if (checker(this))
-            {
                 return this;
-            }
             for (int i = 0; i < _children.Count; i++)
             {
-                _children[i].FindNode(checker);
+                var child = _children[i];
+                var found = child.FindNode(checker);
+                if(found != null)
+                    return found;
             }
-            return new Node<T>();
+            return null;
         }
 
-        Node<T> FindContent(CheckDelegate2<T> element)
+        private List<Node<T>> FindNode(CheckDelegate3<T> checker)//modificar
+        {
+            var result = new List<Node<T>>();
+            //result.FindNode(checker, result)
+
+            if (checker == null)
+                return null;
+            if (checker(this))
+                result.Add();
+            for (int i = 0; i < _children.Count; i++)
+            {
+                var child = _children[i];
+                var found = child.FindNode(checker);
+                if(found != null)
+                    return found;
+            }
+            return result;
+        }
+
+        //private List<Node<T>> Filter(CheckDelegate3<T> checker)
+        //{
+        //
+        //}
+
+        private void FindNode(CheckDelegate3<T> checker, List<Node<T>> list)
+        {
+
+        }
+
+        Node<T> FindNode2(CheckDelegate2<T> element)
         {
             if (element == null)
                 return new Node<T>();
             if (element(this.Content))
-            {
                 return this;
-            }
             for (int i = 0; i < _children.Count; i++)
             {
-                _children[i].FindContent(element);
+                var child = _children[i];
+                var found = child.FindNode2(element);
+                if(found != null)
+                    return found;
             }
             return new Node<T>();
         }

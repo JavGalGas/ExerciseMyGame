@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Node<char> root = new();
+            root.AddChild("A");
+            root.AddChild("B");
+
         }
     }
 }
