@@ -145,7 +145,7 @@ namespace Basura_7
             return false;
         }
         //dado un nodo, invoca una función para él y todos sus descendientes
-        delegate void VisitDelegate<T>(Node<T> node);
+        delegate void VisitDelegate<t>(Node<T> node);
 
         void Visit(VisitDelegate<T> visitor)
         {
@@ -158,19 +158,37 @@ namespace Basura_7
             }
         }
 
-
-        delegate void CheckDelegate<T>(Node<T> node); 
-        delegate void CheckDelegate2<T>(T element);
+        delegate /*void*/bool CheckDelegate<t>(Node<T> node);
+        delegate /*void*/bool CheckDelegate2<t>(T element);
 
         Node<T> FindNode(CheckDelegate<T> checker)
         {
             if (checker == null)
-                return ;
-            checker(this);
+                return new Node<T>();
+            if (checker(this))
+            {
+                return this;
+            }
             for (int i = 0; i < _children.Count; i++)
             {
-                _children[i].Visit(checker);
+                _children[i].FindNode(checker);
             }
+            return new Node<T>();
+        }
+
+        Node<T> FindContent(CheckDelegate2<T> element)
+        {
+            if (element == null)
+                return new Node<T>();
+            if (element(this.Content))
+            {
+                return this;
+            }
+            for (int i = 0; i < _children.Count; i++)
+            {
+                _children[i].FindContent(element);
+            }
+            return new Node<T>();
         }
     }
 
