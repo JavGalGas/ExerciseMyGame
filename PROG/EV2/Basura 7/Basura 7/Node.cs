@@ -228,7 +228,7 @@
 #nullable enable
         }
 
-        private List<Node<T>> FindNode(CheckDelegate3<T> checker)//modificar
+        private List<Node<T>> FindNode(CheckDelegate<T> checker)//modificar
         {
             var result = new List<Node<T>>();
             //result.FindNode(checker, result)
@@ -265,7 +265,7 @@
 #nullable disable
                 return null;
 #nullable enable
-            if (element(this.Content))
+            if (element(Content))
                 return this;
             for (int i = 0; i < _children.Count; i++)
             {
@@ -279,7 +279,7 @@
 #nullable enable
 
         }
-
+        //hacer Filter (copia pega List FindNode y modificar)
 
         public override string ToString()
         {
