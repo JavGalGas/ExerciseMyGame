@@ -1,14 +1,6 @@
-﻿using Basura_7;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Basura_7
+﻿namespace Basura_7
 {
-    public class Node<T>
+    public class Node<T>//implementar WeakReference en parent
     {
         //WeakReference<Node<T>> _parent;
         //Se trabaja con una copia
@@ -17,7 +9,32 @@ namespace Basura_7
         private List<Node<T>> _children;
 #nullable enable
         private Node<T>? _parent; /*(root tiene como _parent null)*/
-        WeakReference<Node<T>?> _Parent = new WeakReference<Node<T>>(_parent);
+        WeakReference<Node<T>> _Parent;
+
+        public Node(T content)
+        {
+            Content = content;
+        }
+
+        public Node(T content, Node<T>? parent)
+        {
+            Content=content;
+            SetParent(parent);
+        }
+
+        public Node(Node<T> parent, List<Node<T>> children)
+        {
+            SetParent(parent);
+            //for(int i = 0; i < children.Count; i++)
+            //{
+            //    Node<T> node = children[i];
+            //    AddChild(node);
+            //}
+
+            foreach(var node in children)
+                AddChild(node);
+
+        }
 
         private Node<T>? Parent 
         {
@@ -45,13 +62,13 @@ namespace Basura_7
             return result;
         }
 
-        public void SetParent2(WeakReference<Node<T>> parent)
+        public void SetParent2(Node<T>? parent)
         {
             if (parent == null)
-                return;
-
-            _Parent.SetTarget(parent);
-            _Parent parent;
+            {
+                Unlink();
+            }
+            _Parent = new WeakReference<Node<T>>(parent);
         }
 
         public int GetLevel()
@@ -92,9 +109,9 @@ namespace Basura_7
 
         }
 
-        void Unlink()        /*(tambien se puede llamar Detach())*/
+        public void Unlink()        /*(tambien se puede llamar Detach())*/
         {
-            if(Parent != null)
+            if (Parent != null)
             {
                 _parent?.RemoveChild(this); /*(Remove debe ser private)*/
 
@@ -105,7 +122,7 @@ namespace Basura_7
 
         public void SetParent(Node<T>? node) /*Podría ser bueno revisar si es null, para no confundirlo con un root*/
         {
-            if (node == null)
+            if (node == null || node == this || ContainsDescendant(node) || ContainsAncestor(this))
                 Unlink();
             else
                 node.AddChild(this);
@@ -113,7 +130,7 @@ namespace Basura_7
 
         public void AddChild(Node<T> node)
         {
-            if (node == null)
+            if (node == null|| node == this || ContainsDescendant(node) || ContainsAncestor(this))
                 return;
             node.Unlink();
             node._parent=this;
@@ -132,7 +149,7 @@ namespace Basura_7
         {
            for(int i = 0; i < _children.Count; i++)
            {
-                if(node.Equals(_children[i]))
+                if(node== _children[i]  /*node.Equals(_children[i])*/)
                     return i;
            }
            return -1;
@@ -187,9 +204,9 @@ namespace Basura_7
             }
         }
 
-        delegate bool CheckDelegate<t>(Node<T> node);
-        delegate bool CheckDelegate2<t>(T element);
-        delegate bool CheckDelegate3<t>(List<Node<T>> node);
+        public delegate bool CheckDelegate<t>(Node<T> node);
+        public delegate bool CheckDelegate2<t>(T element);
+        //public delegate bool CheckDelegate3<t>(List<Node<T>> node);
 
         Node<T> FindNode(CheckDelegate<T> checker)
         {
@@ -261,6 +278,15 @@ namespace Basura_7
             return null;
 #nullable enable
 
+        }
+
+
+        public override string ToString()
+        {
+            string result = "";
+            T content = Content;
+            result = $"El contenido del nodo es: {content}";
+            return result;
         }
     }
 
