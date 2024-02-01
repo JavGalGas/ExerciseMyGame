@@ -228,7 +228,7 @@
 #nullable enable
         }
 
-        private List<Node<T>> FindNode(CheckDelegate<T> checker)//modificar
+        private List<Node<T>> FindListNode(CheckDelegate<T> checker)//modificar
         {
             var result = new List<Node<T>>();
             //result.FindNode(checker, result)
@@ -242,7 +242,7 @@
             for (int i = 0; i < _children.Count; i++)
             {
                 var child = _children[i];
-                var found = child.FindNode(checker);
+                var found = child.FindListNode(checker);
                 if(found != null)
                     return found;
             }
