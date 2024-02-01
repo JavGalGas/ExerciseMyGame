@@ -12,15 +12,17 @@ namespace Basura_7
     {
         //WeakReference<Node<T>> _parent;
         //Se trabaja con una copia
-
+#nullable disable
         private T Content  /*Item*/;
         private List<Node<T>> _children;
+#nullable enable
         private Node<T>? _parent; /*(root tiene como _parent null)*/
+        WeakReference<Node<T>?> _Parent = new WeakReference<Node<T>>(_parent);
 
         private Node<T>? Parent 
         {
-                get {_parent;}
-                set{SetParent(this)}
+            get { return _parent; }
+            set { SetParent(this); }
         }/*Set(hacer función);*/
         
         private bool IsRoot => _parent == null;
@@ -32,6 +34,25 @@ namespace Basura_7
         private int Level => GetLevel();
         private Node<T>? Root => GetRoot();
 
+
+        public Node<T>? GetParent()
+        {
+            if (_parent == null)
+                return null;
+
+            Node<T>? result;
+            _Parent.TryGetTarget(out result);
+            return result;
+        }
+
+        public void SetParent2(WeakReference<Node<T>> parent)
+        {
+            if (parent == null)
+                return;
+
+            _Parent.SetTarget(parent);
+            _Parent parent;
+        }
 
         public int GetLevel()
         {
@@ -155,7 +176,7 @@ namespace Basura_7
         //dado un nodo, invoca una función para él y todos sus descendientes
         delegate void VisitDelegate<t>(Node<T> node);
 
-        void Visit(VisitDelegate<T> visitor)
+        private void Visit(VisitDelegate<T> visitor)
         {
             if(visitor == null)
                 return;
@@ -173,7 +194,9 @@ namespace Basura_7
         Node<T> FindNode(CheckDelegate<T> checker)
         {
             if (checker == null)
+#nullable disable
                 return null;
+#nullable enable
             if (checker(this))
                 return this;
             for (int i = 0; i < _children.Count; i++)
@@ -183,7 +206,9 @@ namespace Basura_7
                 if(found != null)
                     return found;
             }
+#nullable disable
             return null;
+#nullable enable
         }
 
         private List<Node<T>> FindNode(CheckDelegate3<T> checker)//modificar
@@ -192,9 +217,11 @@ namespace Basura_7
             //result.FindNode(checker, result)
 
             if (checker == null)
+#nullable disable
                 return null;
+#nullable enable
             if (checker(this))
-                result.Add();
+                result.Add(this);
             for (int i = 0; i < _children.Count; i++)
             {
                 var child = _children[i];
@@ -210,15 +237,17 @@ namespace Basura_7
         //
         //}
 
-        private void FindNode(CheckDelegate3<T> checker, List<Node<T>> list)
-        {
+        //private void FindNode(CheckDelegate3<T> checker, List<Node<T>> list)
+        //{
 
-        }
+        //}
 
         Node<T> FindNode2(CheckDelegate2<T> element)
         {
             if (element == null)
-                return new Node<T>();
+#nullable disable
+                return null;
+#nullable enable
             if (element(this.Content))
                 return this;
             for (int i = 0; i < _children.Count; i++)
@@ -228,7 +257,10 @@ namespace Basura_7
                 if(found != null)
                     return found;
             }
-            return new Node<T>();
+#nullable disable
+            return null;
+#nullable enable
+
         }
     }
 
