@@ -249,10 +249,10 @@
             return result;
         }
 
-        //private List<Node<T>> Filter(CheckDelegate3<T> checker)
-        //{
-        //
-        //}
+        private List<Node<T>> Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
+        {
+
+        }
 
         //private void FindNode(CheckDelegate3<T> checker, List<Node<T>> list)
         //{
@@ -279,7 +279,7 @@
 #nullable enable
 
         }
-        //hacer Filter (copia pega List FindNode y modificar)
+        
 
         public override string ToString()
         {
