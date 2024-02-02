@@ -1,4 +1,6 @@
-﻿namespace Basura_7
+﻿using System.Xml.Linq;
+
+namespace Basura_7
 {
     public class Node<T>//implementar WeakReference en parent
     {
@@ -8,40 +10,41 @@
         private T Content  /*Item*/;
         private List<Node<T>> _children;
 #nullable enable
-        private Node<T>? _parent; /*(root tiene como _parent null)*/
-        WeakReference<Node<T>> _Parent;
-
+        //private Node<T>? _parent; /*(root tiene como _parent null)*/
+        WeakReference<Node<T>?> _parent;
+#nullable disable
         public Node(T content)
+#nullable enable
         {
             Content = content;
         }
 
-        public Node(T content, Node<T>? parent)
+        public Node(T content, Node<T>? node)
         {
             Content=content;
-            SetParent(parent);
+            SetParent(node);
         }
 
-        public Node(Node<T> parent, List<Node<T>> children)
+        public Node(Node<T>? node, List<Node<T>> children)
         {
-            SetParent(parent);
+            SetParent(node);
             //for(int i = 0; i < children.Count; i++)
             //{
             //    Node<T> node = children[i];
             //    AddChild(node);
             //}
 
-            foreach(var node in children)
-                AddChild(node);
+            foreach (var child in children)
+                AddChild(child);
 
         }
 
-        private Node<T>? Parent 
+        private Node<T>? Parent
         {
-            get { return _parent; }
-            set { SetParent(this); }
+            get => GetParent();
+            set => SetParent(this);
         }/*Set(hacer función);*/
-        
+
         private bool IsRoot => _parent == null;
         private bool IsLeaf => _children == null;
         private int ChildCount 
@@ -58,17 +61,22 @@
                 return null;
 
             Node<T>? result;
-            _Parent.TryGetTarget(out result);
+            _parent.TryGetTarget(out result);
             return result;
         }
 
-        public void SetParent2(Node<T>? parent)
+        public void SetParent(Node<T>? node)
         {
-            if (parent == null)
+            if (node == null || node == this || ContainsDescendant(node) || ContainsAncestor(this))
             {
                 Unlink();
             }
-            _Parent = new WeakReference<Node<T>>(parent);
+            else
+            {
+                //node.AddChild(this);
+                var parent = new WeakReference<Node<T>?>(node);
+                _parent = parent;
+            }
         }
 
         public int GetLevel()
@@ -113,27 +121,30 @@
         {
             if (Parent != null)
             {
-                _parent?.RemoveChild(this); /*(Remove debe ser private)*/
-
+                //var parent = GetParent();
+                //parent?.RemoveChild(this); /*(Remove debe ser private)*/
+                Parent.RemoveChild(this);
+#nullable disable
                 _parent = null;
+#nullable enable
             }
 
         }
 
-        public void SetParent(Node<T>? node) /*Podría ser bueno revisar si es null, para no confundirlo con un root*/
-        {
-            if (node == null || node == this || ContainsDescendant(node) || ContainsAncestor(this))
-                Unlink();
-            else
-                node.AddChild(this);
-        }
+        //public void SetParent(Node<T>? node) /*Podría ser bueno revisar si es null, para no confundirlo con un root*/
+        //{
+        //    if (node == null || node == this || ContainsDescendant(node) || ContainsAncestor(this))
+        //        Unlink();
+        //    else
+        //        node.AddChild(this);
+        //}
 
         public void AddChild(Node<T> node)
         {
             if (node == null|| node == this || ContainsDescendant(node) || ContainsAncestor(this))
                 return;
             node.Unlink();
-            node._parent=this;
+            node.SetParent(this);
             _children.Add(node);
         }
 
@@ -155,26 +166,24 @@
            return -1;
         }
         
-         public bool HasSibling()
+        public bool HasSibling()
         {
-            return (_parent != null) ? _parent._children.Count > 0 :false;
+#nullable disable
+            return (GetParent() != null) ? Parent._children.Count > 0 : false;
+#nullable enable
             //if (_parent != null)
             //    return _parent._children?.Count > 0;
             //return false;
-
-
-            //deberia intentarlo con Equals
-
-
         }
 
         public bool ContainsAncestor(Node<T> node)
         {
-            if (node == null || _parent == null)
+            var parent = GetParent();
+            if (node == null || parent == null)
                 return false;
-            if(_parent == node)
+            if(parent == node)
                 return true;
-            return _parent.ContainsAncestor(node);
+            return parent.ContainsAncestor(node);
         }
 
         public bool ContainsDescendant(Node<T> node)
@@ -249,10 +258,10 @@
             return result;
         }
 
-        private List<Node<T>> Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
-        {
+        //private List<Node<T>> Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
+        //{
 
-        }
+        //}
 
         //private void FindNode(CheckDelegate3<T> checker, List<Node<T>> list)
         //{
