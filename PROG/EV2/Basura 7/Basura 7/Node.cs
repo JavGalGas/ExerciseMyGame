@@ -67,12 +67,13 @@ namespace Basura_7
 
         public void SetParent(Node<T>? node)
         {
-            if (node == null || node == this || ContainsDescendant(node) || ContainsAncestor(this))
-            {
-                Unlink();
-            }
+            if (node == null || node == this || node == GetParent())
+                return;
+            if (node.ContainsDescendant(this) || ContainsAncestor(node))
+                return;
             else
             {
+                Unlink();
                 //node.AddChild(this);
                 var parent = new WeakReference<Node<T>?>(node);
                 _parent = parent;
@@ -141,7 +142,7 @@ namespace Basura_7
 
         public void AddChild(Node<T> node)
         {
-            if (node == null|| node == this || ContainsDescendant(node) || ContainsAncestor(this))
+            if (node == null|| node == this || node.ContainsDescendant(this) || ContainsAncestor(node))
                 return;
             node.Unlink();
             node.SetParent(this);
@@ -166,15 +167,21 @@ namespace Basura_7
            return -1;
         }
         
+        private Node<T>? GetChildAt(int index)
+        {
+            return (index <= 0 || index >= _children.Count) ? null : _children[index];
+        }
+
         public bool HasSibling()
         {
 #nullable disable
-            return (GetParent() != null) ? Parent._children.Count > 0 : false;
+            return (GetParent() != null) ? Parent._children.Count > 1 : false;
 #nullable enable
             //if (_parent != null)
             //    return _parent._children?.Count > 0;
             //return false;
         }
+
 
         public bool ContainsAncestor(Node<T> node)
         {
@@ -258,15 +265,34 @@ namespace Basura_7
             return result;
         }
 
-        //private List<Node<T>> Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
-        //{
+        private List<Node<T>> Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
+        {
+            var result = new List<Node<T>>();
 
-        //}
+            if (checker == null)
+#nullable disable
+                return null;
+#nullable enable
+            if (checker(this))
+                result.Add(this);
+            for (int i = 0; i < _children.Count; i++)
+            {
+                var child = _children[i];
+                var found = child.FindListNode(checker);
+                if (found != null)
+                    return found;
+            }
+            return result;
 
-        //private void FindNode(CheckDelegate3<T> checker, List<Node<T>> list)
-        //{
+        }
 
-        //}
+        private void FindNodeInternal(CheckDelegate<T> checker, List<Node<T>> list)
+        {
+            for(int i= 0; i < _children.Count;i++)
+            {
+                var foundNode = _children[i].FindNodeInternal(checker, list);
+            }
+        }
 
         Node<T> FindNode2(CheckDelegate2<T> element)
         {
