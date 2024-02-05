@@ -9,9 +9,13 @@
             Node<string> child2 = new Node<string>("B");
             root.AddChild(child2);
             child1.AddChild(root);
-            Console.WriteLine(root.GetParent());
-            Console.WriteLine(child1.GetParent());
-            Console.WriteLine(child2.GetParent());
+
+            Console.WriteLine(root.ToString());
+            Console.WriteLine(child1.ToString());
+            Console.WriteLine(child2.ToString());
+
+            Console.WriteLine(root.GetLevel());
+            Console.WriteLine(child1.GetLevel());
 
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Basura_7
 {
@@ -21,7 +23,7 @@ namespace Basura_7
 
         public Node(T content, Node<T>? node)
         {
-            Content=content;
+            Content = content;
             SetParent(node);
         }
 
@@ -69,7 +71,7 @@ namespace Basura_7
         {
             if (node == null || node == this || node == GetParent())
                 return;
-            if (node.ContainsDescendant(this) || ContainsAncestor(node))
+            if (ContainsDescendant(node) || node.ContainsAncestor(this))
                 return;
             else
             {
@@ -144,7 +146,8 @@ namespace Basura_7
         {
             if (node == null|| node == this || node.ContainsDescendant(this) || ContainsAncestor(node))
                 return;
-            node.Unlink();
+            if(_children==null)
+                _children = new List<Node<T>>();
             node.SetParent(this);
             _children.Add(node);
         }
@@ -154,6 +157,8 @@ namespace Basura_7
             int index = IndexOf(child);
             if (index != -1 && index < _children.Count)
                 _children.RemoveAt(index);
+            if(_children.Count == 0)
+                _children = null;
             return;
         }
 
@@ -195,14 +200,20 @@ namespace Basura_7
 
         public bool ContainsDescendant(Node<T> node)
         {
-            if(node == null)
+            if(node == null || _children == null)
                 return false ;
-            for(int i = 0; i < _children.Count; i++)
+            //for(int i = 0; i < _children.Count; i++)
+            //{
+            //    var child = _children[i];
+            //    if(child.Equals(node))
+            //        return true;
+            //    child.ContainsDescendant(node);
+            //}
+            foreach(var child in _children)
             {
-                var child = _children[i];
-                if(child.Equals(node))
+                if (child.Equals(node))
                     return true;
-                _children[i].ContainsDescendant(node);
+                child.ContainsDescendant(node);
             }
             return false;
         }
@@ -214,9 +225,14 @@ namespace Basura_7
             if(visitor == null)
                 return;
             visitor(this);
-            for(int i = 0; i < _children.Count; i++)
+            //for(int i = 0; i < _children.Count; i++)
+            //{
+            //    _children[i].Visit(visitor);
+            //}
+
+            foreach(Node<T> node in _children)
             {
-                _children[i].Visit(visitor);
+                node.Visit(visitor);
             }
         }
 
@@ -232,11 +248,18 @@ namespace Basura_7
 #nullable enable
             if (checker(this))
                 return this;
-            for (int i = 0; i < _children.Count; i++)
+            //for (int i = 0; i < _children.Count; i++)
+            //{
+            //    var child = _children[i];
+            //    var found = child.FindNode(checker);
+            //    if(found != null)
+            //        return found;
+            //}
+
+            foreach (var child in _children)
             {
-                var child = _children[i];
                 var found = child.FindNode(checker);
-                if(found != null)
+                if (found != null)
                     return found;
             }
 #nullable disable
@@ -244,62 +267,76 @@ namespace Basura_7
 #nullable enable
         }
 
-        private List<Node<T>> FindListNode(CheckDelegate<T> checker)//modificar
+        private List<Node<T>>? FindListNode(CheckDelegate<T> checker)//modificar
         {
             var result = new List<Node<T>>();
             //result.FindNode(checker, result)
 
             if (checker == null)
-#nullable disable
                 return null;
-#nullable enable
             if (checker(this))
                 result.Add(this);
-            for (int i = 0; i < _children.Count; i++)
+            //for (int i = 0; i < _children.Count; i++)
+            //{
+            //    var child = _children[i];
+            //    var found = child.FindListNode(checker);
+            //    if(found != null)
+            //    {
+            //        foreach (var foundNode in found)
+            //            result.Add(foundNode);
+            //    }
+            //}
+
+            foreach (var child in _children)
             {
-                var child = _children[i];
                 var found = child.FindListNode(checker);
-                if(found != null)
-                    return found;
+                if (found != null)
+                {
+                    foreach (var foundNode in found)
+                        result.Add(foundNode);
+                }
             }
             return result;
         }
 
-        private List<Node<T>> Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
+        private List<Node<T>>? Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
         {
             var result = new List<Node<T>>();
 
             if (checker == null)
-#nullable disable
                 return null;
-#nullable enable
             if (checker(this))
                 result.Add(this);
-            for (int i = 0; i < _children.Count; i++)
-            {
-                var child = _children[i];
-                var found = child.FindListNode(checker);
-                if (found != null)
-                    return found;
-            }
+            FindNodeInternal(checker, result);
+            //for (int i = 0; i < _children.Count; i++)
+            //{
+            //    var child = _children[i];
+            //    var found = child.Filter(checker);
+            //    if (found != null)
+            //        return found;
+            //}
             return result;
 
         }
 
-        private void FindNodeInternal(CheckDelegate<T> checker, List<Node<T>> list)
+        private void FindNodeInternal(CheckDelegate<T> checker, List<Node<T>> list)//hace una lista a través del for, luego la copia a la list
         {
             for(int i= 0; i < _children.Count;i++)
             {
-                var foundNode = _children[i].FindNodeInternal(checker, list);
+                var child = _children[i];
+                var found = child.FindListNode(checker);
+                if (found != null)
+                {
+                    foreach (var foundNode in found)
+                        list.Add(foundNode);
+                }
             }
         }
 
-        Node<T> FindNode2(CheckDelegate2<T> element)
+        Node<T>? FindNode2(CheckDelegate2<T> element)
         {
             if (element == null)
-#nullable disable
                 return null;
-#nullable enable
             if (element(Content))
                 return this;
             for (int i = 0; i < _children.Count; i++)
@@ -309,18 +346,14 @@ namespace Basura_7
                 if(found != null)
                     return found;
             }
-#nullable disable
             return null;
-#nullable enable
-
         }
         
 
         public override string ToString()
         {
-            string result = "";
             T content = Content;
-            result = $"El contenido del nodo es: {content}";
+            string result = $"El contenido del nodo es: {content}";
             return result;
         }
     }
