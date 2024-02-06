@@ -24,12 +24,12 @@ namespace Basura_7
         public Node(T content, Node<T>? node)
         {
             Content = content;
-            SetParent(node);
+            SetParent(node!);
         }
 
         public Node(Node<T>? node, List<Node<T>> children)
         {
-            SetParent(node);
+            SetParent(node!);
             //for(int i = 0; i < children.Count; i++)
             //{
             //    Node<T> node = children[i];
@@ -47,14 +47,14 @@ namespace Basura_7
             set => SetParent(this);
         }/*Set(hacer función);*/
 
-        private bool IsRoot => _parent == null;
-        private bool IsLeaf => _children == null;
-        private int ChildCount 
+        public bool IsRoot => _parent == null;
+        public bool IsLeaf => _children == null;
+        public int ChildCount 
         { 
             get {   return (!IsLeaf) ? _children.Count : 0;} 
         }
-        private int Level => GetLevel();
-        private Node<T>? Root => GetRoot();
+        public int Level => GetLevel();
+        public Node<T>? Root => GetRoot();
 
 
         public Node<T>? GetParent()
@@ -63,8 +63,9 @@ namespace Basura_7
                 return null;
 
             Node<T>? result;
-            _parent.TryGetTarget(out result);
-            return result;
+            if (_parent.TryGetTarget(out result))
+                return result;
+            return null;
         }
 
         public void SetParent(Node<T>? node)
@@ -122,11 +123,12 @@ namespace Basura_7
 
         public void Unlink()        /*(tambien se puede llamar Detach())*/
         {
-            if (Parent != null)
+            var parent = Parent;
+            if (parent != null)
             {
                 //var parent = GetParent();
                 //parent?.RemoveChild(this); /*(Remove debe ser private)*/
-                Parent.RemoveChild(this);
+                parent.RemoveChild(this);
 #nullable disable
                 _parent = null;
 #nullable enable
@@ -148,7 +150,7 @@ namespace Basura_7
                 return;
             if(_children==null)
                 _children = new List<Node<T>>();
-            node.SetParent(this);
+            node.Parent = this;
             _children.Add(node);
         }
 
@@ -220,7 +222,7 @@ namespace Basura_7
         //dado un nodo, invoca una función para él y todos sus descendientes
         delegate void VisitDelegate<t>(Node<T> node);
 
-        private void Visit(VisitDelegate<T> visitor)
+        void Visit(VisitDelegate<T> visitor)
         {
             if(visitor == null)
                 return;
@@ -240,7 +242,7 @@ namespace Basura_7
         public delegate bool CheckDelegate2<t>(T element);
         //public delegate bool CheckDelegate3<t>(List<Node<T>> node);
 
-        Node<T> FindNode(CheckDelegate<T> checker)
+        public Node<T> FindNode(CheckDelegate<T> checker)
         {
             if (checker == null)
 #nullable disable
@@ -267,7 +269,7 @@ namespace Basura_7
 #nullable enable
         }
 
-        private List<Node<T>>? FindListNode(CheckDelegate<T> checker)//modificar
+        public List<Node<T>>? FindListNode(CheckDelegate<T> checker)//modificar
         {
             var result = new List<Node<T>>();
             //result.FindNode(checker, result)
@@ -299,7 +301,7 @@ namespace Basura_7
             return result;
         }
 
-        private List<Node<T>>? Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
+        public List<Node<T>>? Filter(CheckDelegate<T> checker) //hacer Filter (copia pega List FindNode y modificar)
         {
             var result = new List<Node<T>>();
 
@@ -333,7 +335,7 @@ namespace Basura_7
             }
         }
 
-        Node<T>? FindNode2(CheckDelegate2<T> element)
+        public Node<T>? FindNode2(CheckDelegate2<T> element)
         {
             if (element == null)
                 return null;
