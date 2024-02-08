@@ -51,7 +51,7 @@ namespace Basura_7
         public bool IsLeaf => _children == null;
         public int ChildCount 
         { 
-            get {   return (!IsLeaf) ? _children.Count : 0;} 
+            get {   return (!IsLeaf && _children!=null) ? _children.Count : 0;} 
         }
         public int Level => GetLevel();
         public Node<T>? Root => GetRoot();
@@ -157,18 +157,22 @@ namespace Basura_7
         private void RemoveChild(Node<T> child) 
         {
             int index = IndexOf(child);
-            if (index != -1 && index < _children.Count)
+            int count = _children.Count;
+            if (index != -1 && index < count)
                 _children.RemoveAt(index);
-            if(_children.Count == 0)
+            if(count == 0)
                 _children = null;
             return;
         }
 
         private int IndexOf(Node<T> node)
         {
-           for(int i = 0; i < _children.Count; i++)
+            if(_children == null) 
+                return -1;
+            int count = _children.Count;
+           for(int i = 0; i < count; i++)
            {
-                if(node== _children[i]  /*node.Equals(_children[i])*/)
+                if(node == _children[i]  /*node.Equals(_children[i])*/)
                     return i;
            }
            return -1;
@@ -176,7 +180,7 @@ namespace Basura_7
         
         private Node<T>? GetChildAt(int index)
         {
-            return (index <= 0 || index >= _children.Count) ? null : _children[index];
+            return (index <= 0 || index >= _children.Count || _children==null) ? null : _children[index];
         }
 
         public bool HasSibling()
