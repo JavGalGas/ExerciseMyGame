@@ -45,7 +45,7 @@
             });
 
             //queremos sumar dos listas : AddRange() [buscar]
-            //nunca te 
+            //nunca te...(a ver si recuerdo que venia aquí) 
             //switch(exp)
             //{
             //  case: 3
