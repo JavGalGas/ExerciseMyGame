@@ -2,35 +2,24 @@
 {
     public class Product
     {
-        private long _id;
-        private string _name;
-        private string _description;
-        private double _price;
-        private int _stock;
-        //private var _image;
-        private bool IsAvailable => _stock > 0;
-        private double _IVA;
+        public long Id { get; set;}
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double Price { get; set; }
+        public int Stock { get; set; }
+        //public var Image { get; set;}
+        public double IVA { get; set; }
 
-        public long Id => _id;
-        public string Name => _name;
-        public string Description => _description;
-        public double Price => _price;
-        public int Stock => _stock;
-        //public var Image =>image;
-        public Product()//no estoy seguro que necesite un constructor vacío
+        public Product Clone()
         {
-            _name = string.Empty;
-            _description = string.Empty;
-        }
-        public Product(long id, string name, string description, double price, int stock, /*var image, */ double IVA)
-        {
-            _id = id;
-            _name = name;
-            _description = description;
-            _price = price;
-            _stock = stock;
-            //_image = image;
-            _IVA = IVA;
+            Product clonedProduct = new Product();
+            clonedProduct.Id = Id;
+            clonedProduct.Name = Name;
+            clonedProduct.Description = Description;
+            clonedProduct.Price = Price;
+            clonedProduct.Stock = Stock;
+            //clonedProduct.Image = Image;
+            return clonedProduct;
         }
 
 

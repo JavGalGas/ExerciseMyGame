@@ -2,60 +2,22 @@
 {
     public interface ITPV
     {
-        int ProductCount {  get; }
+        int ProductCount { get; }
 
         static ITPV CreateNewTPV()
         {
             return new RAMTPV();
         }
 
-        public abstract long AddProduct(Product product);//debe añadir el producto que le pasen, y si falla realiza un Try...Catch. Además, devuelve el id del producto por si necesitas modificar el producto
-        public void RemoveProduct(long id)
-        {
-            try 
-            {
-                
-            }
-            catch
-            {
-
-            }
-            finally
-            {
-
-            }
-        }
-
-        public Product? GetProduct(long id)
-        {
-            return null;
-        }
-
-        public void UpdateProductWithId(long id, Product product)
-        {
-            try
-            {
-
-            }
-            catch
-            {
-
-            }
-            finally
-            {
-
-            }
-        }
-
+        long AddProduct(Product product);
+        void RemoveProduct(long id);
+        Product? GetProductWithId(long id);
+        void UpdateProductWithId(long id, Product product);
         public void RemoveProduct(Product product)
         {
             if(product != null)
                 RemoveProduct(product.Id);
         }
-
-        public List<Product> GetProducts(int offset, int limit)
-        {
-            return new List<Product>();
-        }
+        List<Product> GetProducts(int offset, int limit);
     }
 }
