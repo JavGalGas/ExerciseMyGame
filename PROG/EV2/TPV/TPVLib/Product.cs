@@ -9,17 +9,20 @@
         public int Stock { get; set; }
         //public var Image { get; set;}
         public double IVA { get; set; }
+        //public enum TaxesType { get; set; }
 
         public Product Clone()
         {
-            Product clonedProduct = new Product();
-            clonedProduct.Id = Id;
-            clonedProduct.Name = Name;
-            clonedProduct.Description = Description;
-            clonedProduct.Price = Price;
-            clonedProduct.Stock = Stock;
-            //clonedProduct.Image = Image;
-            return clonedProduct;
+            return new Product()
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                Price = Price,
+                Stock = Stock,
+                //clonedProduct.Image = Image,
+                //TaxesType = TaxesType
+            };
         }
 
 

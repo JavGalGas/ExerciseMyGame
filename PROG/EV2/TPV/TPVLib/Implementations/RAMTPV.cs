@@ -6,42 +6,106 @@ namespace TPVLib
         public int ProductCount => _products.Count;
         private long _currentGeneratingId = 1;
 
+
         public long AddProduct(Product product)//modificar
         {
             var cloneP = product.Clone();
             cloneP.Id = _currentGeneratingId++;
-            _products.Add(cloneP.Id,cloneP);
+            _products.Add(cloneP.Id, cloneP);
             return cloneP.Id;
         }
 
         public void RemoveProduct(long id)//hacer
         {
-            
+            Product? result = GetProductWithId(id);
+            if (result != null)
+            {
+                _products.Remove(id);
+            }
+        }
+
+        public void RemoveAt(int index)
+        {
+            for (int i = 0; i < _products.Count; i++)
+            {
+                if (_products[i].Id == index)
+                    _products.Remove(i);
+
+
+            }
         }
 
         public Product? GetProductWithId(long id)//hacer
         {
-            throw new NotImplementedException();
+            foreach(var entry in _products)
+            {
+                long entryId = entry.Key;
+                Product entryProduct = entry.Value;
+                if (entryId == id)
+                {
+                    Product result = entryProduct.Clone();
+                    return result;
+                }
+            }
+            return null;
         }
 
         public void UpdateProductWithId(long id, Product product)//hacer
         {
-            throw new NotImplementedException();
+            foreach (var entry in _products)
+            {
+                long entryId = entry.Key;
+                Product entryProduct = entry.Value;
+                if (entryId == id)
+                {
+                    _products[entry.Key] = entryProduct;
+                }
+            }
         }
 
         public List<Product> GetProducts(int offset, int limit)//hacer
         {
-            throw new NotImplementedException();
+            int startPos = offset - 1;
+            int endPos = Math.Min(startPos + ProductCount, ProductCount);
+
+        List<Product> products = new List<Product>();
+            while(offset<limit)
+            {
+                Product? product1 = GetProductWithId(offset);
+                if (product1 != null)
+                    products.Add(product1);
+                //foreach (var p in _products)
+                //{
+                //    if (p.Value.Id == offset)
+                //    {
+                //        Product product = p.Value;
+                //        products.Add(product);
+                //    }
+                //}
+                offset++;
+            }
+            return products;
         }
 
         public bool Contains(Product product)
         {
-
+            if(product == null)
+                return false;
             foreach(var p in _products)
             {
-                if(p.Key == product.Id) return true;
+                if(p.Value.Id == product.Id) return true;
             }
             return false;
+        }
+
+        public int IndexOf(Product product)
+        {
+            for(int i=0; i< _products.Count; i++) 
+            {
+                if (_products[i].Id == product.Id)
+                    return i;
+            }
+            return -1;
         }
     }
 }

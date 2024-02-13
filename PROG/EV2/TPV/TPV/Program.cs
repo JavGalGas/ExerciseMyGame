@@ -6,37 +6,31 @@ namespace TPV
     {
         static void Main(string[] args)
         {
-            ITPV tpv = ITPV.CreateNewTPV();
-            Product product = new Product()// id en Product o en el Key????
+            var tpv = ITPV.CreateNewTPV();
+            bool IsRunning = true;
+            while (IsRunning)
             {
-                Id = 1,
-                Name = "Coca-Cola",
-                Stock = 40,
-                Description = "Test",
-                Price = 1,
-                IVA = 20.2
-            };
-            Product product2 = new Product()
-            {
-                Id = 1,
-                Name = "Pepsi",
-                Stock = 40,
-                Description = "Test2",
-                Price = 1,
-                IVA = 20.2
-            };
-            Console.WriteLine(tpv.AddProduct(product));
-            Console.WriteLine(tpv.AddProduct(product2));
-            Product product3 = new Product()
-            {
-                Id = -2,
-                Name = "Fanta",
-                Stock = 40,
-                Description = "Test3",
-                Price = 1,
-                IVA = 20.2
-            };
-            Console.WriteLine(tpv.AddProduct(product3));
+                Console.WriteLine("1-Buscar Producto");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("");
+                var option = Console.ReadLine();
+                if (option != null)
+                {
+
+                }
+            }
+
+
+            Console.ReadLine();/*==> string*/
+            //Crear la clase UI y crear una función que muestre las principales opciones del menú principal
+            //Al crear UI, está TERMINANTEMENTE PROHIBIDO utilizar Console.WriteLine ni Console.ReadLine en Program
+            //Crear la clase Controllers, y crear la función RunMainMenu 
+            //MVC
+            //M modelo
+            //V vista
+            //C controlador (en el Main)
+
         }
     }
 }
