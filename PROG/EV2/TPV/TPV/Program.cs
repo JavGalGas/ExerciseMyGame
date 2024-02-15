@@ -7,19 +7,12 @@ namespace TPV
         static void Main(string[] args)
         {
             var tpv = ITPV.CreateNewTPV();
-            bool IsRunning = true;
-            while (IsRunning)
-            {
-                Console.WriteLine("1-Buscar Producto");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("");
-                var option = Console.ReadLine();
-                if (option != null)
-                {
+            Controllers.RunMainMenu(tpv);
 
-                }
-            }
+
+
+
+           
 
 
             Console.ReadLine();/*==> string*/

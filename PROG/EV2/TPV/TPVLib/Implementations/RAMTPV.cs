@@ -24,17 +24,6 @@ namespace TPVLib
             }
         }
 
-        public void RemoveAt(int index)
-        {
-            for (int i = 0; i < _products.Count; i++)
-            {
-                if (_products[i].Id == index)
-                    _products.Remove(i);
-
-
-            }
-        }
-
         public Product? GetProductWithId(long id)//hacer
         {
             foreach(var entry in _products)
