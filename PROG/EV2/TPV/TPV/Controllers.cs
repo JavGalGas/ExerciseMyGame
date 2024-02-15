@@ -8,7 +8,17 @@ namespace TPVLib
 {
     public class Controllers
     {
-       
+        public static void RunMainMenu(ITPV tpv)
+        {
+            ViewTPV v = new viewTPV();
+            bool IsRunning = true;
+            while (IsRunning)
+            {
+                ViewTPV.MostrarMenuPrincipal(tpv);
+                var option = ViewTPV.Leer(tpv);
+
+            }
+        }
 
         public static void RunMainMenu(ITPV tpv)
         {

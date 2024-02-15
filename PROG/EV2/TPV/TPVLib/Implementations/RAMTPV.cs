@@ -15,16 +15,14 @@ namespace TPVLib
             return cloneP.Id;
         }
 
-        public void RemoveProduct(long id)//hacer
+        public void RemoveProduct(long id)
         {
-            Product? result = GetProductWithId(id);
-            if (result != null)
-            {
-                _products.Remove(id);
-            }
+            if (id <= 0)
+                throw new Exception("The id doesn't exist.");
+            _products.Remove(id);
         }
 
-        public Product? GetProductWithId(long id)//hacer
+        public Product? GetProductWithId(long id)
         {
             foreach(var entry in _products)
             {
@@ -32,14 +30,13 @@ namespace TPVLib
                 Product entryProduct = entry.Value;
                 if (entryId == id)
                 {
-                    Product result = entryProduct.Clone();
-                    return result;
+                    return entryProduct.Clone();
                 }
             }
             return null;
         }
 
-        public void UpdateProductWithId(long id, Product product)//hacer
+        public void UpdateProductWithId(long id, Product product)
         {
             foreach (var entry in _products)
             {
@@ -47,22 +44,24 @@ namespace TPVLib
                 Product entryProduct = entry.Value;
                 if (entryId == id)
                 {
-                    _products[entry.Key] = entryProduct;
+                    _products[entryId] = entryProduct;
                 }
             }
         }
 
-        public List<Product> GetProducts(int offset, int limit)//hacer
+        public List<Product> GetProducts(int offset, int limit)
         {
             int startPos = offset - 1;
-            int endPos = Math.Min(startPos + ProductCount, ProductCount);
+            int endPos = Math.Min(startPos + limit, ProductCount);
 
-        List<Product> products = new List<Product>();
-            while(offset<limit)
+            if(offset < 0 || limit < 0|| startPos > endPos)
+                return new List<Product>();
+
+            var products = new List<Product>();
+            while(startPos<endPos)
             {
-                Product? product1 = GetProductWithId(offset);
-                if (product1 != null)
-                    products.Add(product1);
+                startPos++;
+                products.Add(_products[startPos]);
                 //foreach (var p in _products)
                 //{
                 //    if (p.Value.Id == offset)
@@ -71,7 +70,6 @@ namespace TPVLib
                 //        products.Add(product);
                 //    }
                 //}
-                offset++;
             }
             return products;
         }
