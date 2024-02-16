@@ -19,5 +19,21 @@
                 RemoveProduct(product.Id);
         }
         List<Product> GetProducts(int offset, int limit);
+
+        public void AddTicket(Ticket ticket);
+
+        // Modelo de Negocios            Modelo de Datos
+        //      ITPV                        IDatabase
+        //  AddTicket(Ticket)               AddProduct(product)
+        //                                  ...
+        //                                  AddTicketHeader(...)
+        //                                  AddTicketLine(...)
+        //                                  ...
+
+        //CRUD - Tickets
+        //No es infinita
+        //Mostrar todo
+
+
     }
 }
