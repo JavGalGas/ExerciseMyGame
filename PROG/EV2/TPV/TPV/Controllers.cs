@@ -10,18 +10,15 @@ namespace TPVLib
     {
         public static void RunMainMenu(ITPV tpv)
         {
-            ViewTPV v = new viewTPV();
-            bool IsRunning = true;
-            while (IsRunning)
-            {
-                ViewTPV.MostrarMenuPrincipal(tpv);
-                var option = ViewTPV.Leer(tpv);
+            //ViewTPV v = new viewTPV();
+            //bool IsRunning = true;
+            //while (IsRunning)
+            //{
+            //    ViewTPV.ShowMainMenu(tpv);
+            //    var option = ViewTPV.Read(tpv);
 
-            }
-        }
+            //}
 
-        public static void RunMainMenu(ITPV tpv)
-        {
             bool IsRunning = true;
             while (IsRunning)
             {
@@ -70,6 +67,19 @@ namespace TPVLib
                     }
                 }
             }
+            //public static void RunMainMenu(ITPV tpv)
+            //{
+            //    
+            //    }
+            //}
+        }
+
+        public static void Start(ITPV tpv)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
+
+            RunMainMenu(tpv);
         }
 
     }

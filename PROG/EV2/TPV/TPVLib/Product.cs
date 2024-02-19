@@ -1,5 +1,11 @@
 ﻿namespace TPVLib
 {
+    public enum TaxesType
+    {
+        IVA,
+        NO_IVA,
+        REDUCED_IVA
+    }
     public class Product
     {//Se trabaja con properties en c# y se respeta que las clases sean lo más POJO posible porque cuando se hace una consulta solo devuelve un objeto con las properties
      //si tiene variables que no se devuelven.
@@ -10,7 +16,7 @@
         public int Stock { get; set; }
         //public var Image { get; set;}
         public double IVA { get; set; }
-        //public enum TaxesType { get; set; }
+        public TaxesType Type{ get; set; }
 
         public Product Clone()
         {
@@ -22,33 +28,11 @@
                 Price = Price,
                 Stock = Stock,
                 //Image = Image,
-                //TaxesType = TaxesType
+                IVA = IVA,
+                Type = Type
             };
         }
 
-        //public class Ticket
-        //{
-        //    public TicketHeader Header { get; set; }
-        //    public TicketBody Body { get; set; }
-        //    public double TotalPrice { get; set; }
-        //}
-
-        //public class TicketHeader
-        //{
-        //    public int Id { get; set; }
-        //    public string BarCode { get; set; }
-        //}
-
-        //public class TicketBody
-        //{
-                
-        //}
-
-        //public class TicketLine
-        //{
-        //    public string Details { get; set; }
-        //    public double Quantity {get; set;}
-        //      public Product Product { get; set; }
-        //}Se podría hacer con long ProductId, pero tendrías que hacer un query por cada producto
+ 
     }
 }

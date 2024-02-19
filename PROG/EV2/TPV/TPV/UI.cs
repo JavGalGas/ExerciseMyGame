@@ -24,12 +24,13 @@ namespace TPVLib
         }
         public static void Case3(ITPV tpv)
         {
-            
+
+            Console.Write("Diga el nombre del producto: ");
             //Product product = Console.ReadLine();
             //tpv.AddProduct(product);
         }
 
-        internal static void Case4(ITPV tpv)
+        public static void Case4(ITPV tpv)
         {
             //Product product = Console.ReadLine();
             //tpv.UpdateProduct(product);

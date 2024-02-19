@@ -7,8 +7,8 @@ namespace TPV
         static void Main(string[] args)
         {
             var tpv = ITPV.CreateNewTPV();
-            Controllers.RunMainMenu(tpv);
-
+            Controllers.Start(tpv);
+            //IDatabase database = new RAMDatabase();
 
 
 
