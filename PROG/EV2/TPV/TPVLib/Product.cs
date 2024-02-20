@@ -2,9 +2,10 @@
 {
     public enum TaxesType
     {
-        IVA,
-        NO_IVA,
-        REDUCED_IVA
+        IVA,                //21%
+        NO_IVA,             //0%
+        REDUCED_IVA,        //10%
+        SUPER_REDUCED_IVA   //4%
     }
     public class Product
     {//Se trabaja con properties en c# y se respeta que las clases sean lo más POJO posible porque cuando se hace una consulta solo devuelve un objeto con las properties

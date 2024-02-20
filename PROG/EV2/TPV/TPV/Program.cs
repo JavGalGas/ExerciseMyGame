@@ -1,4 +1,5 @@
 ﻿using TPVLib;
+using TPVLib.Implementations;
 
 namespace TPV
 {
@@ -9,10 +10,10 @@ namespace TPV
             var tpv = ITPV.CreateNewTPV();
             Controllers.Start(tpv);
             //IDatabase database = new RAMDatabase();
+            IDatabase _database = new RAMDatabase();
 
 
 
-           
 
 
             Console.ReadLine();/*==> string*/

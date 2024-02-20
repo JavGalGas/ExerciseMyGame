@@ -5,8 +5,17 @@ namespace TPVLib
         IDatabase? _database;
         private Dictionary<long, Product> _products = new();
         public int ProductCount => _products.Count;
+
+        public IDatabase database { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         private long _currentGeneratingId = 1;
 
+        public RAMTPV(IDatabase database)
+        {
+            _database = database;
+        }
+
+        public RAMTPV() { }
 
         public long AddProduct(Product product)//modificar
         {

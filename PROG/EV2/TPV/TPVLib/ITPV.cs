@@ -2,6 +2,7 @@
 {
     public interface ITPV
     {
+        IDatabase database { get; set; }
         int ProductCount { get; }
 
         static ITPV CreateNewTPV()

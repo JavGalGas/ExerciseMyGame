@@ -1,11 +1,12 @@
 ﻿namespace TPVLib
 {
-    internal interface IDatabase
+    public interface IDatabase
     {
+
         //Tan cercana a la BD como sea posible
         //void BeginTransaction();
         /**void Comit();
-         * void 
+         * void Rollback();
          */
         long AddProduct(Product product);
         void RemoveProductWithId(long id);
@@ -22,6 +23,8 @@
         public void AddTicketLine(long ticketId, TicketLine ticketLine);
         public void AddTicketBody(Body body);
         TicketLine[] GetTicketLinesWithId(long ticketId);
+
+        public void AddLineToTicketWithId(long id, TicketLine ticketLine);
         //todas las funciones ADD
     }
 }
