@@ -6,4 +6,5 @@
         public DateTime Date { get; set; }
         public string? BarCode { get; set; }
     }
+
 }

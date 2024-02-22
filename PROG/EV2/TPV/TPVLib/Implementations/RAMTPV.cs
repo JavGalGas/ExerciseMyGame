@@ -1,3 +1,5 @@
+using TPVLib.Implementations;
+
 namespace TPVLib
 {
     public class RAMTPV : ITPV
@@ -19,13 +21,13 @@ namespace TPVLib
 
         public long AddProduct(Product product)//modificar
         {
-            var cloneP = product.Clone();
+            var cloneP = product.GetClone();
             cloneP.Id = _currentGeneratingId++;
             _products.Add(cloneP.Id, cloneP);
             return cloneP.Id;
         }
 
-        public void RemoveProduct(long id)
+        public void RemoveProductWithId(long id)
         {
             if (id <= 0)
                 throw new Exception("The id doesn't exist.");
@@ -34,13 +36,13 @@ namespace TPVLib
 
         public Product? GetProductWithId(long id)
         {
-            foreach(var entry in _products)
+            foreach (var entry in _products)
             {
                 long entryId = entry.Key;
                 Product entryProduct = entry.Value;
                 if (entryId == id)
                 {
-                    return entryProduct.Clone();
+                    return entryProduct.GetClone();
                 }
             }
             return null;
@@ -54,7 +56,9 @@ namespace TPVLib
                 Product entryProduct = entry.Value;
                 if (entryId == id)
                 {
-                    _products[entryId] = entryProduct;
+                    product.Id = entryProduct.Id;
+                    entryProduct = product;
+                    break;
                 }
             }
         }
@@ -64,11 +68,11 @@ namespace TPVLib
             int startPos = offset - 1;
             int endPos = Math.Min(startPos + limit, ProductCount);
 
-            if(offset < 0 || limit < 0|| startPos > endPos)
+            if (offset < 0 || limit < 0 || startPos > endPos)
                 return new List<Product>();
 
             var products = new List<Product>();
-            while(startPos<endPos)
+            while (startPos < endPos)
             {
                 startPos++;
                 products.Add(_products[startPos]);
@@ -86,18 +90,18 @@ namespace TPVLib
 
         public bool Contains(Product product)
         {
-            if(product == null)
+            if (product == null)
                 return false;
-            foreach(var p in _products)
+            foreach (var p in _products)
             {
-                if(p.Value.Id == product.Id) return true;
+                if (p.Value.Id == product.Id) return true;
             }
             return false;
         }
 
         public int IndexOf(Product product)
         {
-            for(int i=0; i< _products.Count; i++) 
+            for (int i = 0; i < _products.Count; i++)
             {
                 if (_products[i].Id == product.Id)
                     return i;
@@ -105,19 +109,14 @@ namespace TPVLib
             return -1;
         }
 
-        public void AddTicket(Ticket ticket)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public long AddTicket(Header header)
+        //public void AddTicket(Ticket ticket)
         //{
         //    try
         //    {
-        //        _database.BeginTransaction();
+        //        _database!.BeginTransaction();
 
-        //        long id = _database.AddTicket(Ticket.Header);
-        //        foreach (var line in Ticket.Body.Lines)
+        //        long id = _database.AddTicket(ticket.Header!);
+        //        foreach (var line in ticket.Body!.lines!)
         //        {
         //            _database.AddTicketLine(id, line);
         //        }
@@ -126,23 +125,44 @@ namespace TPVLib
         //    }
         //    catch (Exception ex)
         //    {
-        //        _database.Rollback();
+        //        _database!.Rollback();
         //        throw new Exception(ex.Message);
         //    }
         //}
-        /**public static void savetickets(Ticket[] tickets, ITPV tpv)
-         * {
-         *      try
-         *      {
-         *      _database.BeginTransaction();
-         *       foreach(var line in Ticket.Body.Lines)
-        //      {
-        //         tpv.AddTicketLine(id, line);
-        //      }   
-         * 
-         * 
-         * 
-         * }
-         */
+
+        //public long AddTicket(Header header)
+        //{
+        //    try
+        //    {
+        //        _database.BeginTransaction();
+
+            //        long id = _database.AddTicket(Ticket.Header);
+            //        foreach (var line in Ticket.Body.Lines)
+            //        {
+            //            _database.AddTicketLine(id, line);
+            //        }
+
+            //        _database.Commit();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        _database.Rollback();
+            //        throw new Exception(ex.Message);
+            //    }
+            //}
+            /**public static void savetickets(Ticket[] tickets, ITPV tpv)
+             * {
+             *      try
+             *      {
+             *      _database.BeginTransaction();
+             *       foreach(var line in Ticket.Body.Lines)
+            //      {
+            //         tpv.AddTicketLine(id, line);
+            //      }   
+             * 
+             * 
+             * 
+             * }
+             */
     }
 }

@@ -21,10 +21,10 @@
 
         public long AddTicket(Header ticket);
         public void AddTicketLine(long ticketId, TicketLine ticketLine);
-        public void AddTicketBody(Body body);
+        public void AddTicketBody(long ticketId, Body body);
         TicketLine[] GetTicketLinesWithId(long ticketId);
 
-        public void AddLineToTicketWithId(long id, TicketLine ticketLine);
+        //public void AddLineToTicketWithId(long id, TicketLine ticketLine);
         //todas las funciones ADD
     }
 }

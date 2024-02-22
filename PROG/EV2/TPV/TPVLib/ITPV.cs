@@ -11,17 +11,17 @@
         }
 
         long AddProduct(Product product);
-        void RemoveProduct(long id);
+        void RemoveProductWithId(long id);
         Product? GetProductWithId(long id);
         void UpdateProductWithId(long id, Product product);
         public void RemoveProduct(Product product)
         {
             if(product != null)
-                RemoveProduct(product.Id);
+                RemoveProductWithId(product.Id);
         }
         List<Product> GetProducts(int offset, int limit);
 
-        public void AddTicket(Ticket ticket);
+        //public void AddTicket(Ticket ticket);
 
         // Modelo de Negocios            Modelo de Datos
         //      ITPV                        IDatabase

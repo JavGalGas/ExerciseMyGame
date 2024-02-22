@@ -22,43 +22,48 @@ namespace TPVLib
             bool IsRunning = true;
             while (IsRunning)
             {
-                var option = UI.ShowMainMenu();
-                if (/*option != null*/ true)
-                {
+
+                string? option = UI.ShowMainMenu();
+                //if (option != null)
+                //{
                     switch (option)
                     {
-                        case 1:
+                        case "1":
                             {
                                 UI.CaseGetProduct(tpv);
                                 break;
                             }
-                        case 2:
+                        case "2":
                             {
                                 UI.CaseGetProducts(tpv);
                                 break;
                             }
-                        case 3:
+                        case "3":
                             {
                                 UI.CaseAddProduct(tpv);
                                 break;
                             }
-                        case 4:
+                        case "4":
                             {
                                 UI.CaseUpdateProduct(tpv);
                                 break;
                             }
-                        case 5:
+                        case "5":
                             {
                                 UI.CaseRemoveProduct(tpv);
                                 break;
                             }
-                        default:
+                        case "6":
                             {
                                 UI.CaseExit(tpv, out IsRunning);
                                 break;
                             }
+                        default:
+                            {
+                                break;
+                            }
                     }
-                }
+                //}
             }
             //public static void RunMainMenu(ITPV tpv)
             //{
@@ -69,9 +74,6 @@ namespace TPVLib
 
         public static void Start(ITPV tpv)
         {
-            Console.WriteLine("");
-            Console.WriteLine("");
-
             RunMainMenu(tpv);
         }
 
