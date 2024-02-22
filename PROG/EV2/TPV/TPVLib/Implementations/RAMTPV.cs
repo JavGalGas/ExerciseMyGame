@@ -4,88 +4,47 @@ namespace TPVLib
 {
     public class RAMTPV : ITPV
     {
-        IDatabase? _database;
+        
+        private IDatabase _db;
+
         private Dictionary<long, Product> _products = new();
+        private Dictionary<long, Ticket> _tickets = new();
+        private long _currentGeneratingId = 1;
         public int ProductCount => _products.Count;
 
-        public IDatabase database { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        private long _currentGeneratingId = 1;
-
+        //Inyección de dependencias (Buscar)
         public RAMTPV(IDatabase database)
         {
-            _database = database;
+            _db = database;
         }
 
-        public RAMTPV() { }
-
+        /**public long AddProduct(Product product) => _db.AddProduct(product);
+         * ...
+         */
         public long AddProduct(Product product)//modificar
         {
-            var cloneP = product.GetClone();
-            cloneP.Id = _currentGeneratingId++;
-            _products.Add(cloneP.Id, cloneP);
-            return cloneP.Id;
+            return _db.AddProduct(product);
         }
 
-        public void RemoveProductWithId(long id)
+        public void RemoveProductWithId(long id)//Ver si se puede cambiar el key y el id del diccionario
         {
-            if (id <= 0)
-                throw new Exception("The id doesn't exist.");
-            _products.Remove(id);
+            _db.RemoveProductWithId(id);
         }
 
         public Product? GetProductWithId(long id)
         {
-            foreach (var entry in _products)
-            {
-                long entryId = entry.Key;
-                Product entryProduct = entry.Value;
-                if (entryId == id)
-                {
-                    return entryProduct.GetClone();
-                }
-            }
-            return null;
+            return _db.GetProductWithId(id);
         }
 
         public void UpdateProductWithId(long id, Product product)
         {
-            foreach (var entry in _products)
-            {
-                long entryId = entry.Key;
-                Product entryProduct = entry.Value;
-                if (entryId == id)
-                {
-                    product.Id = entryProduct.Id;
-                    entryProduct = product;
-                    break;
-                }
-            }
+            _db.UpdateProductWithId(id, product);
         }
 
         public List<Product> GetProducts(int offset, int limit)
         {
-            int startPos = offset - 1;
-            int endPos = Math.Min(startPos + limit, ProductCount);
-
-            if (offset < 0 || limit < 0 || startPos > endPos)
-                return new List<Product>();
-
-            var products = new List<Product>();
-            while (startPos < endPos)
-            {
-                startPos++;
-                products.Add(_products[startPos]);
-                //foreach (var p in _products)
-                //{
-                //    if (p.Value.Id == offset)
-                //    {
-                //        Product product = p.Value;
-                //        products.Add(product);
-                //    }
-                //}
-            }
-            return products;
+            return _db.GetProducts(offset, limit);
         }
 
         public bool Contains(Product product)
@@ -107,6 +66,16 @@ namespace TPVLib
                     return i;
             }
             return -1;
+        }
+
+        public void SaveTickets()
+        {
+
+        }
+
+        public void SaveProducts()
+        {
+
         }
 
         //public void AddTicket(Ticket ticket)
@@ -150,7 +119,7 @@ namespace TPVLib
             //        throw new Exception(ex.Message);
             //    }
             //}
-            /**public static void savetickets(Ticket[] tickets, ITPV tpv)
+            /**public static void SaveTickets(Ticket[] tickets, ITPV tpv)
              * {
              *      try
              *      {

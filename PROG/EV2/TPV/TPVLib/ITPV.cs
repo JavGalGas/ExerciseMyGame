@@ -2,12 +2,12 @@
 {
     public interface ITPV
     {
-        IDatabase database { get; set; }
+        //IDatabase database { get; }
         int ProductCount { get; }
 
-        static ITPV CreateNewTPV()
+        static ITPV CreateNewTPV(IDatabase db)
         {
-            return new RAMTPV();
+            return new RAMTPV(db);
         }
 
         long AddProduct(Product product);

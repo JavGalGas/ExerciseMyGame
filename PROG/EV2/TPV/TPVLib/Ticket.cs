@@ -6,8 +6,9 @@ namespace TPVLib
     public class Ticket
     {
         //Product[] _products = new Product[0];
-        public Header? Header { get; set; }
-        public Body? Body { get; set; }
+        public Header Header { get; set; } = new Header();
+        public Body Body { get; set; } = new Body();
         public double TotalPrice { get; set; }
+
     }
 }

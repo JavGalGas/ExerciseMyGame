@@ -49,9 +49,10 @@ namespace TPVLib
             }
             Console.WriteLine(" ------------------------------------------------------------ ");
             Console.WriteLine("| ID   Name        Description         Price   Stock   IVA   |");
-            Console.WriteLine("| " + p.Id + "   " + p.Name + "   " + p.Description + "   " + p.Price + "   " + p.Stock + "   " + p.IVA + "  |");
+            Console.WriteLine("| " + p.Id + "    " + p.Name + "       " + p.Description + "       " + p.Price + "       " + p.Stock + "       " + p.IVA + "  |");
             Console.WriteLine("|                                                            |");
             Console.WriteLine(" ------------------------------------------------------------ ");
+            Console.ReadLine();
         }
         public static void CaseGetProducts(ITPV tpv)
         {

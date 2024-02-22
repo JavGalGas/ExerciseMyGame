@@ -8,6 +8,7 @@
         /**void Comit();
          * void Rollback();
          */
+
         long AddProduct(Product product);
         void RemoveProductWithId(long id);
         Product? GetProductWithId(long id);

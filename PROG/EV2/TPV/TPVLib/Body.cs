@@ -4,14 +4,12 @@ namespace TPVLib
 {
     public class Body
     {
-        public TicketLine[]? Lines { get; set; }
+        public TicketLine[] Lines { get; set; } = new TicketLine[0];
 
         public void AddLine(TicketLine line)
         {
             if (line == null)
                 return;
-            if (Lines == null)
-                Lines = new TicketLine[0];
 
             int count = Lines.Length;
             TicketLine[] aux= new TicketLine[++count];
@@ -22,5 +20,6 @@ namespace TPVLib
             aux[count-1] = line;
             Lines = aux;
         }
+
     }
 }

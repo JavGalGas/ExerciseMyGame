@@ -12,7 +12,7 @@ namespace TPVLib.Implementations
         private Dictionary<long, Ticket> _tickets = new();
         private long _currentGeneratingId = 1;
 
-        public int ProductCount => _products.Count;
+        private int ProductCount => _products.Count;
         //public void AddLineToTicketWithId(long id, TicketLine ticketLine)
         //{
 
@@ -21,8 +21,8 @@ namespace TPVLib.Implementations
         public long AddTicket(Header ticket)
         {
             Ticket  newTicket = new Ticket();
-            ticket.Id = (int)_currentGeneratingId++;
-            int id = ticket.Id;
+            ticket.Id = _currentGeneratingId++;
+            long id = ticket.Id;
             newTicket.Header = ticket;
             _tickets.Add(id, newTicket);
             return id;
@@ -72,15 +72,17 @@ namespace TPVLib.Implementations
            return lines;
         }
 
-        public long AddProduct(Product product)//modificar
+        public long AddProduct(Product product) 
         {
+            if (product == null)
+                throw new Exception("No se puede añadir");
             var cloneP = product.GetClone();
             cloneP.Id = _currentGeneratingId++;
             _products.Add(cloneP.Id, cloneP);
             return cloneP.Id;
         }
 
-        public void RemoveProductWithId(long id)
+        public void RemoveProductWithId(long id)//Ver si se puede cambiar el key y el id del diccionario
         {
             if (id <= 0)
                 throw new Exception("The id doesn't exist.");
@@ -109,7 +111,9 @@ namespace TPVLib.Implementations
                 Product entryProduct = entry.Value;
                 if (entryId == id)
                 {
-                    _products[entryId] = entryProduct;
+                    product.Id = entryProduct.Id;
+                    entryProduct = product;
+                    break;
                 }
             }
         }
@@ -120,21 +124,13 @@ namespace TPVLib.Implementations
             int endPos = Math.Min(startPos + limit, ProductCount);
 
             if (offset < 0 || limit < 0 || startPos > endPos)
-                return new List<Product>();
+                throw new Exception("Valores incorrectos.");
 
             var products = new List<Product>();
             while (startPos < endPos)
             {
                 startPos++;
                 products.Add(_products[startPos]);
-                //foreach (var p in _products)
-                //{
-                //    if (p.Value.Id == offset)
-                //    {
-                //        Product product = p.Value;
-                //        products.Add(product);
-                //    }
-                //}
             }
             return products;
         }
