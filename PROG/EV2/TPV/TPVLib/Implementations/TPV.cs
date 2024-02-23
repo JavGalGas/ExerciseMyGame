@@ -2,7 +2,7 @@ using TPVLib.Implementations;
 
 namespace TPVLib
 {
-    public class RAMTPV : ITPV
+    public class TPV : ITPV
     {
         
         private IDatabase _db;
@@ -14,7 +14,7 @@ namespace TPVLib
 
 
         //Inyección de dependencias (Buscar)
-        public RAMTPV(IDatabase database)
+        public TPV(IDatabase database)
         {
             _db = database;
         }

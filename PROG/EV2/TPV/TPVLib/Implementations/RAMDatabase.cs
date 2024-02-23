@@ -28,7 +28,7 @@ namespace TPVLib.Implementations
             return id;
         }
 
-        public void AddTicketBody/*AddBodyToTicketWithId*/(long ticketId, Body body)
+        public void AddTicketBodyWithId/*AddBodyToTicketWithId*/(long ticketId, Body body)
         {
            foreach (var ticket in _tickets)
            {
@@ -40,7 +40,7 @@ namespace TPVLib.Implementations
            }
         }
 
-        public void AddTicketLine/*AddLineToTicketWithId*/(long ticketId, TicketLine ticketLine)
+        public void AddTicketLineWithId/*AddLineToTicketWithId*/(long ticketId, TicketLine ticketLine)
         {
             foreach (var ticket in _tickets)
             {

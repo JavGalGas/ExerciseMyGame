@@ -7,7 +7,7 @@
 
         static ITPV CreateNewTPV(IDatabase db)
         {
-            return new RAMTPV(db);
+            return new TPV(db);
         }
 
         long AddProduct(Product product);
