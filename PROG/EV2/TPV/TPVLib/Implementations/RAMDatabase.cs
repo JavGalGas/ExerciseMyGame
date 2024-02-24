@@ -156,7 +156,30 @@ namespace TPVLib.Implementations
             return -1;
         }
 
-       
+        public Ticket GetTicketWithId(long ticketId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateTicketWithId(long ticketId, Ticket body)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveTicketWithId(long ticketId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveTickets()
+        {
+
+        }
+
+        public void SaveProducts()
+        {
+
+        }
 
         //public void BeginTransaction()
         //{

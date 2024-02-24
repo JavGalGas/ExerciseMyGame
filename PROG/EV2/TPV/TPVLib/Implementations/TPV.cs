@@ -68,13 +68,14 @@ namespace TPVLib
             return -1;
         }
 
-        public void SaveTickets()
+        public void SaveTickets(Ticket[] tickets, ITPV tpv)
         {
-
+            
         }
 
-        public void SaveProducts()
+        public void SaveProducts(Ticket[] tickets, ITPV tpv)
         {
+            Dictionary<long, Product> products = new Dictionary<long, Product>();
 
         }
 
@@ -105,33 +106,33 @@ namespace TPVLib
         //    {
         //        _database.BeginTransaction();
 
-            //        long id = _database.AddTicket(Ticket.Header);
-            //        foreach (var line in Ticket.Body.Lines)
-            //        {
-            //            _database.AddTicketLine(id, line);
-            //        }
+        //        long id = _database.AddTicket(Ticket.Header);
+        //        foreach (var line in Ticket.Body.Lines)
+        //        {
+        //            _database.AddTicketLine(id, line);
+        //        }
 
-            //        _database.Commit();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        _database.Rollback();
-            //        throw new Exception(ex.Message);
-            //    }
-            //}
-            /**public static void SaveTickets(Ticket[] tickets, ITPV tpv)
-             * {
-             *      try
-             *      {
-             *      _database.BeginTransaction();
-             *       foreach(var line in Ticket.Body.Lines)
-            //      {
-            //         tpv.AddTicketLine(id, line);
-            //      }   
-             * 
-             * 
-             * 
-             * }
-             */
+        //        _database.Commit();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _database.Rollback();
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+        /**public static void SaveTickets(Ticket[] tickets, ITPV tpv)
+         * {
+         *      try
+         *      {
+         *      _database.BeginTransaction();
+         *       foreach(var line in Ticket.Body.Lines)
+        //      {
+        //         tpv.AddTicketLine(id, line);
+        //      }   
+         * 
+         * 
+         * 
+         * }
+         */
     }
 }

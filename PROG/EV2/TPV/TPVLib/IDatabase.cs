@@ -24,6 +24,9 @@
         public void AddTicketLineWithId(long ticketId, TicketLine ticketLine);
         public void AddTicketBodyWithId(long ticketId, Body body);
         TicketLine[] GetTicketLinesWithId(long ticketId);
+        public Ticket GetTicketWithId(long ticketId);
+        public void UpdateTicketWithId(long ticketId, Ticket body);
+        public void RemoveTicketWithId(long ticketId);
 
         //public void AddLineToTicketWithId(long id, TicketLine ticketLine);
         //todas las funciones ADD

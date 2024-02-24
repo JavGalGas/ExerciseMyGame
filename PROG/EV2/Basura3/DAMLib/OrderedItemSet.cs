@@ -35,7 +35,6 @@ namespace DAMLib
             return _items.GetHashCode() * _items.GetHashCode() - Count * (_count.GetHashCode() / 77) + Count;
         }
 
-
         public int Count
         {
             get => _count;
@@ -116,48 +115,54 @@ namespace DAMLib
             if ( _items == null || Count == 0)
                 return new int[0];
             int[] _hash = HashClone();
-            int n = Count-1;
+            int m = Count;
+            int n = m-1;
             for (int i = 0; i < n; i++)
             {
-                for (int j = i + 1; j < Count; j++)
+                for (int j = i + 1; j < m; j++)
                 {
-                    if (_items[i] > list[j])
+                    if (_hash[i] > _hash[j])
                     {
                         int aux;
-                        aux = list[i];
-                        list[i] = list[j];
-                        list[j] = aux;
+                        aux = _hash[i];
+                        _hash[i] = _hash[j];
+                        _hash[j] = aux;
                     }
                 }
             }
-            return (list);
+            return (_hash);
         }
 
-        private static List<int>? Sort(List<int> list)
-        {
-            int n = list.Count;
-            int m = n - 1;
+        //private Item[]? SortItemSet()
+        //{
+        //    //int n = list.Count;
+        //    //int m = n - 1;
 
-            if (list == null || list.Count == 0)
-                return null;
+        //    //if (list == null || list.Count == 0)
+        //    //    return null;
 
-            for (int i = 0; i < m; i++)
-            {
-                for (int j = i + 1; j < n; j++)
-                {
-                    if (list[i] > list[j])
-                    {
-                        int aux;
-                        aux = list[i];
-                        list[i] = list[j];
-                        list[j] = aux;
-                    }
-                }
-            }
-            return (list);
-        }
+        //    //for (int i = 0; i < m; i++)
+        //    //{
+        //    //    for (int j = i + 1; j < n; j++)
+        //    //    {
+        //    //        if (list[i] > list[j])
+        //    //        {
+        //    //            Swap(list[i], list[j]);
+        //    //        }
+        //    //    }
+        //    //}
+        //    //return (list);
+        //    int length = Count;
+        //    Item[] orderedItemSet = new Item[length];
+        //    int[] orderedHash = OrderedHash();
+        //    for (int i = 0;i < length;i++)
+        //    {
+        //        if(orderedHash[i] ==  )
+        //    }
+        //    return orderedItemSet;
+        //}
 
-        private void Swap(int hash1, int hash2)
+        private static void Swap(int hash1, int hash2)
         {
             int aux = hash1;
             hash1 = hash2;
@@ -190,6 +195,11 @@ namespace DAMLib
             //if (IndexOf(element) == -1)
             //    return false;
             //return true;
+            int length = Count;
+            int[] orderedHash = OrderedHash();
+
+
+
             for (int i = 0; i < Count - 1; i++)
             {
                 for (int j = 1; j < Count; j++)
