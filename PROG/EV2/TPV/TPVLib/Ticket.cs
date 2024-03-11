@@ -10,5 +10,15 @@ namespace TPVLib
         public Body Body { get; set; } = new Body();
         public double TotalPrice { get; set; }
 
+        public Ticket GetClone()
+        {
+            return new Ticket()
+            {
+                Header = Header,
+                Body = Body,
+                TotalPrice = TotalPrice
+            };
+        }
+
     }
 }

@@ -49,7 +49,9 @@ namespace TPVLib
             }
             Console.WriteLine(" ------------------------------------------------------------ ");
             Console.WriteLine("| ID   Name        Description         Price   Stock   IVA   |");
-            Console.WriteLine("| " + p.Id + "    " + p.Name + "       " + p.Description + "       " + p.Price + "       " + p.Stock + "       " + p.IVA + "  |");
+            Console.Write("| " + p.Id);
+            for(int i=0; i<8-p.Id.ToString().Length)+ "    " + p.Name + "       " + p.Description + "       " + p.Price + "       " + p.Stock + "       " + p.IVA);
+            Console.WriteLine("  |");
             Console.WriteLine("|                                                            |");
             Console.WriteLine(" ------------------------------------------------------------ ");
             Console.ReadLine();

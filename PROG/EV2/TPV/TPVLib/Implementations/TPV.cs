@@ -70,7 +70,7 @@ namespace TPVLib
 
         public void SaveTickets(Ticket[] tickets, ITPV tpv)
         {
-            
+            _db.SaveTickets(tickets, tpv);
         }
 
         public void SaveProducts(Ticket[] tickets, ITPV tpv)

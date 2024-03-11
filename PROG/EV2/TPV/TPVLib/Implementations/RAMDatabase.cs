@@ -20,6 +20,8 @@ namespace TPVLib.Implementations
 
         public long AddTicket(Header ticket)
         {
+            if (ContainsTicket(ticket))
+                throw new Exception("No se puede añadir");
             Ticket  newTicket = new Ticket();
             ticket.Id = _currentGeneratingId++;
             long id = ticket.Id;
@@ -30,51 +32,35 @@ namespace TPVLib.Implementations
 
         public void AddTicketBodyWithId/*AddBodyToTicketWithId*/(long ticketId, Body body)
         {
-           foreach (var ticket in _tickets)
-           {
-                if(ticket.Key == ticketId)
-                {
-                    ticket.Value.Body = body;
-                    break;
-                }
-           }
+            if (!_tickets.ContainsKey(ticketId))
+                throw new Exception("The id doesn't exist.");
+            _tickets[ticketId].Body = body;
         }
 
         public void AddTicketLineWithId/*AddLineToTicketWithId*/(long ticketId, TicketLine ticketLine)
         {
-            foreach (var ticket in _tickets)
-            {
-                if (ticket.Key == ticketId)
-                {
-                    ticket.Value.Body!.AddLine(ticketLine);
-                    break;
-                }
-            }
+            if (!_tickets.ContainsKey(ticketId))
+                throw new Exception("The id doesn't exist.");
+            _tickets[ticketId].Body!.AddLine(ticketLine);
         }
 
-        public TicketLine[] GetTicketLinesWithId(long ticketId)
+        public TicketLine[]? GetTicketLinesWithId(long ticketId)
         {//hacer un Contains
-            TicketLine[] lines = new TicketLine[0];
-            foreach (var ticket in _tickets)
+            if (!_tickets.ContainsKey(ticketId))
+                throw new Exception("The id doesn't exist.");
+            Ticket aux = _tickets[ticketId];
+            int length = aux.Body!.Lines!.Length;
+            TicketLine[] lines = new TicketLine[length];
+            for (int i = 0; i < length; i++)
             {
-                if (ticket.Key == ticketId)
-                {
-                    Ticket aux = ticket.Value;
-                    int length = aux.Body!.Lines!.Length;
-                    lines = new TicketLine[length];
-                    for (int i = 0; i<length; i++)
-                    {
-                        lines[i] = aux.Body!.Lines![i];
-                    }
-                    break;
-                }
+                lines[i] = aux.Body!.Lines![i];
             }
            return lines;
         }
 
         public long AddProduct(Product product) 
         {
-            if (product == null)
+            if (ContainsProduct(product))
                 throw new Exception("No se puede añadir");
             var cloneP = product.GetClone();
             cloneP.Id = _currentGeneratingId++;
@@ -91,31 +77,17 @@ namespace TPVLib.Implementations
 
         public Product? GetProductWithId(long id)
         {
-            foreach (var entry in _products)
-            {
-                long entryId = entry.Key;
-                Product entryProduct = entry.Value;
-                if (entryId == id)
-                {
-                    return entryProduct.GetClone();
-                }
-            }
-            return null;
+            if (!_products.ContainsKey(id))
+                throw new Exception("The id doesn't exist.");
+            return _products[id].GetClone();
         }
 
         public void UpdateProductWithId(long id, Product product)
         {
-            foreach (var entry in _products)
-            {
-                long entryId = entry.Key;
-                Product entryProduct = entry.Value;
-                if (entryId == id)
-                {
-                    product.Id = entryProduct.Id;
-                    entryProduct = product;
-                    break;
-                }
-            }
+            if (!_products.ContainsKey(id))
+                throw new Exception("The id doesn't exist.");
+            product.Id = _products[id].Id;
+            _products[id] = product;
         }
 
         public List<Product> GetProducts(int offset, int limit)
@@ -135,13 +107,24 @@ namespace TPVLib.Implementations
             return products;
         }
 
-        public bool Contains(Product product)
+        public bool ContainsProduct(Product product)
         {
             if (product == null)
                 return false;
             foreach (var p in _products)
             {
                 if (p.Value.Id == product.Id) return true;
+            }
+            return false;
+        }
+
+        public bool ContainsTicket(Header ticket)
+        {
+            if (ticket == null)
+                return false;
+            foreach (var t in _tickets)
+            {
+                if (t.Value.Header.Id == ticket.Id) return true;
             }
             return false;
         }
@@ -158,17 +141,23 @@ namespace TPVLib.Implementations
 
         public Ticket GetTicketWithId(long ticketId)
         {
-            throw new NotImplementedException();
+            if (!_tickets.ContainsKey(ticketId))
+                throw new Exception("The id doesn't exist.");
+            return _tickets[ticketId].GetClone();
         }
 
         public void UpdateTicketWithId(long ticketId, Ticket body)
         {
-            throw new NotImplementedException();
+            if (!_tickets.ContainsKey(ticketId))
+                throw new Exception("The id doesn't exist.");
+            _tickets[ticketId] = body;
         }
 
         public void RemoveTicketWithId(long ticketId)
         {
-            throw new NotImplementedException();
+            if (ticketId <= 0)
+                throw new Exception("The id doesn't exist.");
+            _products.Remove(ticketId);
         }
 
         public void SaveTickets()
