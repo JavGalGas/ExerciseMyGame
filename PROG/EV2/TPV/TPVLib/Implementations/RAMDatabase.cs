@@ -11,8 +11,8 @@ namespace TPVLib.Implementations
         private Dictionary<long, Product> _products = new();
         private Dictionary<long, Ticket> _tickets = new();
         private long _currentGeneratingId = 1;
-
-        private int ProductCount => _products.Count;
+        public int ProductCount => _products.Count;
+        public int TicketCount => _tickets.Count;
         //public void AddLineToTicketWithId(long id, TicketLine ticketLine)
         //{
 
@@ -44,7 +44,7 @@ namespace TPVLib.Implementations
             _tickets[ticketId].Body!.AddLine(ticketLine);
         }
 
-        public TicketLine[]? GetTicketLinesWithId(long ticketId)
+        public TicketLine[] GetTicketLinesWithId(long ticketId)
         {//hacer un Contains
             if (!_tickets.ContainsKey(ticketId))
                 throw new Exception("The id doesn't exist.");
@@ -158,16 +158,6 @@ namespace TPVLib.Implementations
             if (ticketId <= 0)
                 throw new Exception("The id doesn't exist.");
             _products.Remove(ticketId);
-        }
-
-        public void SaveTickets()
-        {
-
-        }
-
-        public void SaveProducts()
-        {
-
         }
 
         //public void BeginTransaction()

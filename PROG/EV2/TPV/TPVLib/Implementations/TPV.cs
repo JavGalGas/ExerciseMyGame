@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using TPVLib.Implementations;
 
 namespace TPVLib
@@ -11,7 +12,7 @@ namespace TPVLib
         private Dictionary<long, Ticket> _tickets = new();
         private long _currentGeneratingId = 1;
         public int ProductCount => _products.Count;
-
+        public int TicketCount => _tickets.Count;
 
         //Inyección de dependencias (Buscar)
         public TPV(IDatabase database)
@@ -68,16 +69,55 @@ namespace TPVLib
             return -1;
         }
 
+        public void SaveProducts(Product[] products, ITPV tpv)
+        {
+            if (products == null || tpv == null)
+                throw new Exception("Incorrect data.");
+            _products.Clear();
+            int count = products.Length;
+            for (int i = 0; i < count; i++)
+            {
+                _products.Add(1 + i, products[i]);
+            }
+        }
+
         public void SaveTickets(Ticket[] tickets, ITPV tpv)
         {
-            _db.SaveTickets(tickets, tpv);
+            if (tickets == null || tpv == null)
+                throw new Exception("Incorrect data.");
+            _tickets.Clear();
+            int count = tickets.Length;
+            for (int i = 0; i < count; i++)
+            {
+                _tickets.Add(1 + i, tickets[i]);
+            }
         }
 
-        public void SaveProducts(Ticket[] tickets, ITPV tpv)
-        {
-            Dictionary<long, Product> products = new Dictionary<long, Product>();
+        //public void SaveProducts()
+        //{
+        //    Dictionary<long, Product> products = new();
+        //    foreach (var product in _products)
+        //        products.Add(product.Key, product.Value);
+        //    _products.Clear();
+        //    List<Product> saveProducts = _db.GetProducts(0, ProductCount);            
+        //    for (int i = 0; i < ProductCount; i++)
+        //    {
+        //        _products.Add(1 + i, saveProducts[i]);
+        //    }
+        //}
 
-        }
+        //public void SaveTickets()
+        //{
+        //    Dictionary<long, Ticket> tickets = new();
+        //    foreach (var ticket in _tickets)
+        //        tickets.Add(ticket.Key, ticket.Value);
+        //    _tickets.Clear();
+        //    List<Product> saveProducts = _db.GetProducts(0, TicketCount);
+        //    for (int i = 0; i < ProductCount; i++)
+        //    {
+        //        _products.Add(1 + i, saveProducts[i]);
+        //    }
+        //}
 
         //public void AddTicket(Ticket ticket)
         //{

@@ -42,9 +42,7 @@ namespace DAMLib
         public void Enqueue(T element)
         {
             if (Count < _queue.Length)
-            {
                 _queue[_count++] = element;
-            }
             else
             {
                 T[] NewQueue = new T[Count + 1];

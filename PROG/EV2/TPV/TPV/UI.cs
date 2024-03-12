@@ -42,18 +42,14 @@ namespace TPVLib
         {
             Console.Write("Seleccione el id: ");
             long id = Convert.ToInt64(Console.ReadLine());
-            Product? p= tpv.GetProductWithId(id);
-            if (p == null)
-            {
+            Product? product= tpv.GetProductWithId(id);
+            if (product == null)
                 return;
-            }
-            Console.WriteLine(" ------------------------------------------------------------ ");
-            Console.WriteLine("| ID   Name        Description         Price   Stock   IVA   |");
-            Console.Write("| " + p.Id);
-            for(int i=0; i<8-p.Id.ToString().Length)+ "    " + p.Name + "       " + p.Description + "       " + p.Price + "       " + p.Stock + "       " + p.IVA);
-            Console.WriteLine("  |");
-            Console.WriteLine("|                                                            |");
-            Console.WriteLine(" ------------------------------------------------------------ ");
+            Console.WriteLine(" -------------------------------------------------------------- ");
+            Console.WriteLine("| ID   Name        Description         Price    Stock    IVA   |");
+            ShowProduct(product, tpv);
+            Console.WriteLine("|                                                              |");
+            Console.WriteLine(" -------------------------------------------------------------- ");
             Console.ReadLine();
         }
         public static void CaseGetProducts(ITPV tpv)
@@ -62,7 +58,17 @@ namespace TPVLib
             int offset = Convert.ToInt32(Console.ReadLine());
             Console.Write("Seleccione el id final: ");
             int limit = Convert.ToInt32(Console.ReadLine());
-            tpv.GetProducts(offset, limit);
+            List<Product> products= tpv.GetProducts(offset, limit);
+            if (products == null)
+                return;
+            int count = products.Count;
+            Console.WriteLine(" -------------------------------------------------------------- ");
+            Console.WriteLine("| ID   Name        Description         Price    Stock    IVA   |");
+            foreach (Product product in products)
+                ShowProduct(product, tpv);
+            Console.WriteLine("|                                                              |");
+            Console.WriteLine(" -------------------------------------------------------------- ");
+            Console.ReadLine();
         }
         public static void CaseAddProduct(ITPV tpv)
         {
@@ -130,8 +136,15 @@ namespace TPVLib
 
         public static void CaseRemoveProduct(ITPV tpv)
         {
-            //var product = Console.ReadLine();
-            //tpv.RemoveProduct(product);
+            Console.Write("Seleccione el id: ");
+            long id = Convert.ToInt64(Console.ReadLine());
+            Product? p = tpv.GetProductWithId(id);
+            if (p == null)
+            {
+                return;
+            }
+            Console.WriteLine("Producto eliminado");
+            Console.ReadLine();
         }
 
         public static void CaseExit(ITPV tpv, out bool runProgram)
@@ -142,9 +155,46 @@ namespace TPVLib
             runProgram = false;
         }
 
-        public static void ShowProduct(ITPV tpv)
+        private static void ShowProduct(Product product, ITPV tpv)
         {
-            throw new NotImplementedException();
+            if(product==null || tpv==null)
+                return;
+            int spaces;
+            Console.Write("| " + product.Id);
+            spaces = 5 - product.Id.ToString().Length;
+            PrintSpace(spaces);
+            Console.Write(product.Name);
+            if(product.Name == null)
+                spaces = 12;
+            else
+            {
+                spaces = 12 - product.Name.Length;
+            }
+            PrintSpace(spaces);
+            Console.Write(product.Description);
+            if (product.Description == null)
+                spaces = 20;
+            else
+            {
+                spaces = 20 - product.Description.Length;
+            }
+            PrintSpace(spaces);
+            Console.Write(product.Price.ToString());
+            spaces = 9 - product.Price.ToString().Length;
+            PrintSpace(spaces);
+            Console.Write(product.Stock.ToString());
+            spaces = 9 - product.Stock.ToString().Length;
+            PrintSpace(spaces);
+            Console.Write(product.IVA.ToString());
+            spaces = 6 - product.IVA.ToString().Length;
+            PrintSpace(spaces);
+            Console.WriteLine("|");
+        }
+
+        private static void PrintSpace(int count)
+        {
+            for (int i = 0;i < count;i++)
+                Console.Write(" ");
         }
 
         //public static long StringToLong(string? value)
