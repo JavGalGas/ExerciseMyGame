@@ -9,25 +9,29 @@ namespace DominoJGG
     public class Game
     {
         private List<Participant> _participants;
-        private DominoDeck _amountOfDominoes;
+        private DominoDeck _gameField;
         private Participant? _winner;
 
         public Game(List<Participant> participants, DominoDeck amountOfDominoes) 
         { 
             _participants = participants;
-            _amountOfDominoes = amountOfDominoes;
+            _gameField = amountOfDominoes;
         }
-        public void StartGame()//
+        public void StartGame()//método para iniciar una nueva partida
         {
-
+            _gameField.Shuffle();
+            foreach (Participant participant in _participants)
+            {
+                _gameField.ExtractPiece();
+            }
         }
         public void SimulateGame()
         {
-            _amountOfDominoes.Shuffle();
-            foreach (Participant participant in _participants)
+            while (_participants.Count > 1)
             {
-                _amountOfDominoes.ExtractPiece();
-            }
+               StartGame();
+                _participants.RemoveAt(0);
+            } 
         }
     }
 }

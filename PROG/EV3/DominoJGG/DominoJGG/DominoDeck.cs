@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 namespace DominoJGG
 {
     public class DominoDeck
-    {
+    { //Necesita métodos para comprobar qué fichas hay en el monto
         private List<Domino> _dominoes = new();
         public int DominoesCount { get => _dominoes.Count; }
-        public void CheckDominoes()//comprueba qué fichas hay en el monto
-        {
-
-        }
 
         public Domino? ExtractPieceAt(int index)
         {
